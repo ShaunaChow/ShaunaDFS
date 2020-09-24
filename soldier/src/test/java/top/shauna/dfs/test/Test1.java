@@ -103,6 +103,14 @@ public class Test1 {
         block2.setMd5(md5);
         blockHandler.read(block2);
         System.out.println(new String(block2.getContent()));
+
+        System.out.println("====================================");
+        Block block3= new Block();
+        block3.setFilePath("/root/test/ok/data11");
+        block3.setPin(1);
+        block3.setMd5(md5);
+        RandomAccessFile file = new RandomAccessFile("F:\\java项目\\test222222.txt", "rw");
+        blockHandler.readAndTransfer(block,file.getChannel());
     }
 
     private String getMD5(byte[] bb){

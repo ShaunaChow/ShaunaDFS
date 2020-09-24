@@ -8,6 +8,7 @@ import top.shauna.dfs.block.interfaces.BlockHandler;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
 
 import java.io.File;
+import java.nio.channels.WritableByteChannel;
 
 /**
  * @Author Shauna.Chou
@@ -19,6 +20,16 @@ public class LocalBlockHandler extends BlockHandler {
 
     public LocalBlockHandler(){
         localFileStorage = LocalFileStorage.getInstance();
+    }
+
+    @Override
+    protected void transferData(DataInfo dataInfo, WritableByteChannel channel) throws Exception {
+        try {
+            localFileStorage.read(dataInfo.getDataPath(),channel);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override

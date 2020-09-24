@@ -10,6 +10,8 @@ import top.shauna.dfs.config.PubConfig;
 
 import java.io.File;
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.nio.channels.WritableByteChannel;
 import java.security.MessageDigest;
 
 /**
@@ -87,6 +89,26 @@ public abstract class BlockHandler {
         }
         throw new Exception("本机未找到block对应的块文件:"+block.getFilePath()+"_"+block.getPin()+".block");
     }
+
+    public void readAndTransfer(Block block, WritableByteChannel channel) throws Exception {
+        PubConfig pubConfig = PubConfig.getInstance();
+        String metaDataDir = pubConfig.getRootDir()+ File.separator+"Meta";
+        String metaPath = metaDataDir+  File.separator+
+                block.getFilePath()+"_"+block.getPin()+".block";
+        if(MetaKeeper.contains(metaPath)){
+            MetaInfo metaInfo = MetaKeeper.get(metaPath);
+            byte[] content = metaInfo.getDataInfo().getContent();
+            if(content != null){
+                channel.write(ByteBuffer.wrap(content));
+                return;
+            }
+            transferData(metaInfo.getDataInfo(),channel);
+            return;
+        }
+        throw new Exception("本机未找到block对应的块文件:"+block.getFilePath()+"_"+block.getPin()+".block");
+    }
+
+    protected abstract void transferData(DataInfo dataInfo, WritableByteChannel channel) throws Exception;
 
     protected abstract byte[] readData(DataInfo dataInfo) throws Exception;
 
