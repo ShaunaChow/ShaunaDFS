@@ -1,8 +1,8 @@
 package top.shauna.dfs.block;
 
-import top.shauna.dfs.bean.DataInfo;
 import top.shauna.dfs.bean.MetaInfo;
 
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -23,5 +23,9 @@ public class MetaKeeper {
 
     public static boolean contains(String md5){
         return blocks.containsKey(md5);
+    }
+
+    public static ConcurrentHashMap<String, MetaInfo> getBlocks() {
+        return blocks;
     }
 }

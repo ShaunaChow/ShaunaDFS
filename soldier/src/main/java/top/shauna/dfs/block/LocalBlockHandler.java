@@ -15,10 +15,10 @@ import java.nio.channels.WritableByteChannel;
  * @Date 2020/9/24 17:01
  * @E-Mail z1023778132@icloud.com
  */
-public class LocalAbstractBlockHandler extends AbstractBlockHandler {
+public class LocalBlockHandler extends AbstractBlockHandler {
     private LocalFileStorage localFileStorage;
 
-    public LocalAbstractBlockHandler(){
+    public LocalBlockHandler(){
         localFileStorage = LocalFileStorage.getInstance();
     }
 

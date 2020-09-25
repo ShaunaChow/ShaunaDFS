@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: top.shauna:service:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://F:/maven/apache-maven-3.5.4/repository/top/shauna/service/1.0-SNAPSHOT/service-1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://F:/maven/apache-maven-3.5.4/repository/top/shauna/service/1.0-SNAPSHOT/service-1.0-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://F:/maven/apache-maven-3.5.4/repository/top/shauna/service/1.0-SNAPSHOT/service-1.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

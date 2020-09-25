@@ -1,7 +1,7 @@
 package top.shauna.dfs.monitor;
 
 import top.shauna.dfs.bean.Block;
-import top.shauna.dfs.block.LocalAbstractBlockHandler;
+import top.shauna.dfs.block.LocalBlockHandler;
 import top.shauna.dfs.block.interfaces.BlockHandler;
 import top.shauna.dfs.monitor.bean.StaticBean;
 
@@ -18,7 +18,7 @@ public class MonitorProxy implements InvocationHandler {
     private BlockHandler abstractBlockHandler;
 
     public MonitorProxy(){
-        abstractBlockHandler = new LocalAbstractBlockHandler();
+        abstractBlockHandler = new LocalBlockHandler();
     }
 
     public MonitorProxy(BlockHandler blockHandler){

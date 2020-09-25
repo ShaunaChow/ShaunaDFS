@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.channels.Channel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -126,5 +128,15 @@ public class Test1 {
             e.printStackTrace();
         }
         return res;
+    }
+
+    @Test
+    public void test5(){
+        try {
+            String ip = InetAddress.getLocalHost().getHostAddress();
+            System.out.println(ip);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 }

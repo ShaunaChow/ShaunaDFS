@@ -2,6 +2,7 @@ package top.shauna.dfs.monitor;
 
 import top.shauna.dfs.monitor.bean.StaticBean;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -10,27 +11,41 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @E-Mail z1023778132@icloud.com
  */
 public class StaticDatas {
-    private static CopyOnWriteArrayList<StaticBean> readList = new CopyOnWriteArrayList<>();
-    private static CopyOnWriteArrayList<StaticBean> writeList = new CopyOnWriteArrayList<>();
+    private static ConcurrentHashMap<String,CopyOnWriteArrayList<StaticBean>> readList = new ConcurrentHashMap();
+    private static ConcurrentHashMap<String,CopyOnWriteArrayList<StaticBean>> writeList = new ConcurrentHashMap();
 
     public static void addReadData(StaticBean staticBean){
-        readList.add(staticBean);
+        String key = staticBean.getBlock().getFilePath();
+        if(readList.containsKey(key)){
+            readList.get(key).add(staticBean);
+        }else{
+            CopyOnWriteArrayList<StaticBean> bean = new CopyOnWriteArrayList<>();
+            bean.add(staticBean);
+            readList.put(key,bean);
+        }
     }
 
     public static void addWriteData(StaticBean staticBean){
-        writeList.add(staticBean);
+        String key = staticBean.getBlock().getFilePath();
+        if(writeList.containsKey(key)){
+            writeList.get(key).add(staticBean);
+        }else{
+            CopyOnWriteArrayList<StaticBean> bean = new CopyOnWriteArrayList<>();
+            bean.add(staticBean);
+            writeList.put(key,bean);
+        }
     }
 
-    public static CopyOnWriteArrayList<StaticBean> getReadList() {
-        return readList;
+    public static CopyOnWriteArrayList<StaticBean> getReadList(String filePath) {
+        return readList.get(filePath);
     }
 
-    public static CopyOnWriteArrayList<StaticBean> getWriteList() {
-        return writeList;
+    public static CopyOnWriteArrayList<StaticBean> getWriteList(String filePath) {
+        return writeList.get(filePath);
     }
 
     public static void restart(){
-        readList = new CopyOnWriteArrayList<>();
-        writeList = new CopyOnWriteArrayList<>();
+        readList = new ConcurrentHashMap<>();
+        writeList = new ConcurrentHashMap<>();
     }
 }

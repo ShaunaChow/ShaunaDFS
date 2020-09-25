@@ -23,6 +23,15 @@ public class PubConfig {
     }
 
     private String rootDir;
+    private String port;
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
 
     public String getRootDir() {
         return rootDir;
