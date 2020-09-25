@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import top.shauna.dfs.bean.Block;
 import top.shauna.dfs.bean.DataInfo;
 import top.shauna.dfs.bean.MetaInfo;
-import top.shauna.dfs.block.interfaces.BlockHandler;
+import top.shauna.dfs.block.interfaces.AbstractBlockHandler;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
 
 import java.io.File;
@@ -15,10 +15,10 @@ import java.nio.channels.WritableByteChannel;
  * @Date 2020/9/24 17:01
  * @E-Mail z1023778132@icloud.com
  */
-public class LocalBlockHandler extends BlockHandler {
+public class LocalAbstractBlockHandler extends AbstractBlockHandler {
     private LocalFileStorage localFileStorage;
 
-    public LocalBlockHandler(){
+    public LocalAbstractBlockHandler(){
         localFileStorage = LocalFileStorage.getInstance();
     }
 

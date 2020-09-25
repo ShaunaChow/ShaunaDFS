@@ -13,5 +13,12 @@
         <module name="soldier" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common" target="1.8" />
+      <module name="king" target="1.8" />
+      <module name="queen" target="1.8" />
+      <module name="ShaunaDFS" target="1.8" />
+      <module name="soldier" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -2,9 +2,10 @@ package top.shauna.dfs.test;
 
 import org.junit.Test;
 import top.shauna.dfs.bean.Block;
-import top.shauna.dfs.block.LocalBlockHandler;
+import top.shauna.dfs.block.interfaces.AbstractBlockHandler;
 import top.shauna.dfs.block.interfaces.BlockHandler;
 import top.shauna.dfs.config.PubConfig;
+import top.shauna.dfs.monitor.MonitorProxy;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
 
 import java.io.File;
@@ -93,15 +94,15 @@ public class Test1 {
         block.setVersion(1L);
         PubConfig instance = PubConfig.getInstance();
         instance.setRootDir("F:\\java项目");
-        BlockHandler blockHandler = new LocalBlockHandler();
-        blockHandler.write(block);
+        BlockHandler abstractBlockHandler = new MonitorProxy().getProxy();
+        abstractBlockHandler.write(block);
 
         System.out.println("====================================");
         Block block2 = new Block();
         block2.setFilePath("/root/test/ok/data11");
         block2.setPin(1);
         block2.setMd5(md5);
-        blockHandler.read(block2);
+        abstractBlockHandler.read(block2);
         System.out.println(new String(block2.getContent()));
 
         System.out.println("====================================");
@@ -110,7 +111,7 @@ public class Test1 {
         block3.setPin(1);
         block3.setMd5(md5);
         RandomAccessFile file = new RandomAccessFile("F:\\java项目\\test222222.txt", "rw");
-        blockHandler.readAndTransfer(block,file.getChannel());
+        abstractBlockHandler.readAndTransfer(block,file.getChannel());
     }
 
     private String getMD5(byte[] bb){
