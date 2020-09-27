@@ -5,6 +5,8 @@ import top.shauna.dfs.bean.Block;
 import top.shauna.dfs.block.interfaces.AbstractBlockHandler;
 import top.shauna.dfs.block.interfaces.BlockHandler;
 import top.shauna.dfs.config.PubConfig;
+import top.shauna.dfs.interact.MessageUtil;
+import top.shauna.dfs.interact.heartbeat.SoldierHeartBeat;
 import top.shauna.dfs.monitor.MonitorProxy;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
 
@@ -95,7 +97,7 @@ public class Test1 {
         block.setPin(1);
         block.setVersion(1L);
         PubConfig instance = PubConfig.getInstance();
-        instance.setRootDir("F:\\java项目");
+        instance.setRootDir("F:\\java项目\\ShaunaDfsTmp");
         BlockHandler abstractBlockHandler = new MonitorProxy().getProxy();
         abstractBlockHandler.write(block);
 
@@ -114,6 +116,9 @@ public class Test1 {
         block3.setMd5(md5);
         RandomAccessFile file = new RandomAccessFile("F:\\java项目\\test222222.txt", "rw");
         abstractBlockHandler.readAndTransfer(block,file.getChannel());
+
+//        Thread.sleep(15000);
+//        MessageUtil.deleteFile(block.getFilePath(),block.getPin().toString());
     }
 
     private String getMD5(byte[] bb){
@@ -131,12 +136,8 @@ public class Test1 {
     }
 
     @Test
-    public void test5(){
-        try {
-            String ip = InetAddress.getLocalHost().getHostAddress();
-            System.out.println(ip);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+    public void test5() throws Exception {
+//        SoldierHeartBeat soldierHeartBeat = new SoldierHeartBeat();
+//        System.out.println(soldierHeartBeat.sendHeartBeat(MessageUtil.getHeartBeatRequestBean()));
     }
 }

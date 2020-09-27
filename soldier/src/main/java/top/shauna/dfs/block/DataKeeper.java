@@ -23,4 +23,8 @@ public class DataKeeper {
     public static boolean contains(String md5){
         return blocks.containsKey(md5);
     }
+
+    public static DataInfo delete(String md5){
+        return blocks.remove(md5);
+    }
 }

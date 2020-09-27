@@ -74,6 +74,26 @@ public class LocalFileStorage implements StorageEngine {
     }
 
     @Override
+    public byte[] read(File file) throws Exception {
+        RandomAccessFile readFile = null;
+        try {
+            readFile = new RandomAccessFile(file, "rw");
+            byte[] bytes = new byte[(int)readFile.length()];
+            readFile.read(bytes);
+            return bytes;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw e;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }finally {
+            if(readFile!=null)
+                readFile.close();
+        }
+    }
+
+    @Override
     public void read(String url, WritableByteChannel out) throws Exception {
         RandomAccessFile readFile = null;
         try {

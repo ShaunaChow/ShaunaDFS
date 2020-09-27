@@ -1,5 +1,6 @@
 package top.shauna.dfs.storage.interfaces;
 
+import java.io.File;
 import java.nio.channels.WritableByteChannel;
 
 /**
@@ -10,6 +11,7 @@ import java.nio.channels.WritableByteChannel;
 public interface StorageEngine {
     void write(String url, byte[] content) throws Exception;
     byte[] read(String url) throws Exception;
+    byte[] read(File file) throws Exception;
     void read(String url,WritableByteChannel out) throws Exception;
     void delete(String url);
     void append(String url,byte[] content) throws Exception;

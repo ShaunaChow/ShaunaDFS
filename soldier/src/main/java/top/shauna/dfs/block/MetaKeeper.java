@@ -2,7 +2,6 @@ package top.shauna.dfs.block;
 
 import top.shauna.dfs.bean.MetaInfo;
 
-import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -27,5 +26,9 @@ public class MetaKeeper {
 
     public static ConcurrentHashMap<String, MetaInfo> getBlocks() {
         return blocks;
+    }
+
+    public static MetaInfo delete(String md5){
+        return blocks.remove(md5);
     }
 }
