@@ -1,4 +1,4 @@
-package top.shauna.dfs.interact.SoldierUDPSupport;
+package top.shauna.dfs.interact.soldierconnect;
 
 /**
  * @Author Shauna.Chou

@@ -6,26 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6a51f00b-e7d2-44af-8fcb-ff5299584bea" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/bean/HeartBeatResponseBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/bean/HeartBeatResponseBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/PubConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/PubConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/bean/HeartBeatResponseBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/bean/HeartBeatResponseBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/config/PubConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/config/PubConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/king.iml" beforeDir="false" afterPath="$PROJECT_DIR$/king/king.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/king/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/DataKeeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/DataKeeper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/MetaKeeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/MetaKeeper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/NettyStarter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/heartbeat/SoldierHeartBeat.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/heartbeat/SoldierHeartBeat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/storage/impl/LocalFileStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/storage/impl/LocalFileStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/storage/interfaces/StorageEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/storage/interfaces/StorageEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/test/java/top/shauna/dfs/test/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/test/java/top/shauna/dfs/test/Test1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/DataKeeper.class" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/DataKeeper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/MetaKeeper.class" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/MetaKeeper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/NettyStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/heartbeat/SoldierHeartBeat.class" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/heartbeat/SoldierHeartBeat.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/storage/impl/LocalFileStorage.class" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/storage/impl/LocalFileStorage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/storage/interfaces/StorageEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/storage/interfaces/StorageEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/test-classes/top/shauna/dfs/test/Test1.class" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/target/test-classes/top/shauna/dfs/test/Test1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/SoldierUDPSupport/SoldierConnecter.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/soldierconnect/SoldierConnecter.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/king/target/" />
@@ -53,11 +34,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SoldierConnecter.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/SoldierUDPSupport/SoldierConnecter.java">
+      <file leaf-file-name="SoldierConnecter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/soldierconnect/SoldierConnecter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="7" column="31" lean-forward="true" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+            <state relative-caret-position="243">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UDPUtil.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/soldierconnect/udpsupport/UDPUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="43">
+              <caret line="8" column="33" lean-forward="true" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -202,6 +195,8 @@
         <option value="$PROJECT_DIR$/soldier/src/main/resources/soldier.properties" />
         <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/heartbeat/SoldierHeartBeat.java" />
         <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/config/SoldierConfig.java" />
+        <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/soldierconnect/SoldierConnecter.java" />
+        <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/soldierconnect/udpsupport/UDPUtil.java" />
       </list>
     </option>
   </component>
@@ -496,7 +491,19 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="dfs" type="462c0819:PsiDirectoryNode" />
               <item name="interact" type="462c0819:PsiDirectoryNode" />
-              <item name="SoldierUDPSupport" type="462c0819:PsiDirectoryNode" />
+              <item name="soldierconnect" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ShaunaDFS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShaunaDFS" type="462c0819:PsiDirectoryNode" />
+              <item name="soldier" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="dfs" type="462c0819:PsiDirectoryNode" />
+              <item name="interact" type="462c0819:PsiDirectoryNode" />
+              <item name="soldierconnect" type="462c0819:PsiDirectoryNode" />
+              <item name="udpsupport" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ShaunaDFS" type="b2602c69:ProjectViewProjectNode" />
@@ -748,7 +755,7 @@
       <workItem from="1600914902521" duration="28248000" />
       <workItem from="1601000393773" duration="15074000" />
       <workItem from="1601087350959" duration="2420000" />
-      <workItem from="1601187038808" duration="17597000" />
+      <workItem from="1601187038808" duration="18876000" />
     </task>
     <servers />
   </component>
@@ -785,7 +792,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63339000" />
+    <option name="totallyTimeSpent" value="64618000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-320" width="1874" height="1096" extended-state="6" />
@@ -804,7 +811,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.46185997" />
       <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.4879833" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3218391" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49733335" visible="true" weight="0.17530319" />
@@ -887,16 +894,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/soldier/src/test/java/top/shauna/dfs/test/Test1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="33" lean-forward="true" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/interfaces/AbstractBlockHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2646">
@@ -1296,10 +1293,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/SoldierUDPSupport/SoldierConnecter.java">
+    <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/soldierconnect/SoldierConnecter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="7" column="31" lean-forward="true" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+        <state relative-caret-position="243">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/soldierconnect/udpsupport/UDPUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="43">
+          <caret line="8" column="33" lean-forward="true" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
