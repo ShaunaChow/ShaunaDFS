@@ -2,6 +2,7 @@ package top.shauna.dfs.bean;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class HeartBeatResponseBean {
+public class HeartBeatResponseBean implements Serializable {
     private String ip;
     private String port;
     private Long timeStamp;

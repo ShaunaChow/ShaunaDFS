@@ -43,5 +43,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-core:5.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.2.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: com.caucho:hessian:4.0.38" level="project" />
   </component>
 </module>
