@@ -33,7 +33,8 @@ public class MetaFileScanner implements Starter {
         }else if(file.getName().endsWith(".block")){
             byte[] readBytes = LocalFileStorage.getInstance().read(file);
             MetaInfo metaInfo = JSON.parseObject(new String(readBytes), MetaInfo.class);
-            String metaKey = metaInfo.getFilePath();
+            String metaKey = PubConfig.getInstance().getRootDir()+ File.separator+"Meta"+
+                                File.separator+metaInfo.getFilePath()+"_"+metaInfo.getPin()+".block";
             MetaKeeper.put(metaKey,metaInfo);
             String dataKey = metaInfo.getDataInfo().getMd5();
             DataKeeper.put(dataKey,metaInfo.getDataInfo());

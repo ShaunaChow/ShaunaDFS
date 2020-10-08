@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @Author Shauna.Chou
  * @Date 2020/9/24 15:49
@@ -14,7 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Block {
+public class Block implements Serializable {
     private String uuid;
     private String md5;
     private Long version;

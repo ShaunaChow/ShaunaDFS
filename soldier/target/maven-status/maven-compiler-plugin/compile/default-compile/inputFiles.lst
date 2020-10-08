@@ -1,5 +1,5 @@
+F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\soldierserver\udpsupport\UDPUtil.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\SoldierStarter.java
-F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\interact\soldierconnect\SoldierConnecter.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\interact\SoldierInteractStarter.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\monitor\bean\StaticBean.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\DataKeeper.java
@@ -7,12 +7,14 @@ F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\LocalBlockHan
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\MetaKeeper.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\monitor\MonitorProxy.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\MetaFileScanner.java
-F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\interact\soldierconnect\udpsupport\UDPUtil.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\interact\MessageUtil.java
+F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\soldierserver\SoldierServerUtil.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\storage\impl\LocalFileStorage.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\storage\interfaces\StorageEngine.java
+F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\soldierserver\SoldierServerStarter.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\interfaces\AbstractBlockHandler.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\config\SoldierConfig.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\interact\heartbeat\SoldierHeartBeat.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\interfaces\BlockHandler.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\monitor\StaticDatas.java
+F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\soldierserver\protocolimpl\SoldierServerProtocolImpl.java

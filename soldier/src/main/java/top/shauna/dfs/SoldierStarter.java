@@ -3,6 +3,7 @@ package top.shauna.dfs;
 import top.shauna.dfs.block.MetaFileScanner;
 import top.shauna.dfs.config.SoldierConfig;
 import top.shauna.dfs.interact.SoldierInteractStarter;
+import top.shauna.dfs.soldierserver.SoldierServerStarter;
 
 /**
  * @Author Shauna.Chou
@@ -14,6 +15,8 @@ public class SoldierStarter {
         new SoldierConfig().onStart();
 
         new MetaFileScanner().onStart();
+
+        new SoldierServerStarter().onStart();
 
         new SoldierInteractStarter().onStart();
     }

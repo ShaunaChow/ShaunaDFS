@@ -1,4 +1,4 @@
-package top.shauna.dfs.interact.soldierconnect.udpsupport;
+package top.shauna.dfs.soldierserver.udpsupport;
 
 import java.io.IOException;
 import java.net.*;

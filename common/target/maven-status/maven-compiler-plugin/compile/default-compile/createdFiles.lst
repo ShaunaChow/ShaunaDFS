@@ -1,4 +1,5 @@
 top\shauna\dfs\bean\DataInfo.class
+top\shauna\dfs\protocol\SoldierServerProtocol.class
 top\shauna\dfs\bean\Block.class
 top\shauna\dfs\bean\HeartBeatRequestBean.class
 top\shauna\dfs\starter\Starter.class

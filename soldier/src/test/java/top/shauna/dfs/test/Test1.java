@@ -2,20 +2,19 @@ package top.shauna.dfs.test;
 
 import org.junit.Test;
 import top.shauna.dfs.bean.Block;
-import top.shauna.dfs.block.interfaces.AbstractBlockHandler;
 import top.shauna.dfs.block.interfaces.BlockHandler;
 import top.shauna.dfs.config.PubConfig;
-import top.shauna.dfs.interact.MessageUtil;
-import top.shauna.dfs.interact.heartbeat.SoldierHeartBeat;
 import top.shauna.dfs.monitor.MonitorProxy;
+import top.shauna.dfs.protocol.SoldierServerProtocol;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
+import top.shauna.rpc.bean.FoundBean;
+import top.shauna.rpc.bean.RegisterBean;
+import top.shauna.rpc.service.ShaunaRPCHandler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.math.BigInteger;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.channels.Channel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -137,7 +136,35 @@ public class Test1 {
 
     @Test
     public void test5() throws Exception {
-//        SoldierHeartBeat soldierHeartBeat = new SoldierHeartBeat();
-//        System.out.println(soldierHeartBeat.sendHeartBeat(MessageUtil.getHeartBeatRequestBean()));
+        top.shauna.rpc.config.PubConfig pubConfig = top.shauna.rpc.config.PubConfig.getInstance();
+        if (pubConfig.getRegisterBean()==null) {
+            RegisterBean registerBean = new RegisterBean("zookeeper","39.105.89.185:2181",null);
+            pubConfig.setRegisterBean(registerBean);
+        }
+        if (pubConfig.getFoundBean()==null) {
+            RegisterBean registerBean = pubConfig.getRegisterBean();
+            FoundBean foundBean = new FoundBean(
+                    registerBean.getPotocol(),
+                    registerBean.getUrl(),
+                    registerBean.getLoc()
+            );
+            pubConfig.setFoundBean(foundBean);
+        }
+
+        SoldierServerProtocol referenceProxy = ShaunaRPCHandler.getReferenceProxy(SoldierServerProtocol.class);
+
+        Block block = new Block();
+        byte[] content = "你好啊！我是周旭峰！！！！".getBytes();
+        String md5 = getMD5(content);
+        block.setFilePath("/root/test/ok/data11");
+        block.setMd5(md5);
+        block.setPin(1);
+        block.setVersion(1L);
+
+        System.out.println(block.getContent());
+
+        Block res = referenceProxy.getBlock(block);
+
+        System.out.println(new String(res.getContent()));
     }
 }
