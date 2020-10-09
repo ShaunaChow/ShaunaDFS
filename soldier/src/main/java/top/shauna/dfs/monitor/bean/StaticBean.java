@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import top.shauna.dfs.bean.Block;
+import top.shauna.dfs.soldiermanager.bean.Block;
 
 /**
  * @Author Shauna.Chou

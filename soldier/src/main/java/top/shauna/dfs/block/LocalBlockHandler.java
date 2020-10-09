@@ -1,9 +1,9 @@
 package top.shauna.dfs.block;
 
 import com.alibaba.fastjson.JSON;
-import top.shauna.dfs.bean.Block;
-import top.shauna.dfs.bean.DataInfo;
-import top.shauna.dfs.bean.MetaInfo;
+import top.shauna.dfs.soldiermanager.bean.Block;
+import top.shauna.dfs.soldiermanager.bean.DataInfo;
+import top.shauna.dfs.soldiermanager.bean.MetaInfo;
 import top.shauna.dfs.block.interfaces.AbstractBlockHandler;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
 

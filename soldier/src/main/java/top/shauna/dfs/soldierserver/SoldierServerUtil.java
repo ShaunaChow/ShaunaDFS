@@ -1,6 +1,6 @@
 package top.shauna.dfs.soldierserver;
 
-import top.shauna.dfs.config.PubConfig;
+import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.soldierserver.protocolimpl.SoldierServerProtocolImpl;
 import top.shauna.dfs.protocol.SoldierServerProtocol;
 import top.shauna.rpc.bean.LocalExportBean;
@@ -32,8 +32,8 @@ public class SoldierServerUtil {
             hostAddress = "127.0.0.1";
 
         int port;
-        if(PubConfig.getInstance().getPort()!=null&&!PubConfig.getInstance().getPort().equals(""))
-            port = Integer.parseInt(PubConfig.getInstance().getPort());
+        if(SoldierPubConfig.getInstance().getPort()!=null&&!SoldierPubConfig.getInstance().getPort().equals(""))
+            port = Integer.parseInt(SoldierPubConfig.getInstance().getPort());
         else
             port = 9001;
 

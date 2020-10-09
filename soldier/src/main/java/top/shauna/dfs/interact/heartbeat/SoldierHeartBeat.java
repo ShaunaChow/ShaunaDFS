@@ -2,7 +2,7 @@ package top.shauna.dfs.interact.heartbeat;
 
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.bean.HeartBeatResponseBean;
-import top.shauna.dfs.config.PubConfig;
+import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.protocol.HeartBeatProtocol;
 import top.shauna.rpc.bean.FoundBean;
 import top.shauna.rpc.bean.RegisterBean;
@@ -27,7 +27,7 @@ public class SoldierHeartBeat {
     }
 
     private void prepareRpcConfig() {
-        if (PubConfig.getInstance().getRpcPubConfig()==null) {
+        if (SoldierPubConfig.getInstance().getRpcPubConfig()==null) {
             top.shauna.rpc.config.PubConfig rpcConfig = top.shauna.rpc.config.PubConfig.getInstance();
             if (rpcConfig.getRegisterBean()==null) {
                 RegisterBean registerBean = new RegisterBean("zookeeper","127.0.0.1:2181",null);
@@ -42,7 +42,7 @@ public class SoldierHeartBeat {
                 );
                 rpcConfig.setFoundBean(foundBean);
             }
-            PubConfig.getInstance().setRpcPubConfig(rpcConfig);
+            SoldierPubConfig.getInstance().setRpcPubConfig(rpcConfig);
         }
     }
 }

@@ -1,6 +1,6 @@
 package top.shauna.dfs.protocol;
 
-import top.shauna.dfs.bean.Block;
+import top.shauna.dfs.soldiermanager.bean.Block;
 
 /**
  * @Author Shauna.Chou

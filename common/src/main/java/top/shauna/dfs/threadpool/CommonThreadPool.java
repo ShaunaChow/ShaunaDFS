@@ -1,6 +1,6 @@
 package top.shauna.dfs.threadpool;
 
-import top.shauna.dfs.config.PubConfig;
+import top.shauna.dfs.config.SoldierPubConfig;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -16,9 +16,9 @@ public class CommonThreadPool {
 
     public static ExecutorService threadPool;
     static {
-        int cores = (PubConfig.getInstance().getThreadPoolNums()==null||PubConfig.getInstance().getThreadPoolNums().equals(0))
+        int cores = (SoldierPubConfig.getInstance().getThreadPoolNums()==null||SoldierPubConfig.getInstance().getThreadPoolNums().equals(0))
                 ?Runtime.getRuntime().availableProcessors()*2
-                :PubConfig.getInstance().getThreadPoolNums();
+                :SoldierPubConfig.getInstance().getThreadPoolNums();
         threadPool = new ThreadPoolExecutor(
                 cores,
                 cores,

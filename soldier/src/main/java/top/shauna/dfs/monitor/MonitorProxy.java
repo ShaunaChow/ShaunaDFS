@@ -1,6 +1,6 @@
 package top.shauna.dfs.monitor;
 
-import top.shauna.dfs.bean.Block;
+import top.shauna.dfs.soldiermanager.bean.Block;
 import top.shauna.dfs.block.LocalBlockHandler;
 import top.shauna.dfs.block.interfaces.BlockHandler;
 import top.shauna.dfs.monitor.bean.StaticBean;

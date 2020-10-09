@@ -1,6 +1,7 @@
 package top.shauna.dfs.bean;
 
 import lombok.*;
+import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,8 +1,8 @@
 package top.shauna.dfs.block;
 
 import com.alibaba.fastjson.JSON;
-import top.shauna.dfs.bean.MetaInfo;
-import top.shauna.dfs.config.PubConfig;
+import top.shauna.dfs.soldiermanager.bean.MetaInfo;
+import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
 
@@ -20,7 +20,7 @@ public class MetaFileScanner implements Starter {
     }
 
     private void scanMetaFiles() throws Exception {
-        String rootPath = PubConfig.getInstance().getRootDir()+File.separator+"Meta";
+        String rootPath = SoldierPubConfig.getInstance().getRootDir()+File.separator+"Meta";
         File file = new File(rootPath);
         scanFile(file);
     }
@@ -33,7 +33,7 @@ public class MetaFileScanner implements Starter {
         }else if(file.getName().endsWith(".block")){
             byte[] readBytes = LocalFileStorage.getInstance().read(file);
             MetaInfo metaInfo = JSON.parseObject(new String(readBytes), MetaInfo.class);
-            String metaKey = PubConfig.getInstance().getRootDir()+ File.separator+"Meta"+
+            String metaKey = SoldierPubConfig.getInstance().getRootDir()+ File.separator+"Meta"+
                                 File.separator+metaInfo.getFilePath()+"_"+metaInfo.getPin()+".block";
             MetaKeeper.put(metaKey,metaInfo);
             String dataKey = metaInfo.getDataInfo().getMd5();

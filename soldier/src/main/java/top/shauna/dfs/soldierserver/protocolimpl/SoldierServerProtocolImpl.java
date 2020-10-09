@@ -1,7 +1,7 @@
 package top.shauna.dfs.soldierserver.protocolimpl;
 
 import lombok.extern.slf4j.Slf4j;
-import top.shauna.dfs.bean.Block;
+import top.shauna.dfs.soldiermanager.bean.Block;
 import top.shauna.dfs.block.interfaces.BlockHandler;
 import top.shauna.dfs.monitor.MonitorProxy;
 import top.shauna.dfs.protocol.SoldierServerProtocol;

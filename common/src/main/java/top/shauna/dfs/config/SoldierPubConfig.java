@@ -1,6 +1,7 @@
 package top.shauna.dfs.config;
 
 import lombok.ToString;
+import top.shauna.rpc.config.PubConfig;
 
 /**
  * @Author Shauna.Chou
@@ -8,26 +9,26 @@ import lombok.ToString;
  * @E-Mail z1023778132@icloud.com
  */
 @ToString
-public class PubConfig {
+public class SoldierPubConfig {
 
-    private PubConfig(){}
+    private SoldierPubConfig(){}
 
-    private static volatile PubConfig pubConfig = null;
+    private static volatile SoldierPubConfig soldierPubConfig;
 
-    public static PubConfig getInstance(){
-        if(pubConfig==null){
-            synchronized (PubConfig.class){
-                if(pubConfig==null){
-                    pubConfig = new PubConfig();
+    public static SoldierPubConfig getInstance(){
+        if(soldierPubConfig ==null){
+            synchronized (SoldierPubConfig.class){
+                if(soldierPubConfig ==null){
+                    soldierPubConfig = new SoldierPubConfig();
                 }
             }
         }
-        return pubConfig;
+        return soldierPubConfig;
     }
 
     private String rootDir;
     private String port;
-    private top.shauna.rpc.config.PubConfig rpcPubConfig;
+    private PubConfig rpcPubConfig;
     private Integer threadPoolNums;
 
     public Integer getThreadPoolNums() {
@@ -38,11 +39,11 @@ public class PubConfig {
         this.threadPoolNums = threadPoolNums;
     }
 
-    public top.shauna.rpc.config.PubConfig getRpcPubConfig() {
+    public PubConfig getRpcPubConfig() {
         return rpcPubConfig;
     }
 
-    public void setRpcPubConfig(top.shauna.rpc.config.PubConfig rpcPubConfig) {
+    public void setRpcPubConfig(PubConfig rpcPubConfig) {
         this.rpcPubConfig = rpcPubConfig;
     }
 

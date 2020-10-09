@@ -1,6 +1,6 @@
 package top.shauna.dfs.block;
 
-import top.shauna.dfs.bean.DataInfo;
+import top.shauna.dfs.soldiermanager.bean.DataInfo;
 
 import java.util.concurrent.ConcurrentHashMap;
 

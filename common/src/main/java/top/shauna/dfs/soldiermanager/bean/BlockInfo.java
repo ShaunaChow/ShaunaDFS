@@ -1,4 +1,4 @@
-package top.shauna.dfs.bean;
+package top.shauna.dfs.soldiermanager.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

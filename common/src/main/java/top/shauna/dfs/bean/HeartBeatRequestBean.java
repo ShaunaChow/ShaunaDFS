@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 
 import java.io.Serializable;
 import java.util.List;

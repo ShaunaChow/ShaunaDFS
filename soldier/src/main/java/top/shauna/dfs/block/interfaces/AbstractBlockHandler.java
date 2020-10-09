@@ -1,12 +1,12 @@
 package top.shauna.dfs.block.interfaces;
 
 import lombok.extern.slf4j.Slf4j;
-import top.shauna.dfs.bean.Block;
-import top.shauna.dfs.bean.DataInfo;
-import top.shauna.dfs.bean.MetaInfo;
+import top.shauna.dfs.soldiermanager.bean.Block;
+import top.shauna.dfs.soldiermanager.bean.DataInfo;
+import top.shauna.dfs.soldiermanager.bean.MetaInfo;
 import top.shauna.dfs.block.DataKeeper;
 import top.shauna.dfs.block.MetaKeeper;
-import top.shauna.dfs.config.PubConfig;
+import top.shauna.dfs.config.SoldierPubConfig;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -29,12 +29,12 @@ public abstract class AbstractBlockHandler implements BlockHandler{
             throw new Exception("block不合法！！！");
         }
 
-        PubConfig pubConfig = PubConfig.getInstance();
+        SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
 
         String dataPath;
         DataInfo dataInfo;
         if(!DataKeeper.contains(md5)){
-            String dataDir = pubConfig.getRootDir()+ File.separator+"Data";
+            String dataDir = soldierPubConfig.getRootDir()+ File.separator+"Data";
             dataPath = dataDir+  File.separator+
                     block.getFilePath()+"_"+block.getPin()+".block";
             writeToData(dataPath,block);
@@ -49,7 +49,7 @@ public abstract class AbstractBlockHandler implements BlockHandler{
             dataInfo = DataKeeper.get(md5);
         }
 
-        String metaDataDir = pubConfig.getRootDir()+ File.separator+"Meta";
+        String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
         String metaPath = metaDataDir+  File.separator+
                                         block.getFilePath()+"_"+block.getPin()+".block";
         if(MetaKeeper.contains(metaPath)){
@@ -68,8 +68,8 @@ public abstract class AbstractBlockHandler implements BlockHandler{
 
     @Override
     public void read(Block block) throws Exception {
-        PubConfig pubConfig = PubConfig.getInstance();
-        String metaDataDir = pubConfig.getRootDir()+ File.separator+"Meta";
+        SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
+        String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
         String metaPath = metaDataDir+  File.separator+
                 block.getFilePath()+"_"+block.getPin()+".block";
         if(MetaKeeper.contains(metaPath)){
@@ -94,8 +94,8 @@ public abstract class AbstractBlockHandler implements BlockHandler{
 
     @Override
     public void readAndTransfer(Block block, WritableByteChannel channel) throws Exception {
-        PubConfig pubConfig = PubConfig.getInstance();
-        String metaDataDir = pubConfig.getRootDir()+ File.separator+"Meta";
+        SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
+        String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
         String metaPath = metaDataDir+  File.separator+
                 block.getFilePath()+"_"+block.getPin()+".block";
         if(MetaKeeper.contains(metaPath)){

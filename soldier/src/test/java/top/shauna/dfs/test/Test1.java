@@ -1,9 +1,9 @@
 package top.shauna.dfs.test;
 
 import org.junit.Test;
-import top.shauna.dfs.bean.Block;
+import top.shauna.dfs.soldiermanager.bean.Block;
 import top.shauna.dfs.block.interfaces.BlockHandler;
-import top.shauna.dfs.config.PubConfig;
+import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.monitor.MonitorProxy;
 import top.shauna.dfs.protocol.SoldierServerProtocol;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
@@ -95,7 +95,7 @@ public class Test1 {
         block.setMd5(md5);
         block.setPin(1);
         block.setVersion(1L);
-        PubConfig instance = PubConfig.getInstance();
+        SoldierPubConfig instance = SoldierPubConfig.getInstance();
         instance.setRootDir("F:\\java项目\\ShaunaDfsTmp");
         BlockHandler abstractBlockHandler = new MonitorProxy().getProxy();
         abstractBlockHandler.write(block);

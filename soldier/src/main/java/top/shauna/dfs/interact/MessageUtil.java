@@ -1,12 +1,12 @@
 package top.shauna.dfs.interact;
 
-import top.shauna.dfs.bean.BlockInfo;
+import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.bean.HeartBeatResponseBean;
-import top.shauna.dfs.bean.MetaInfo;
+import top.shauna.dfs.soldiermanager.bean.MetaInfo;
 import top.shauna.dfs.block.DataKeeper;
 import top.shauna.dfs.block.MetaKeeper;
-import top.shauna.dfs.config.PubConfig;
+import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.monitor.StaticDatas;
 import top.shauna.dfs.monitor.bean.StaticBean;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
@@ -29,7 +29,7 @@ public class MessageUtil {
     public static HeartBeatRequestBean getHeartBeatRequestBean() throws Exception{
         HeartBeatRequestBean heartBeatRequestBean = new HeartBeatRequestBean();
         heartBeatRequestBean.setIp(InetAddress.getLocalHost().getHostAddress());
-        heartBeatRequestBean.setPort(PubConfig.getInstance().getPort());
+        heartBeatRequestBean.setPort(SoldierPubConfig.getInstance().getPort());
         long currentTimeMillis = System.currentTimeMillis();
         heartBeatRequestBean.setTimeStamp(currentTimeMillis);
         currentTime = currentTimeMillis;
@@ -66,8 +66,8 @@ public class MessageUtil {
     }
 
     public static void deleteFile(String filePath, String pin) {
-        PubConfig pubConfig = PubConfig.getInstance();
-        String metaDataDir = pubConfig.getRootDir()+ File.separator+"Meta";
+        SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
+        String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
         String metaPath = metaDataDir+  File.separator+
                 filePath+"_"+pin+".block";
         MetaInfo metaInfo = MetaKeeper.get(metaPath);
