@@ -48,12 +48,41 @@ public class ShaunaFSManager implements Starter {
         return shaunaFSManager;
     }
 
+    public static void main(String[] args) throws Exception {
+        ShaunaFSManager shaunaFSManager = ShaunaFSManager.getInstance();
+        shaunaFSManager.loadRootNode(new File("F:\\java项目\\ShaunaImage.dat"));
+
+        PubConfig pubConfig = PubConfig.getInstance();
+        if (pubConfig.getRegisterBean()==null) {
+            RegisterBean registerBean = new RegisterBean("zookeeper","39.105.89.185:2181",null);
+            pubConfig.setRegisterBean(registerBean);
+        }
+        if (pubConfig.getFoundBean()==null) {
+            RegisterBean registerBean = pubConfig.getRegisterBean();
+            FoundBean foundBean = new FoundBean(
+                    registerBean.getPotocol(),
+                    registerBean.getUrl(),
+                    registerBean.getLoc()
+            );
+            pubConfig.setFoundBean(foundBean);
+        }
+
+        LocalExportBean localExportBean = new LocalExportBean("netty", 9009, "127.0.0.1");
+        ShaunaRPCHandler.publishServiceBean(ClientProtocol.class,new ClientProtocolImpl(),localExportBean);
+
+        System.in.read();
+
+        shaunaFSManager.saveRootNode(new File("F:\\java项目\\ShaunaImage.dat"));
+        System.out.println(1111);
+    }
+
     @Override
     public void onStart() throws Exception {
         KingPubConfig kingPubConfig = KingPubConfig.getInstance();
         String rootDir = kingPubConfig.getRootDir();
         File rootD = new File(rootDir+File.separator+"ShaunaImage.dat");
         loadRootNode(rootD);
+        log.info("KING的root节点初始化完成!!!");
     }
 
     private void loadRootNode(File file) throws Exception {
@@ -75,9 +104,12 @@ public class ShaunaFSManager implements Starter {
             root.setChildren(new CopyOnWriteArrayList<>());
             root.setName("/");
             root.setPath("");
+            root.setStatus(1);
         } finally {
             try {
-                in.close();
+                if (in!=null) {
+                    in.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -101,6 +133,7 @@ public class ShaunaFSManager implements Starter {
                 iNodes.add(iNode);
             }
             directory.setChildren(iNodes);
+            directory.setStatus(1);
             return directory;
         }else{                  /** 文件 **/
             INodeFile file = new INodeFile();
@@ -111,6 +144,7 @@ public class ShaunaFSManager implements Starter {
                 blockList.add(Block.load(in));
             }
             file.setBlocks(blockList);
+            file.setStatus(1);
             return file;
         }
     }
@@ -142,10 +176,14 @@ public class ShaunaFSManager implements Starter {
             out.writeByte(flag);
             out.writeByte(0);
             List<INode> children = dirNode.getChildren();
-            out.writeByte(children.size());
+            int nums = 0;
+            for (INode child : children) {
+                if(child.getStatus()!=null&&child.getStatus()>=0) nums++;
+            }
+            out.writeByte(nums);
             out.flush();
             for (INode child : children) {
-                saveINode(child,out);
+                if(child.getStatus()!=null&&child.getStatus()>=0) saveINode(child,out);
             }
         }else{
             INodeFile fileNode = (INodeFile) node;
@@ -157,9 +195,13 @@ public class ShaunaFSManager implements Starter {
             out.writeByte(flag);
             out.writeByte(0);
             List<Block> blocks = fileNode.getBlocks();
-            out.writeByte(blocks.size());
-            for (Block block : blocks) {
-                block.write(out);
+            if (blocks==null){
+                out.writeByte(0);
+            }else{
+                out.writeByte(blocks.size());
+                for (Block block : blocks) {
+                    block.write(out);
+                }
             }
             out.flush();
         }
@@ -211,8 +253,13 @@ public class ShaunaFSManager implements Starter {
             for (INode child : children) {
                 if(child.getName().equals(fileName)){
                     if(child instanceof INodeFile){
-                        fileInfo.setINodeFile((INodeFile) child);
-                        fileInfo.setRes(ClientProtocolType.SUCCESS);
+                        INodeFile file = (INodeFile) child;
+                        if(file.getStatus()!=null&&file.getStatus()>=0) {
+                            fileInfo.setINodeFile((INodeFile) child);
+                            fileInfo.setRes(ClientProtocolType.SUCCESS);
+                        }else{
+                            fileInfo.setRes(ClientProtocolType.NO_SUCH_File);
+                        }
                     }else{
                         fileInfo.setRes(ClientProtocolType.UNKNOWN);
                     }
@@ -224,6 +271,7 @@ public class ShaunaFSManager implements Starter {
     }
 
     private INodeDirectory getINodeDirectory(String dirPath) {
+        if(dirPath.equals("/")) return root;
         if (!dirPath.startsWith("/")||!dirPath.endsWith("/")){
             log.error("路径地址无效"+dirPath);
             return null;
@@ -260,67 +308,51 @@ public class ShaunaFSManager implements Starter {
         if(directory==null) fileInfo.setRes(ClientProtocolType.NO_SUCH_DIR);
         else{
             INodeDirectory newDir = new INodeDirectory();
-            newDir.setName(fileName.endsWith("/")?fileName:fileName+"/");
+            String name = fileName.endsWith("/")?fileName:fileName+"/";
+            for (INode iNode : directory.getChildren()) {
+                if(iNode.getName().equals(name)){
+                    fileInfo.setRes(ClientProtocolType.ALLREADY_EXITS);
+                    return;
+                }
+            }
+            newDir.setName(name);
             newDir.setChildren(new CopyOnWriteArrayList<>());
             newDir.setParent(directory);
             directory.getChildren().add(newDir);
+            newDir.setStatus(1);
             fileInfo.setRes(ClientProtocolType.SUCCESS);
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        ShaunaFSManager shaunaFSManager = ShaunaFSManager.getInstance();
-
-        INodeDirectory root = new INodeDirectory();
-        root.setName("/");
-
-        INodeFile file1 = new INodeFile();
-        file1.setBlocks(new CopyOnWriteArrayList<>());
-        file1.setName("file1");
-
-        INodeDirectory directory = new INodeDirectory();
-        directory.setName("ok");
-        CopyOnWriteArrayList<INode> childList = new CopyOnWriteArrayList<>();
-        INodeFile file2 = new INodeFile();
-        file2.setBlocks(new CopyOnWriteArrayList<>());
-        file2.setName("file2");
-        childList.add(file2);
-        directory.setChildren(childList);
-
-        CopyOnWriteArrayList<INode> rootlist = new CopyOnWriteArrayList<>();
-        rootlist.add(file1);
-        rootlist.add(directory);
-        root.setChildren(rootlist);
-
-        shaunaFSManager.root = root;
-        shaunaFSManager.saveRootNode(new File("F:\\java项目\\shauna.txt"));
-
-        shaunaFSManager.root = null;
-        shaunaFSManager.loadRootNode(new File("F:\\java项目\\shauna.txt"));
-        INodeDirectory root1 = shaunaFSManager.root;
-        List<INode> children = root1.getChildren();
-        INode iNode = ((INodeDirectory)children.get(1)).getChildren().get(0);
-        System.out.println(iNode.getPath());
-
-        PubConfig pubConfig = PubConfig.getInstance();
-        if (pubConfig.getRegisterBean()==null) {
-            RegisterBean registerBean = new RegisterBean("zookeeper","39.105.89.185:2181",null);
-            pubConfig.setRegisterBean(registerBean);
+    public void rmr(ClientFileInfo fileInfo, boolean rmAll) {
+        String path = fileInfo.getPath();
+        if(path.endsWith("/")){
+            path = path.substring(0,path.length()-1);
         }
-        if (pubConfig.getFoundBean()==null) {
-            RegisterBean registerBean = pubConfig.getRegisterBean();
-            FoundBean foundBean = new FoundBean(
-                    registerBean.getPotocol(),
-                    registerBean.getUrl(),
-                    registerBean.getLoc()
-            );
-            pubConfig.setFoundBean(foundBean);
+        String dirPath = path.substring(0,1+path.lastIndexOf('/'));
+        String fileName = fileInfo.getName();
+        INodeDirectory directory = getINodeDirectory(dirPath);
+        if(directory==null) fileInfo.setRes(ClientProtocolType.NO_SUCH_DIR);
+        else{
+            List<INode> children = directory.getChildren();
+            for (int i = 0; i< children.size(); i++) {
+                INode node = children.get(i);
+                if(node.getName().equals(fileName)){
+                    if(node instanceof INodeDirectory) {
+                        INodeDirectory iNodeDirectory = (INodeDirectory) node;
+                        if (iNodeDirectory.getChildren()==null||iNodeDirectory.getChildren().size()==0||rmAll){
+                            iNodeDirectory.setStatus(-1);
+                            fileInfo.setRes(ClientProtocolType.SUCCESS);
+                        }else{
+                            fileInfo.setRes(ClientProtocolType.IT_IS_NOT_AN_EMPTY_DIR);
+                        }
+                    }else {
+                        node.setStatus(-1);
+                        fileInfo.setRes(ClientProtocolType.SUCCESS);
+                    }
+                    return;
+                }
+            }
         }
-
-        LocalExportBean localExportBean = new LocalExportBean("netty", 9009, "127.0.0.1");
-        ShaunaRPCHandler.publishServiceBean(ClientProtocol.class,new ClientProtocolImpl(),localExportBean);
-
-        System.in.read();
     }
-
 }

@@ -16,7 +16,6 @@ import java.util.List;
 @ToString
 public class INodeFile extends INode {
     private List<Block> blocks;
-    private Integer status;
 
     @Override
     public boolean isDirectory() {

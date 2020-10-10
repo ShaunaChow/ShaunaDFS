@@ -14,6 +14,7 @@ public abstract class INode {
     private INode parent;
     private String name;
     private String path;
+    private Integer status;
 
     public abstract boolean isDirectory();
 

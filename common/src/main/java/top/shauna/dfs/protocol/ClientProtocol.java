@@ -16,4 +16,8 @@ public interface ClientProtocol {
     ClientFileInfo downloadFile(ClientFileInfo fileInfo);
 
     ClientFileInfo mkdir(ClientFileInfo fileInfo);
+
+    ClientFileInfo rmFile(ClientFileInfo fileInfo);
+
+    ClientFileInfo rmDir(ClientFileInfo fileInfo);
 }
