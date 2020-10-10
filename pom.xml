@@ -13,6 +13,7 @@
         <module>queen</module>
         <module>soldier</module>
         <module>common</module>
+        <module>client</module>
     </modules>
 
 

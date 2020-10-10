@@ -11,8 +11,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class INode {
-    protected INode parent;
-    protected String name;
+    private INode parent;
+    private String name;
+    private String path;
 
     public abstract boolean isDirectory();
+
+    public String getPath() {
+        if(parent==null) return name;
+        else return parent.getPath()+name;
+    }
 }

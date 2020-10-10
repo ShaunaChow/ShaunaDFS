@@ -27,6 +27,15 @@ public class KingPubConfig {
     private String port;
     private PubConfig rpcPubConfig;
     private Integer threadPoolNums;
+    private Integer replicas;
+
+    public Integer getReplicas() {
+        return replicas;
+    }
+
+    public void setReplicas(Integer replicas) {
+        this.replicas = replicas;
+    }
 
     public String getRootDir() {
         return rootDir;

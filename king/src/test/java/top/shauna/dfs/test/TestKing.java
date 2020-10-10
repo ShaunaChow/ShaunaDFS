@@ -1,7 +1,7 @@
 package top.shauna.dfs.test;
 
 import org.junit.Test;
-import top.shauna.dfs.interact.heartbeat.KingHeartBeat;
+import top.shauna.dfs.interact.heartbeat.KingHeartBeatStarter;
 
 import java.io.IOException;
 
@@ -14,8 +14,8 @@ public class TestKing {
 
     @Test
     public void test5() throws IOException {
-        KingHeartBeat kingHeartBeat = new KingHeartBeat();
-        kingHeartBeat.onStart();
+        KingHeartBeatStarter kingHeartBeatStarter = new KingHeartBeatStarter();
+        kingHeartBeatStarter.onStart();
         System.in.read();
     }
 }

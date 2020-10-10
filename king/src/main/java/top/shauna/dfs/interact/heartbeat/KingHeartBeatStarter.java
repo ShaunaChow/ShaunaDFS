@@ -17,7 +17,7 @@ import java.net.UnknownHostException;
  * @Date 2020/9/27 14:35
  * @E-Mail z1023778132@icloud.com
  */
-public class KingHeartBeat implements Starter {
+public class KingHeartBeatStarter implements Starter {
     @Override
     public void onStart() {
         prepareRpcConfig();

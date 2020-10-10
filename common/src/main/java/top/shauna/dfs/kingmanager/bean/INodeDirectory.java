@@ -15,11 +15,19 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class INodeDirectory extends INode {
-    private String path;
     private List<INode> children;
 
     @Override
     public boolean isDirectory() {
         return true;
+    }
+
+    @Override
+    public void setName(String name) {
+        if(!name.endsWith("/")){
+            super.setName(name+"/");
+        }else{
+            super.setName(name);
+        }
     }
 }

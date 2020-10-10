@@ -15,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class INodeFile extends INode {
-    private String path;
     private List<Block> blocks;
+    private Integer status;
 
     @Override
     public boolean isDirectory() {

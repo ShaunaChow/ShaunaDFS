@@ -2,14 +2,20 @@ package top.shauna.dfs.kingmanager;
 
 import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
-import top.shauna.dfs.kingmanager.bean.Block;
-import top.shauna.dfs.kingmanager.bean.INode;
-import top.shauna.dfs.kingmanager.bean.INodeDirectory;
-import top.shauna.dfs.kingmanager.bean.INodeFile;
+import top.shauna.dfs.interact.client.impl.ClientProtocolImpl;
+import top.shauna.dfs.kingmanager.bean.*;
+import top.shauna.dfs.protocol.ClientProtocol;
 import top.shauna.dfs.starter.Starter;
+import top.shauna.dfs.type.ClientProtocolType;
+import top.shauna.rpc.bean.FoundBean;
+import top.shauna.rpc.bean.LocalExportBean;
+import top.shauna.rpc.bean.RegisterBean;
+import top.shauna.rpc.config.PubConfig;
+import top.shauna.rpc.service.ShaunaRPCHandler;
 
 import java.io.*;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -20,9 +26,27 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 public class ShaunaFSManager implements Starter {
     private INodeDirectory root;
+    private ConcurrentHashMap<String,ClientFileInfo> newFileKeeper;
     private static byte[] MAGIC_CODE = {62,02};
     private static byte FILE_FLAG = 0b01111111;
     private static byte DIR_FLAG = 0b1000000;
+
+    private static volatile ShaunaFSManager shaunaFSManager;
+
+    private ShaunaFSManager(){
+        newFileKeeper = new ConcurrentHashMap<>();
+    }
+
+    public static ShaunaFSManager getInstance(){
+        if(shaunaFSManager==null){
+            synchronized (ShaunaFSManager.class){
+                if(shaunaFSManager==null){
+                    shaunaFSManager = new ShaunaFSManager();
+                }
+            }
+        }
+        return shaunaFSManager;
+    }
 
     @Override
     public void onStart() throws Exception {
@@ -33,8 +57,9 @@ public class ShaunaFSManager implements Starter {
     }
 
     private void loadRootNode(File file) throws Exception {
-        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
+        DataInputStream in = null;
         try{
+            in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
             byte magic1 = in.readByte();
             byte magic2 = in.readByte();
             if(magic1!=MAGIC_CODE[0]||magic2!=MAGIC_CODE[1]) {
@@ -45,7 +70,12 @@ public class ShaunaFSManager implements Starter {
             root = (INodeDirectory) readINode(in);
             root.setName("/");
             root.setPath("");
-        }finally {
+        } catch (FileNotFoundException e) {
+            if(root==null) root = new INodeDirectory();
+            root.setChildren(new CopyOnWriteArrayList<>());
+            root.setName("/");
+            root.setPath("");
+        } finally {
             try {
                 in.close();
             } catch (IOException e) {
@@ -66,7 +96,9 @@ public class ShaunaFSManager implements Starter {
             int childNodes = (in.readByte() + 256) % 256;
             CopyOnWriteArrayList<INode> iNodes = new CopyOnWriteArrayList<>();
             for(int i=0;i<childNodes;i++){
-                iNodes.add(readINode(in));
+                INode iNode = readINode(in);
+                iNode.setParent(directory);
+                iNodes.add(iNode);
             }
             directory.setChildren(iNodes);
             return directory;
@@ -133,8 +165,111 @@ public class ShaunaFSManager implements Starter {
         }
     }
 
+    public void uploadFile(ClientFileInfo fileInfo){
+        String path = fileInfo.getPath();
+        String dirPath = path.substring(0,1+path.lastIndexOf('/'));
+        String fileName = fileInfo.getName();
+        INodeDirectory directory = getINodeDirectory(dirPath);
+        if (directory==null) fileInfo.setRes(ClientProtocolType.NO_SUCH_DIR);
+        else{
+            List<INode> children = directory.getChildren();
+            for (INode child : children) {
+                if(child.getName().equals(fileName)){
+                    fileInfo.setRes(ClientProtocolType.ALLREADY_EXITS);
+                    return;
+                }
+            }
+            INodeFile newFile = new INodeFile();
+            newFile.setName(fileName);
+            newFile.setParent(directory);
+            List<Block> blocks = BlocksManager.getInstance().getBlocks(fileInfo.getFileLength());
+            newFile.setBlocks(blocks);
+            newFile.setStatus(-1);      /** 设置状态码！！！！！ **/
+            directory.getChildren().add(newFile);
+            fileInfo.setINodeFile(newFile);
+            fileInfo.setRes(ClientProtocolType.SUCCESS);
+            newFileKeeper.put(path,fileInfo);
+        }
+    }
+
+    public void uploadFileOk(ClientFileInfo fileInfo) {
+        if (newFileKeeper.containsKey(fileInfo.getPath())){
+            ClientFileInfo clientFileInfo = newFileKeeper.get(fileInfo.getPath());
+            clientFileInfo.getINodeFile().setStatus(1);     /** 设置状态码！！！！！ **/
+            newFileKeeper.remove(fileInfo.getPath());
+        }
+    }
+
+    public void downloadFile(ClientFileInfo fileInfo){
+        String path = fileInfo.getPath();
+        String dirPath = path.substring(0,1+path.lastIndexOf('/'));
+        String fileName = fileInfo.getName();
+        INodeDirectory directory = getINodeDirectory(dirPath);
+        if (directory==null) fileInfo.setRes(ClientProtocolType.NO_SUCH_DIR);
+        else{
+            List<INode> children = directory.getChildren();
+            for (INode child : children) {
+                if(child.getName().equals(fileName)){
+                    if(child instanceof INodeFile){
+                        fileInfo.setINodeFile((INodeFile) child);
+                        fileInfo.setRes(ClientProtocolType.SUCCESS);
+                    }else{
+                        fileInfo.setRes(ClientProtocolType.UNKNOWN);
+                    }
+                    return;
+                }
+            }
+            fileInfo.setRes(ClientProtocolType.NO_SUCH_File);
+        }
+    }
+
+    private INodeDirectory getINodeDirectory(String dirPath) {
+        if (!dirPath.startsWith("/")||!dirPath.endsWith("/")){
+            log.error("路径地址无效"+dirPath);
+            return null;
+        }
+        String curName = dirPath.substring(1);
+        return getINodeDirectory(root, curName);
+    }
+
+    private INodeDirectory getINodeDirectory(INodeDirectory directory, String curName){
+        String dirName = curName.substring(0,curName.indexOf('/')+1);
+        String lastPath = curName.substring(curName.indexOf('/')+1);
+        List<INode> children = directory.getChildren();
+        INode chosed = null;
+        for (INode child : children) {
+            if (child.getName().equals(dirName)) {
+                chosed = child;
+                break;
+            }
+        }
+        if(chosed==null) return null;
+        if(lastPath.equals("")) return (INodeDirectory)chosed;
+        return getINodeDirectory((INodeDirectory)chosed,lastPath);
+    }
+
+
+    public void mkdir(ClientFileInfo fileInfo) {
+        String path = fileInfo.getPath();
+        if(path.endsWith("/")){
+            path = path.substring(0,path.length()-1);
+        }
+        String dirPath = path.substring(0,1+path.lastIndexOf('/'));
+        String fileName = fileInfo.getName();
+        INodeDirectory directory = getINodeDirectory(dirPath);
+        if(directory==null) fileInfo.setRes(ClientProtocolType.NO_SUCH_DIR);
+        else{
+            INodeDirectory newDir = new INodeDirectory();
+            newDir.setName(fileName.endsWith("/")?fileName:fileName+"/");
+            newDir.setChildren(new CopyOnWriteArrayList<>());
+            newDir.setParent(directory);
+            directory.getChildren().add(newDir);
+            fileInfo.setRes(ClientProtocolType.SUCCESS);
+        }
+    }
+
     public static void main(String[] args) throws Exception {
-        ShaunaFSManager shaunaFSManager = new ShaunaFSManager();
+        ShaunaFSManager shaunaFSManager = ShaunaFSManager.getInstance();
 
         INodeDirectory root = new INodeDirectory();
         root.setName("/");
@@ -163,5 +298,29 @@ public class ShaunaFSManager implements Starter {
         shaunaFSManager.root = null;
         shaunaFSManager.loadRootNode(new File("F:\\java项目\\shauna.txt"));
         INodeDirectory root1 = shaunaFSManager.root;
+        List<INode> children = root1.getChildren();
+        INode iNode = ((INodeDirectory)children.get(1)).getChildren().get(0);
+        System.out.println(iNode.getPath());
+
+        PubConfig pubConfig = PubConfig.getInstance();
+        if (pubConfig.getRegisterBean()==null) {
+            RegisterBean registerBean = new RegisterBean("zookeeper","39.105.89.185:2181",null);
+            pubConfig.setRegisterBean(registerBean);
+        }
+        if (pubConfig.getFoundBean()==null) {
+            RegisterBean registerBean = pubConfig.getRegisterBean();
+            FoundBean foundBean = new FoundBean(
+                    registerBean.getPotocol(),
+                    registerBean.getUrl(),
+                    registerBean.getLoc()
+            );
+            pubConfig.setFoundBean(foundBean);
+        }
+
+        LocalExportBean localExportBean = new LocalExportBean("netty", 9009, "127.0.0.1");
+        ShaunaRPCHandler.publishServiceBean(ClientProtocol.class,new ClientProtocolImpl(),localExportBean);
+
+        System.in.read();
     }
+
 }

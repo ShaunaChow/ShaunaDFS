@@ -29,6 +29,7 @@ public class KingConfig implements Starter {
         KingPubConfig kingPubConfig = KingPubConfig.getInstance();
         kingPubConfig.setRootDir(properties.getProperty("rootPath","/tmp/ShaunaDfs"));
         kingPubConfig.setPort(properties.getProperty("port","9000"));
+        kingPubConfig.setReplicas(Integer.parseInt(properties.getProperty("replicas","3")));
         if (properties.getProperty("threadNums")!=null) {
             kingPubConfig.setThreadPoolNums(Integer.valueOf(properties.getProperty("threadNums")));
         }
