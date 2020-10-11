@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 
 /**
  * @Author Shauna.Chou
@@ -19,16 +18,15 @@ import java.io.IOException;
 public class Block {
     private String filePath;
     private Integer pin;
-    private Long version;
-    private Float QPS;
-    private Float TPS;
+    private Long timeStamp;
     private Boolean Ok;
     private Integer replicas;
-    private SoldierInfo[] soldierInfos;
+    private ReplicasInfo[] replicasInfos;
+    private Integer blockLength;
 
     public void write(DataOutputStream out) throws Exception {
         out.writeByte(replicas);
-        for (SoldierInfo soldierInfo : soldierInfos) {
+        for (ReplicasInfo soldierInfo : replicasInfos) {
             String ip = soldierInfo.getIp();
             for (String s : ip.split("\\.")) {
                 out.writeByte(Integer.parseInt(s));
@@ -40,18 +38,20 @@ public class Block {
 
     public static Block load(DataInputStream in) throws Exception {
         int replicaNums = (in.readByte()+256)%256;
-        SoldierInfo[] soldiers = new SoldierInfo[replicaNums];
+        ReplicasInfo[] soldiers = new ReplicasInfo[replicaNums];
         for (int i = 0; i < soldiers.length; i++) {
-            SoldierInfo soldierInfo = new SoldierInfo();
+            ReplicasInfo soldier = new ReplicasInfo();
             byte[] ip = new byte[4];
             in.read(ip);
-            soldierInfo.setIp(getIP(ip));
+            soldier.setIp(getIP(ip));
             int port = (in.readShort()+65536)%65536;
-            soldierInfo.setPort(String.valueOf(port));
+            soldier.setPort(String.valueOf(port));
+            soldier.setStatus(-1);
+            soldiers[i] = soldier;
         }
         Block block = new Block();
         block.setReplicas(replicaNums);
-        block.setSoldierInfos(soldiers);
+        block.setReplicasInfos(soldiers);
         return block;
     }
 
@@ -66,5 +66,18 @@ public class Block {
             }
         }
         return sb.toString();
+    }
+
+    public ReplicasInfo getReplocasInfo(String ip, String port){
+        for (ReplicasInfo info : replicasInfos) {
+            if(ip.equals(info.getIp())&&port.equals(info.getPort())) {
+                return info;
+            }
+        }
+        return null;
+    }
+
+    public ReplicasInfo getMaster(){
+        return replicasInfos[0];
     }
 }

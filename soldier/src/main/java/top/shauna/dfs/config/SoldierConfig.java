@@ -23,6 +23,7 @@ public class SoldierConfig implements Starter {
 
     private void prepareConfig() throws IOException {
         String propPath = System.getProperty("properties");
+        System.out.println(propPath);
         Properties properties = new Properties();
         InputStream in = SoldierConfig.class.getClassLoader().getResourceAsStream(propPath);
         properties.load(new InputStreamReader(in,"UTF-8"));

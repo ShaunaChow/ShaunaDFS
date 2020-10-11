@@ -28,6 +28,15 @@ public class KingPubConfig {
     private PubConfig rpcPubConfig;
     private Integer threadPoolNums;
     private Integer replicas;
+    private Integer blockSize;
+
+    public Integer getBlockSize() {
+        return blockSize;
+    }
+
+    public void setBlockSize(Integer blockSize) {
+        this.blockSize = blockSize;
+    }
 
     public Integer getReplicas() {
         return replicas;

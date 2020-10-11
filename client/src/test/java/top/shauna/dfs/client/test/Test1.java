@@ -8,6 +8,8 @@ import top.shauna.rpc.bean.RegisterBean;
 import top.shauna.rpc.config.PubConfig;
 import top.shauna.rpc.service.ShaunaRPCHandler;
 
+import java.io.IOException;
+
 /**
  * @Author Shauna.Chou
  * @Date 2020/10/10 17:36
@@ -58,8 +60,9 @@ public class Test1 {
     }
 
     @Test
-    public void test2(){
+    public void test2() throws IOException {
         PubConfig pubConfig = PubConfig.getInstance();
+        pubConfig.setTimeout(100000L);
         if (pubConfig.getRegisterBean()==null) {
             RegisterBean registerBean = new RegisterBean("zookeeper","39.105.89.185:2181",null);
             pubConfig.setRegisterBean(registerBean);
@@ -90,6 +93,8 @@ public class Test1 {
         System.out.println(uploadFile);
 
         proxy.uploadFileOk(clientFileInfo);
+
+        System.in.read();
     }
 
     private void mkdir(String path, ClientProtocol proxy){

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import top.shauna.dfs.type.HeartBeatResponseType;
 
 import java.io.Serializable;
 
@@ -19,8 +20,9 @@ import java.io.Serializable;
 public class BlockInfo implements Serializable {
     private String filePath;
     private Integer pin;
-    private Long version;
+    private Long timeStamp;
     private Float QPS;
     private Float TPS;
-    private Boolean isOk;
+    private HeartBeatResponseType res;
+    private String msg;
 }

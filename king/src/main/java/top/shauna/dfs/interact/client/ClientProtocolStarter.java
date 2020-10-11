@@ -1,7 +1,7 @@
-package top.shauna.dfs.interact.heartbeat;
+package top.shauna.dfs.interact.client;
 
-import top.shauna.dfs.interact.heartbeat.impl.HeartBeatProtocolImpl;
-import top.shauna.dfs.protocol.HeartBeatProtocol;
+import top.shauna.dfs.interact.client.impl.ClientProtocolImpl;
+import top.shauna.dfs.protocol.ClientProtocol;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.rpc.bean.FoundBean;
 import top.shauna.rpc.bean.LocalExportBean;
@@ -14,10 +14,10 @@ import java.net.UnknownHostException;
 
 /**
  * @Author Shauna.Chou
- * @Date 2020/9/27 14:35
+ * @Date 2020/10/11 20:46
  * @E-Mail z1023778132@icloud.com
  */
-public class KingHeartBeatStarter implements Starter {
+public class ClientProtocolStarter implements Starter {
     @Override
     public void onStart() {
         prepareRpcConfig();
@@ -37,9 +37,9 @@ public class KingHeartBeatStarter implements Starter {
 
         localExportBean.setProtocol("netty");
         localExportBean.setIp(hostAddress);
-        localExportBean.setPort(9000);
+        localExportBean.setPort(9001);
 
-        ShaunaRPCHandler.publishServiceBean(HeartBeatProtocol.class, new HeartBeatProtocolImpl(),localExportBean);
+        ShaunaRPCHandler.publishServiceBean(ClientProtocol.class, new ClientProtocolImpl(),localExportBean);
     }
 
     private void prepareRpcConfig() {

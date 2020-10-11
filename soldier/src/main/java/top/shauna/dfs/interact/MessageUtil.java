@@ -40,9 +40,8 @@ public class MessageUtil {
             MetaInfo metaInfo = allBlocks.get(filePath);
             BlockInfo blockInfo = new BlockInfo();
             blockInfo.setFilePath(filePath);
-            blockInfo.setIsOk(true);
             blockInfo.setPin(metaInfo.getPin());
-            blockInfo.setVersion(metaInfo.getVersion());
+            blockInfo.setTimeStamp(metaInfo.getVersion());
             blockInfo.setQPS(getQPS(filePath));
             blockInfo.setTPS(getTPS(filePath));
             blockInfos.add(blockInfo);
@@ -57,11 +56,10 @@ public class MessageUtil {
         if(timeStamp<currentTime){
             return;
         }
+        System.out.println(heartBeatResponseBean);
         List<BlockInfo> blockInfos = heartBeatResponseBean.getBlockInfos();
         for (BlockInfo blockInfo : blockInfos) {
-            if (!blockInfo.getIsOk()) {
-                deleteFile(blockInfo.getFilePath(),blockInfo.getPin().toString());
-            }
+
         }
     }
 

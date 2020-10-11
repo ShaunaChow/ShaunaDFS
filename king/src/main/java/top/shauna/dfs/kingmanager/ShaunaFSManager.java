@@ -27,6 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ShaunaFSManager implements Starter {
     private INodeDirectory root;
     private ConcurrentHashMap<String,ClientFileInfo> newFileKeeper;
+    private BlocksManager blocksManager;
     private static byte[] MAGIC_CODE = {62,02};
     private static byte FILE_FLAG = 0b01111111;
     private static byte DIR_FLAG = 0b1000000;
@@ -35,6 +36,7 @@ public class ShaunaFSManager implements Starter {
 
     private ShaunaFSManager(){
         newFileKeeper = new ConcurrentHashMap<>();
+        blocksManager = BlocksManager.getInstance();
     }
 
     public static ShaunaFSManager getInstance(){
@@ -96,7 +98,7 @@ public class ShaunaFSManager implements Starter {
                 throw new Exception("魔术不匹配");
             }
             in.skipBytes(2);
-            root = (INodeDirectory) readINode(in);
+            root = (INodeDirectory) readINode(in,null);
             root.setName("/");
             root.setPath("");
         } catch (FileNotFoundException e) {
@@ -116,7 +118,7 @@ public class ShaunaFSManager implements Starter {
         }
     }
 
-    private INode readINode(DataInputStream in) throws Exception {
+    private INode readINode(DataInputStream in, INode father) throws Exception {
         int nameLen = (in.readByte()+256)%256;
         byte[] nameBytes = new byte[nameLen];
         in.read(nameBytes);
@@ -125,11 +127,11 @@ public class ShaunaFSManager implements Starter {
         if((flag&DIR_FLAG)!=0){ /** 目录 **/
             INodeDirectory directory = new INodeDirectory();
             directory.setName(new String(nameBytes));
+            directory.setParent(father);
             int childNodes = (in.readByte() + 256) % 256;
             CopyOnWriteArrayList<INode> iNodes = new CopyOnWriteArrayList<>();
             for(int i=0;i<childNodes;i++){
-                INode iNode = readINode(in);
-                iNode.setParent(directory);
+                INode iNode = readINode(in,directory);
                 iNodes.add(iNode);
             }
             directory.setChildren(iNodes);
@@ -138,15 +140,23 @@ public class ShaunaFSManager implements Starter {
         }else{                  /** 文件 **/
             INodeFile file = new INodeFile();
             file.setName(new String(nameBytes));
+            file.setParent(father);
             int blocks = (in.readByte() + 256) % 256;
             CopyOnWriteArrayList<Block> blockList = new CopyOnWriteArrayList<>();
             for(int i=0;i<blocks;i++){
-                blockList.add(Block.load(in));
+                Block load = Block.load(in);
+                load.setPin(i);
+                blockList.add(load);
             }
+            registBlocks(file.getPath(),blockList);
             file.setBlocks(blockList);
             file.setStatus(1);
             return file;
         }
+    }
+
+    private void registBlocks(String filePath, List<Block> blockList) {
+        blocksManager.registBlocks(filePath,blockList);
     }
 
     private void saveRootNode(File newFile) throws Exception {
@@ -224,7 +234,7 @@ public class ShaunaFSManager implements Starter {
             INodeFile newFile = new INodeFile();
             newFile.setName(fileName);
             newFile.setParent(directory);
-            List<Block> blocks = BlocksManager.getInstance().getBlocks(fileInfo.getFileLength());
+            List<Block> blocks = blocksManager.requireBlocks(newFile.getPath(),fileInfo.getFileLength());
             newFile.setBlocks(blocks);
             newFile.setStatus(-1);      /** 设置状态码！！！！！ **/
             directory.getChildren().add(newFile);
@@ -239,6 +249,8 @@ public class ShaunaFSManager implements Starter {
             ClientFileInfo clientFileInfo = newFileKeeper.get(fileInfo.getPath());
             clientFileInfo.getINodeFile().setStatus(1);     /** 设置状态码！！！！！ **/
             newFileKeeper.remove(fileInfo.getPath());
+            INodeFile iNodeFile = clientFileInfo.getINodeFile();
+            registBlocks(iNodeFile.getPath(),iNodeFile.getBlocks());
         }
     }
 
@@ -295,7 +307,6 @@ public class ShaunaFSManager implements Starter {
         if(lastPath.equals("")) return (INodeDirectory)chosed;
         return getINodeDirectory((INodeDirectory)chosed,lastPath);
     }
-
 
     public void mkdir(ClientFileInfo fileInfo) {
         String path = fileInfo.getPath();
