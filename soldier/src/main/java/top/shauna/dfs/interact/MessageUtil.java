@@ -39,7 +39,7 @@ public class MessageUtil {
         for (String filePath : allBlocks.keySet()) {
             MetaInfo metaInfo = allBlocks.get(filePath);
             BlockInfo blockInfo = new BlockInfo();
-            blockInfo.setFilePath(filePath);
+            blockInfo.setFilePath(metaInfo.getFilePath());
             blockInfo.setPin(metaInfo.getPin());
             blockInfo.setTimeStamp(metaInfo.getVersion());
             blockInfo.setQPS(getQPS(filePath));

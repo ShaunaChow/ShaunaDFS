@@ -2,6 +2,7 @@ package top.shauna.dfs.kingmanager.bean;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class INodeDirectory extends INode {
+public class INodeDirectory extends INode implements Serializable {
     private List<INode> children;
 
     @Override

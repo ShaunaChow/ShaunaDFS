@@ -54,7 +54,7 @@ public class BlocksManager implements Starter {
             block.setReplicas(replicas);
             block.setBlockLength(fileLength>blockSize?blockSize:(int)fileLength);
             block.setTimeStamp(System.currentTimeMillis());
-            ReplicasInfo[] replicasInfos = soldierManager.getReplicas(replicas);
+            List<ReplicasInfo> replicasInfos = soldierManager.getReplicas(replicas);
             block.setReplicasInfos(replicasInfos);
             blocks.add(block);
             fileLength -= blockSize;

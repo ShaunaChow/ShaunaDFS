@@ -62,8 +62,16 @@ public class LocalBlockHandler extends AbstractBlockHandler {
 
     @Override
     protected void writeToMetaData(MetaInfo metaInfo, Block block) throws Exception {
-        byte[] content = JSON.toJSONString(metaInfo).getBytes();
-        String dataPath = metaInfo.getMetaPath();
+        DataInfo dataInfo = metaInfo.getDataInfo();
+        MetaInfo meta = new MetaInfo(
+                metaInfo.getFilePath(),
+                metaInfo.getPin(),
+                metaInfo.getVersion(),
+                metaInfo.getMetaPath(),
+                new DataInfo(dataInfo.getDataPath(),dataInfo.getMd5(),null)
+        );
+        byte[] content = JSON.toJSONString(meta).getBytes();
+        String dataPath = meta.getMetaPath();
         if(localFileStorage.isExits(dataPath)) {
             throw new Exception("文件" + dataPath + "已经存在！！！");
         }

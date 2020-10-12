@@ -17,12 +17,11 @@ public class SoldierHeartBeat {
     private HeartBeatProtocol heartBeatProtocol;
 
     public SoldierHeartBeat(){
+        prepareRpcConfig();
         heartBeatProtocol = ShaunaRPCHandler.getReferenceProxy(HeartBeatProtocol.class);
     }
 
     public HeartBeatResponseBean sendHeartBeat(HeartBeatRequestBean heartBeatRequestBean){
-        prepareRpcConfig();
-
         return heartBeatProtocol.reportHeartBeat(heartBeatRequestBean);
     }
 

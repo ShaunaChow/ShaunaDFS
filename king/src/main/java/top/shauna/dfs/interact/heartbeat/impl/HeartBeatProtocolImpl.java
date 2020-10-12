@@ -19,6 +19,8 @@ public class HeartBeatProtocolImpl implements HeartBeatProtocol {
     @Override
     public HeartBeatResponseBean reportHeartBeat(HeartBeatRequestBean heartBeatRequestBean) {
         HeartBeatResponseBean heartBeatResponseBean = new HeartBeatResponseBean();
+        heartBeatResponseBean.setIp(heartBeatRequestBean.getIp());
+        heartBeatResponseBean.setPort(heartBeatRequestBean.getPort());
         try {
             heartBeatProtocolService.reportHeartBeat(heartBeatRequestBean);
         } catch (Exception e) {

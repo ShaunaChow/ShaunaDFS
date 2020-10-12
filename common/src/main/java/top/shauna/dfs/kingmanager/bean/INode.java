@@ -3,6 +3,8 @@ package top.shauna.dfs.kingmanager.bean;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @Author Shauna.Chou
  * @Date 2020/10/9 16:31
@@ -10,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public abstract class INode {
+public abstract class INode implements Serializable {
     private INode parent;
     private String name;
     private String path;

@@ -5,6 +5,8 @@ import top.shauna.dfs.soldiermanager.bean.Block;
 import top.shauna.dfs.block.interfaces.BlockHandler;
 import top.shauna.dfs.monitor.MonitorProxy;
 import top.shauna.dfs.protocol.SoldierServerProtocol;
+import top.shauna.dfs.soldiermanager.bean.SoldierResponse;
+import top.shauna.dfs.type.SoldierResponseType;
 
 /**
  * @Author Shauna.Chou
@@ -31,6 +33,22 @@ public class SoldierServerProtocolImpl implements SoldierServerProtocol {
         } catch (Exception e) {
             log.error("Block请求出错："+e.getMessage());
             return null;
+        }
+    }
+
+    @Override
+    public SoldierResponse uploadFile(Block block) {
+        SoldierResponse soldierResponse = new SoldierResponse();
+        try {
+            blockHandler.write(block);
+            soldierResponse.setRes(SoldierResponseType.SUCCESS);
+            soldierResponse.setUuid(block.getUuid());
+            return soldierResponse;
+        } catch (Exception e) {
+            log.error("Block写入出错："+e.getMessage());
+            soldierResponse.setRes(SoldierResponseType.UNKNOWN);
+            soldierResponse.setUuid(block.getUuid());
+            return soldierResponse;
         }
     }
 }

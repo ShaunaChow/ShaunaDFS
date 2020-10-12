@@ -3,6 +3,8 @@ package top.shauna.dfs.kingmanager.bean;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @Author Shauna.Chou
  * @Date 2020/10/11 16:10
@@ -10,7 +12,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class ReplicasInfo {
+public class ReplicasInfo implements Serializable {
     private String ip;
     private String port;
     private Integer status;

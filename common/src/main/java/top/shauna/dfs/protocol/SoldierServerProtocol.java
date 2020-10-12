@@ -1,6 +1,7 @@
 package top.shauna.dfs.protocol;
 
 import top.shauna.dfs.soldiermanager.bean.Block;
+import top.shauna.dfs.soldiermanager.bean.SoldierResponse;
 
 /**
  * @Author Shauna.Chou
@@ -9,4 +10,6 @@ import top.shauna.dfs.soldiermanager.bean.Block;
  */
 public interface SoldierServerProtocol {
     Block getBlock(Block block);
+
+    SoldierResponse uploadFile(Block block);
 }

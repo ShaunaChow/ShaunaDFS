@@ -4,6 +4,8 @@ import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
 import top.shauna.dfs.kingmanager.bean.SoldierInfo;
 import top.shauna.dfs.starter.Starter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -98,9 +100,9 @@ public class SoldierManager implements Starter {
         }
     }
 
-    public ReplicasInfo[] getReplicas(int nums){
+    public List<ReplicasInfo> getReplicas(int nums){
         if(nums>soldierInfoMap.size()) return null;
-        ReplicasInfo[] res = new ReplicasInfo[nums];
+        List<ReplicasInfo> res = new ArrayList<>();
         SoldierInfo soldierInfo = header.next;
         for (int i=0;i<nums;i++){
             ReplicasInfo replicasInfo = new ReplicasInfo();
@@ -110,7 +112,8 @@ public class SoldierManager implements Starter {
             replicasInfo.setQPS(0f);
             replicasInfo.setIp(soldierInfo.getIp());
             replicasInfo.setPort(soldierInfo.getPort());
-            res[i] = replicasInfo;
+            if(i==0) replicasInfo.setMaster(true);
+            res.add(replicasInfo);
             soldierInfo = soldierInfo.next;
         }
         return res;

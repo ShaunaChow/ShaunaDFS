@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author Shauna.Chou
@@ -15,13 +18,13 @@ import java.io.DataOutputStream;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Block {
+public class Block implements Serializable {
     private String filePath;
     private Integer pin;
     private Long timeStamp;
     private Boolean Ok;
     private Integer replicas;
-    private ReplicasInfo[] replicasInfos;
+    private List<ReplicasInfo> replicasInfos;
     private Integer blockLength;
 
     public void write(DataOutputStream out) throws Exception {
@@ -38,8 +41,8 @@ public class Block {
 
     public static Block load(DataInputStream in) throws Exception {
         int replicaNums = (in.readByte()+256)%256;
-        ReplicasInfo[] soldiers = new ReplicasInfo[replicaNums];
-        for (int i = 0; i < soldiers.length; i++) {
+        List<ReplicasInfo> soldiers = new ArrayList<>();
+        for (int i = 0; i < replicaNums; i++) {
             ReplicasInfo soldier = new ReplicasInfo();
             byte[] ip = new byte[4];
             in.read(ip);
@@ -47,7 +50,7 @@ public class Block {
             int port = (in.readShort()+65536)%65536;
             soldier.setPort(String.valueOf(port));
             soldier.setStatus(-1);
-            soldiers[i] = soldier;
+            soldiers.add(soldier);
         }
         Block block = new Block();
         block.setReplicas(replicaNums);
@@ -78,6 +81,6 @@ public class Block {
     }
 
     public ReplicasInfo getMaster(){
-        return replicasInfos[0];
+        return replicasInfos.get(0);
     }
 }
