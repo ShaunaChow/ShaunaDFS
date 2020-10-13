@@ -37,7 +37,7 @@ public class LocalFileStorage implements StorageEngine {
         RandomAccessFile writeFile = null;
         try {
             if (isExits(url)) {
-                throw new Exception("文件"+url+"已存在！！！");
+                log.warn("文件"+url+"已存在！！！");
             }
             writeFile = new RandomAccessFile(url, "rw");
             writeFile.write(content);

@@ -1,6 +1,7 @@
 package top.shauna.dfs.service;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
@@ -11,5 +12,11 @@ import java.nio.channels.FileChannel;
 public interface ClientService {
     boolean uploadFile(String filePath, FileChannel inputStream) throws IOException;
 
+    ByteBuffer downloadFile(String filePath);
 
+    boolean mkdir(String dirPath);
+
+    boolean rmFile(String filePath);
+
+    boolean rmDir(String dirPath);
 }

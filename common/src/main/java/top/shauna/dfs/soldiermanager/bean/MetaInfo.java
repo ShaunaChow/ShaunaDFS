@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @Author Shauna.Chou
  * @Date 2020/9/24 20:46
@@ -14,7 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MetaInfo {
+public class MetaInfo implements Serializable {
     private String filePath;
     private Integer pin;
     private Long version;

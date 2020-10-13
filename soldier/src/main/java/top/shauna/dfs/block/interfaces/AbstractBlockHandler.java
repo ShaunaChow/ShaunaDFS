@@ -35,8 +35,7 @@ public abstract class AbstractBlockHandler implements BlockHandler{
         DataInfo dataInfo;
         if(!DataKeeper.contains(md5)){
             String dataDir = soldierPubConfig.getRootDir()+ File.separator+"Data";
-            dataPath = dataDir+  File.separator+
-                    block.getFilePath()+"_"+block.getPin()+".block";
+            dataPath = dataDir + block.getFilePath()+"_"+block.getPin()+".block";
             writeToData(dataPath,block);
             dataInfo = new DataInfo();
             dataInfo.setDataPath(dataPath);
@@ -50,10 +49,9 @@ public abstract class AbstractBlockHandler implements BlockHandler{
         }
 
         String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
-        String metaPath = metaDataDir+  File.separator+
-                                        block.getFilePath()+"_"+block.getPin()+".block";
+        String metaPath = metaDataDir + block.getFilePath()+"_"+block.getPin()+".block";
         if(MetaKeeper.contains(metaPath)){
-            throw new Exception("Block已经存在，请确认是否覆盖");
+            log.warn("Block已经存在，请确认是否覆盖");
         }
         MetaInfo metaInfo = new MetaInfo();
         metaInfo.setDataInfo(dataInfo);
@@ -70,24 +68,19 @@ public abstract class AbstractBlockHandler implements BlockHandler{
     public void read(Block block) throws Exception {
         SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
         String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
-        String metaPath = metaDataDir+  File.separator+
-                block.getFilePath()+"_"+block.getPin()+".block";
+        String metaPath = metaDataDir + block.getFilePath()+"_"+block.getPin()+".block";
         if(MetaKeeper.contains(metaPath)){
             MetaInfo metaInfo = MetaKeeper.get(metaPath);
             byte[] content = metaInfo.getDataInfo().getContent();
             if(content !=null){
-                String md5 = getMD5(content);
-                if(isValid(block,md5)){
-                    block.setContent(content);
-                    return;
-                }
-            }
-            content = readData(metaInfo.getDataInfo());
-            String md5 = getMD5(content);
-            if(isValid(block,md5)){
                 block.setContent(content);
+                block.setMd5(metaInfo.getDataInfo().getMd5());
                 return;
             }
+            content = readData(metaInfo.getDataInfo());
+            block.setContent(content);
+            block.setMd5(metaInfo.getDataInfo().getMd5());
+            return;
         }
         throw new Exception("本机未找到block对应的块文件:"+block.getFilePath()+"_"+block.getPin()+".block");
     }
@@ -96,8 +89,7 @@ public abstract class AbstractBlockHandler implements BlockHandler{
     public void readAndTransfer(Block block, WritableByteChannel channel) throws Exception {
         SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
         String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
-        String metaPath = metaDataDir+  File.separator+
-                block.getFilePath()+"_"+block.getPin()+".block";
+        String metaPath = metaDataDir + block.getFilePath()+"_"+block.getPin()+".block";
         if(MetaKeeper.contains(metaPath)){
             MetaInfo metaInfo = MetaKeeper.get(metaPath);
             byte[] content = metaInfo.getDataInfo().getContent();

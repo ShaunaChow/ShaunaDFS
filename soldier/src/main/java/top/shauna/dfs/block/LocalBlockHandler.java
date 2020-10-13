@@ -1,11 +1,13 @@
 package top.shauna.dfs.block;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.soldiermanager.bean.Block;
 import top.shauna.dfs.soldiermanager.bean.DataInfo;
 import top.shauna.dfs.soldiermanager.bean.MetaInfo;
 import top.shauna.dfs.block.interfaces.AbstractBlockHandler;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
+import top.shauna.rpc.protocol.serializer.HessianSerializer;
 
 import java.io.File;
 import java.nio.channels.WritableByteChannel;
@@ -15,11 +17,14 @@ import java.nio.channels.WritableByteChannel;
  * @Date 2020/9/24 17:01
  * @E-Mail z1023778132@icloud.com
  */
+@Slf4j
 public class LocalBlockHandler extends AbstractBlockHandler {
     private LocalFileStorage localFileStorage;
+    private HessianSerializer hessianSerializer;
 
     public LocalBlockHandler(){
         localFileStorage = LocalFileStorage.getInstance();
+        hessianSerializer = new HessianSerializer();
     }
 
     @Override
@@ -46,7 +51,7 @@ public class LocalBlockHandler extends AbstractBlockHandler {
     @Override
     protected void writeToData(String dataPath, Block block) throws Exception {
         if(localFileStorage.isExits(dataPath)) {
-            throw new Exception("文件" + dataPath + "已经存在！！！");
+            log.warn("文件" + dataPath + "已经存在！！！");
         }
         File parentFile = new File(dataPath).getParentFile();
         if(!localFileStorage.isExits(parentFile)){
@@ -70,10 +75,10 @@ public class LocalBlockHandler extends AbstractBlockHandler {
                 metaInfo.getMetaPath(),
                 new DataInfo(dataInfo.getDataPath(),dataInfo.getMd5(),null)
         );
-        byte[] content = JSON.toJSONString(meta).getBytes();
+        byte[] content = hessianSerializer.getData(meta);
         String dataPath = meta.getMetaPath();
         if(localFileStorage.isExits(dataPath)) {
-            throw new Exception("文件" + dataPath + "已经存在！！！");
+            log.warn("文件" + dataPath + "已经存在！！！");
         }
         File parentFile = new File(dataPath).getParentFile();
         if(!localFileStorage.isExits(parentFile)){

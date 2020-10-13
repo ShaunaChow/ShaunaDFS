@@ -1,10 +1,10 @@
 package top.shauna.dfs.block;
 
-import com.alibaba.fastjson.JSON;
 import top.shauna.dfs.soldiermanager.bean.MetaInfo;
 import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
+import top.shauna.rpc.protocol.serializer.HessianSerializer;
 
 import java.io.File;
 
@@ -14,8 +14,11 @@ import java.io.File;
  * @E-Mail z1023778132@icloud.com
  */
 public class MetaFileScanner implements Starter {
+    private HessianSerializer hessianSerializer;
+
     @Override
     public void onStart() throws Exception {
+        hessianSerializer = new HessianSerializer();
         scanMetaFiles();
     }
 
@@ -32,9 +35,9 @@ public class MetaFileScanner implements Starter {
             }
         }else if(file.getName().endsWith(".block")){
             byte[] readBytes = LocalFileStorage.getInstance().read(file);
-            MetaInfo metaInfo = JSON.parseObject(new String(readBytes), MetaInfo.class);
+            MetaInfo metaInfo = (MetaInfo) hessianSerializer.getObj(readBytes);
             String metaKey = SoldierPubConfig.getInstance().getRootDir()+ File.separator+"Meta"+
-                                File.separator+metaInfo.getFilePath()+"_"+metaInfo.getPin()+".block";
+                                metaInfo.getFilePath()+"_"+metaInfo.getPin()+".block";
             MetaKeeper.put(metaKey,metaInfo);
             String dataKey = metaInfo.getDataInfo().getMd5();
             DataKeeper.put(dataKey,metaInfo.getDataInfo());

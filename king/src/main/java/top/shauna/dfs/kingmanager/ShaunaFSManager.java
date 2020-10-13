@@ -50,34 +50,6 @@ public class ShaunaFSManager implements Starter {
         return shaunaFSManager;
     }
 
-    public static void main(String[] args) throws Exception {
-        ShaunaFSManager shaunaFSManager = ShaunaFSManager.getInstance();
-        shaunaFSManager.loadRootNode(new File("F:\\java项目\\ShaunaImage.dat"));
-
-        PubConfig pubConfig = PubConfig.getInstance();
-        if (pubConfig.getRegisterBean()==null) {
-            RegisterBean registerBean = new RegisterBean("zookeeper","39.105.89.185:2181",null);
-            pubConfig.setRegisterBean(registerBean);
-        }
-        if (pubConfig.getFoundBean()==null) {
-            RegisterBean registerBean = pubConfig.getRegisterBean();
-            FoundBean foundBean = new FoundBean(
-                    registerBean.getPotocol(),
-                    registerBean.getUrl(),
-                    registerBean.getLoc()
-            );
-            pubConfig.setFoundBean(foundBean);
-        }
-
-        LocalExportBean localExportBean = new LocalExportBean("netty", 9009, "127.0.0.1");
-        ShaunaRPCHandler.publishServiceBean(ClientProtocol.class,new ClientProtocolImpl(),localExportBean);
-
-        System.in.read();
-
-        shaunaFSManager.saveRootNode(new File("F:\\java项目\\ShaunaImage.dat"));
-        System.out.println(1111);
-    }
-
     @Override
     public void onStart() throws Exception {
         KingPubConfig kingPubConfig = KingPubConfig.getInstance();
@@ -224,14 +196,21 @@ public class ShaunaFSManager implements Starter {
         INodeDirectory directory = getINodeDirectory(dirPath);
         if (directory==null) fileInfo.setRes(ClientProtocolType.NO_SUCH_DIR);
         else{
+            INodeFile newFile = null;
             List<INode> children = directory.getChildren();
             for (INode child : children) {
                 if(child.getName().equals(fileName)){
-                    fileInfo.setRes(ClientProtocolType.ALLREADY_EXITS);
-                    return;
+                    if (child.getStatus()==null||child.getStatus()<0){
+                        newFile = (INodeFile) child;
+                        children.remove(child);
+                        break;
+                    }else {
+                        fileInfo.setRes(ClientProtocolType.ALLREADY_EXITS);
+                        return;
+                    }
                 }
             }
-            INodeFile newFile = new INodeFile();
+            if (newFile==null) newFile = new INodeFile();
             newFile.setName(fileName);
             newFile.setParent(directory);
             List<Block> blocks = blocksManager.requireBlocks(newFile.getPath(),fileInfo.getFileLength());
@@ -303,7 +282,7 @@ public class ShaunaFSManager implements Starter {
                 break;
             }
         }
-        if(chosed==null) return null;
+        if(chosed==null||chosed.getStatus()==null||chosed.getStatus()<0) return null;
         if(lastPath.equals("")) return (INodeDirectory)chosed;
         return getINodeDirectory((INodeDirectory)chosed,lastPath);
     }
@@ -318,14 +297,19 @@ public class ShaunaFSManager implements Starter {
         INodeDirectory directory = getINodeDirectory(dirPath);
         if(directory==null) fileInfo.setRes(ClientProtocolType.NO_SUCH_DIR);
         else{
-            INodeDirectory newDir = new INodeDirectory();
             String name = fileName.endsWith("/")?fileName:fileName+"/";
             for (INode iNode : directory.getChildren()) {
                 if(iNode.getName().equals(name)){
-                    fileInfo.setRes(ClientProtocolType.ALLREADY_EXITS);
+                    if (iNode.getStatus()==null||iNode.getStatus()<0){
+                        iNode.setStatus(1);
+                        fileInfo.setRes(ClientProtocolType.SUCCESS);
+                    }else{
+                        fileInfo.setRes(ClientProtocolType.ALLREADY_EXITS);
+                    }
                     return;
                 }
             }
+            INodeDirectory newDir = new INodeDirectory();
             newDir.setName(name);
             newDir.setChildren(new CopyOnWriteArrayList<>());
             newDir.setParent(directory);
@@ -351,8 +335,11 @@ public class ShaunaFSManager implements Starter {
                 if(node.getName().equals(fileName)){
                     if(node instanceof INodeDirectory) {
                         INodeDirectory iNodeDirectory = (INodeDirectory) node;
-                        if (iNodeDirectory.getChildren()==null||iNodeDirectory.getChildren().size()==0||rmAll){
+                        if (iNodeDirectory.getChildren()==null||iNodeDirectory.getChildren().size()==0){
                             iNodeDirectory.setStatus(-1);
+                            fileInfo.setRes(ClientProtocolType.SUCCESS);
+                        }else if (rmAll){
+                            setStatus(iNodeDirectory,-1,true);
                             fileInfo.setRes(ClientProtocolType.SUCCESS);
                         }else{
                             fileInfo.setRes(ClientProtocolType.IT_IS_NOT_AN_EMPTY_DIR);
@@ -362,6 +349,19 @@ public class ShaunaFSManager implements Starter {
                         fileInfo.setRes(ClientProtocolType.SUCCESS);
                     }
                     return;
+                }
+            }
+        }
+    }
+
+    private void setStatus(INode node, int status, boolean digui){
+        if (node==null) return;
+        node.setStatus(status);
+        if (node instanceof INodeDirectory&&digui){
+            INodeDirectory directory = (INodeDirectory) node;
+            if (directory.getChildren()!=null) {
+                for (INode iNode : directory.getChildren()) {
+                    setStatus(iNode,status,digui);
                 }
             }
         }
