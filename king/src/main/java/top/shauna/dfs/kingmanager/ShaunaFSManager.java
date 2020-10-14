@@ -2,16 +2,11 @@ package top.shauna.dfs.kingmanager;
 
 import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
-import top.shauna.dfs.interact.client.impl.ClientProtocolImpl;
 import top.shauna.dfs.kingmanager.bean.*;
-import top.shauna.dfs.protocol.ClientProtocol;
+import top.shauna.dfs.kingmanager.interfaze.FSManager;
+import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.type.ClientProtocolType;
-import top.shauna.rpc.bean.FoundBean;
-import top.shauna.rpc.bean.LocalExportBean;
-import top.shauna.rpc.bean.RegisterBean;
-import top.shauna.rpc.config.PubConfig;
-import top.shauna.rpc.service.ShaunaRPCHandler;
 
 import java.io.*;
 import java.util.List;
@@ -24,7 +19,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @E-Mail z1023778132@icloud.com
  */
 @Slf4j
-public class ShaunaFSManager implements Starter {
+public class ShaunaFSManager implements Starter,FSManager {
     private INodeDirectory root;
     private ConcurrentHashMap<String,ClientFileInfo> newFileKeeper;
     private BlocksManager blocksManager;
@@ -32,22 +27,9 @@ public class ShaunaFSManager implements Starter {
     private static byte FILE_FLAG = 0b01111111;
     private static byte DIR_FLAG = 0b1000000;
 
-    private static volatile ShaunaFSManager shaunaFSManager;
-
-    private ShaunaFSManager(){
+    public ShaunaFSManager(){
         newFileKeeper = new ConcurrentHashMap<>();
         blocksManager = BlocksManager.getInstance();
-    }
-
-    public static ShaunaFSManager getInstance(){
-        if(shaunaFSManager==null){
-            synchronized (ShaunaFSManager.class){
-                if(shaunaFSManager==null){
-                    shaunaFSManager = new ShaunaFSManager();
-                }
-            }
-        }
-        return shaunaFSManager;
     }
 
     @Override
@@ -189,6 +171,7 @@ public class ShaunaFSManager implements Starter {
         }
     }
 
+    @Override
     public void uploadFile(ClientFileInfo fileInfo){
         String path = fileInfo.getPath();
         String dirPath = path.substring(0,1+path.lastIndexOf('/'));
@@ -218,21 +201,22 @@ public class ShaunaFSManager implements Starter {
             newFile.setStatus(-1);      /** 设置状态码！！！！！ **/
             directory.getChildren().add(newFile);
             fileInfo.setINodeFile(newFile);
+            registBlocks(newFile.getPath(),newFile.getBlocks());
             fileInfo.setRes(ClientProtocolType.SUCCESS);
             newFileKeeper.put(path,fileInfo);
         }
     }
 
+    @Override
     public void uploadFileOk(ClientFileInfo fileInfo) {
         if (newFileKeeper.containsKey(fileInfo.getPath())){
             ClientFileInfo clientFileInfo = newFileKeeper.get(fileInfo.getPath());
             clientFileInfo.getINodeFile().setStatus(1);     /** 设置状态码！！！！！ **/
             newFileKeeper.remove(fileInfo.getPath());
-            INodeFile iNodeFile = clientFileInfo.getINodeFile();
-            registBlocks(iNodeFile.getPath(),iNodeFile.getBlocks());
         }
     }
 
+    @Override
     public void downloadFile(ClientFileInfo fileInfo){
         String path = fileInfo.getPath();
         String dirPath = path.substring(0,1+path.lastIndexOf('/'));
@@ -287,6 +271,7 @@ public class ShaunaFSManager implements Starter {
         return getINodeDirectory((INodeDirectory)chosed,lastPath);
     }
 
+    @Override
     public void mkdir(ClientFileInfo fileInfo) {
         String path = fileInfo.getPath();
         if(path.endsWith("/")){
@@ -319,6 +304,7 @@ public class ShaunaFSManager implements Starter {
         }
     }
 
+    @Override
     public void rmr(ClientFileInfo fileInfo, boolean rmAll) {
         String path = fileInfo.getPath();
         if(path.endsWith("/")){

@@ -1,6 +1,7 @@
 package top.shauna.dfs.block;
 
 import top.shauna.dfs.soldiermanager.bean.DataInfo;
+import top.shauna.dfs.storage.impl.LocalFileStorage;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,7 +25,14 @@ public class DataKeeper {
         return blocks.containsKey(md5);
     }
 
-    public static DataInfo delete(String md5){
-        return blocks.remove(md5);
+    public static void delete(String md5){
+        DataInfo dataInfo = blocks.get(md5);
+        if (dataInfo==null) return;
+        dataInfo.setReference((dataInfo.getReference()==null?0:dataInfo.getReference())-1);
+        if (dataInfo.getReference()<=0) {
+            blocks.remove(md5);
+            LocalFileStorage.getInstance().delete(dataInfo.getDataPath());
+        }
+        return;
     }
 }

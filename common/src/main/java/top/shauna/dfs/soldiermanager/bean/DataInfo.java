@@ -20,4 +20,5 @@ public class DataInfo implements Serializable {
     private String dataPath;
     private String md5;
     private byte[] content;
+    private Integer reference;
 }

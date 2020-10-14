@@ -1,6 +1,7 @@
 package top.shauna.dfs.block.interfaces;
 
 import top.shauna.dfs.soldiermanager.bean.Block;
+import top.shauna.dfs.soldiermanager.bean.DataInfo;
 
 import java.nio.channels.WritableByteChannel;
 

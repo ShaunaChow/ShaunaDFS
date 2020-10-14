@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Author Shauna.Chou
@@ -23,4 +25,5 @@ public class Block implements Serializable {
     private String filePath;
     private Integer pin;
     private byte[] content;
+    private List<ReplicasInfo> replicasInfos;
 }

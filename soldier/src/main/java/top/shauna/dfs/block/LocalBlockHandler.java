@@ -1,6 +1,5 @@
 package top.shauna.dfs.block;
 
-import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.soldiermanager.bean.Block;
 import top.shauna.dfs.soldiermanager.bean.DataInfo;
@@ -73,7 +72,7 @@ public class LocalBlockHandler extends AbstractBlockHandler {
                 metaInfo.getPin(),
                 metaInfo.getVersion(),
                 metaInfo.getMetaPath(),
-                new DataInfo(dataInfo.getDataPath(),dataInfo.getMd5(),null)
+                new DataInfo(dataInfo.getDataPath(),dataInfo.getMd5(),null,dataInfo.getReference())
         );
         byte[] content = hessianSerializer.getData(meta);
         String dataPath = meta.getMetaPath();

@@ -92,9 +92,9 @@ public class Test1 {
 //      2019优秀数模论文.zip
         ClientService clientService = new ClientServiceImpl();
 
-//        clientService.mkdir("/shauna/");
+        clientService.mkdir("/shauna/");
 
-//        clientService.uploadFile("/shauna/okkk.txt", fileChannel);
+        clientService.uploadFile("/shauna/okkk.txt", fileChannel);
 
         ByteBuffer byteBuffer = clientService.downloadFile("/shauna/okkk.txt");
 
@@ -107,7 +107,7 @@ public class Test1 {
         fileChannel2.close();
 
 //        boolean b1 = clientService.rmDir("/shauna");
-//        boolean b1 = clientService.rmFile("/shauna/okkk.txt");
+        boolean b1 = clientService.rmFile("/shauna/okkk.txt");
 //        System.out.println(b1);
     }
 

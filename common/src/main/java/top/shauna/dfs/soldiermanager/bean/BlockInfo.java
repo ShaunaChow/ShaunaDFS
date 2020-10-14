@@ -18,6 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BlockInfo implements Serializable {
+    private String metaPath;
     private String filePath;
     private Integer pin;
     private Long timeStamp;

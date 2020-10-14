@@ -4,14 +4,11 @@ import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.bean.HeartBeatResponseBean;
 import top.shauna.dfs.soldiermanager.bean.MetaInfo;
-import top.shauna.dfs.block.DataKeeper;
 import top.shauna.dfs.block.MetaKeeper;
 import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.monitor.StaticDatas;
 import top.shauna.dfs.monitor.bean.StaticBean;
-import top.shauna.dfs.storage.impl.LocalFileStorage;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +36,7 @@ public class MessageUtil {
         for (String filePath : allBlocks.keySet()) {
             MetaInfo metaInfo = allBlocks.get(filePath);
             BlockInfo blockInfo = new BlockInfo();
+            blockInfo.setMetaPath(filePath);
             blockInfo.setFilePath(metaInfo.getFilePath());
             blockInfo.setPin(metaInfo.getPin());
             blockInfo.setTimeStamp(metaInfo.getVersion());
@@ -59,20 +57,16 @@ public class MessageUtil {
         System.out.println(heartBeatResponseBean);
         List<BlockInfo> blockInfos = heartBeatResponseBean.getBlockInfos();
         for (BlockInfo blockInfo : blockInfos) {
+            switch (blockInfo.getRes()){
+                case SUCCESS: continue;
+                case NO_SUCH_BLOCK:
+                    MetaInfo metaInfo = MetaKeeper.get(blockInfo.getMetaPath());
+                    MetaKeeper.delete(metaInfo.getMetaPath());
+                    break;
+                case OUT_OF_DATE:
 
+            }
         }
-    }
-
-    public static void deleteFile(String filePath, String pin) {
-        SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
-        String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
-        String metaPath = metaDataDir+  File.separator+
-                filePath+"_"+pin+".block";
-        MetaInfo metaInfo = MetaKeeper.get(metaPath);
-        LocalFileStorage.getInstance().delete(metaInfo.getMetaPath());
-        LocalFileStorage.getInstance().delete(metaInfo.getDataInfo().getDataPath());
-        MetaKeeper.delete(metaPath);
-        DataKeeper.delete(metaInfo.getDataInfo().getMd5());
     }
 
     private static Float getTPS(String filePath) {

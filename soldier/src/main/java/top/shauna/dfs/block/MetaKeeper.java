@@ -1,6 +1,8 @@
 package top.shauna.dfs.block;
 
+import top.shauna.dfs.soldiermanager.bean.DataInfo;
 import top.shauna.dfs.soldiermanager.bean.MetaInfo;
+import top.shauna.dfs.storage.impl.LocalFileStorage;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,23 +14,27 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MetaKeeper {
     private static ConcurrentHashMap<String,MetaInfo> blocks = new ConcurrentHashMap<>();
 
-    public static void put(String md5,MetaInfo path){
-        blocks.put(md5,path);
+    public static void put(String metaPath,MetaInfo path){
+        blocks.put(metaPath,path);
     }
 
-    public static MetaInfo get(String md5){
-        return blocks.get(md5);
+    public static MetaInfo get(String metaPath){
+        return blocks.get(metaPath);
     }
 
-    public static boolean contains(String md5){
-        return blocks.containsKey(md5);
+    public static boolean contains(String metaPath){
+        return blocks.containsKey(metaPath);
     }
 
     public static ConcurrentHashMap<String, MetaInfo> getBlocks() {
         return blocks;
     }
 
-    public static MetaInfo delete(String md5){
-        return blocks.remove(md5);
+    public static void delete(String metaPath){
+        MetaInfo metaInfo = blocks.get(metaPath);
+        LocalFileStorage.getInstance().delete(metaPath);
+        DataInfo dataInfo = metaInfo.getDataInfo();
+        DataKeeper.delete(dataInfo.getMd5());
+        blocks.remove(metaPath);
     }
 }

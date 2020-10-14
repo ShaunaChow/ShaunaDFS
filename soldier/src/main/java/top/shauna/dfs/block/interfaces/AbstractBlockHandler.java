@@ -31,6 +31,27 @@ public abstract class AbstractBlockHandler implements BlockHandler{
 
         SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
 
+        String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
+        String metaPath = metaDataDir + block.getFilePath()+"_"+block.getPin()+".block";
+        MetaInfo metaInfo = null;
+        if(MetaKeeper.contains(metaPath)){
+            log.warn("Block已经存在，即将覆盖");
+            MetaInfo oldMetaInfo = MetaKeeper.get(metaPath);
+            DataInfo oldDataInfo = oldMetaInfo.getDataInfo();
+            if (oldDataInfo.getMd5().equals(md5)){
+                return;
+            }else{
+                DataKeeper.delete(oldDataInfo.getMd5());
+                metaInfo = oldMetaInfo;
+            }
+        }
+
+        if (metaInfo==null) metaInfo = new MetaInfo();
+        metaInfo.setFilePath(block.getFilePath());
+        metaInfo.setMetaPath(metaPath);
+        metaInfo.setPin(block.getPin());
+        metaInfo.setVersion(block.getVersion());
+
         String dataPath;
         DataInfo dataInfo;
         if(!DataKeeper.contains(md5)){
@@ -40,25 +61,16 @@ public abstract class AbstractBlockHandler implements BlockHandler{
             dataInfo = new DataInfo();
             dataInfo.setDataPath(dataPath);
             dataInfo.setMd5(md5);
+            dataInfo.setReference(1);
             if(isMemEnough()){
                 dataInfo.setContent(block.getContent());
             }
             DataKeeper.put(md5,dataInfo);
         }else{
             dataInfo = DataKeeper.get(md5);
+            dataInfo.setReference((dataInfo.getReference()==null?0:dataInfo.getReference())+1);
         }
-
-        String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
-        String metaPath = metaDataDir + block.getFilePath()+"_"+block.getPin()+".block";
-        if(MetaKeeper.contains(metaPath)){
-            log.warn("Block已经存在，请确认是否覆盖");
-        }
-        MetaInfo metaInfo = new MetaInfo();
         metaInfo.setDataInfo(dataInfo);
-        metaInfo.setFilePath(block.getFilePath());
-        metaInfo.setMetaPath(metaPath);
-        metaInfo.setPin(block.getPin());
-        metaInfo.setVersion(block.getVersion());
 
         writeToMetaData(metaInfo,block);
         MetaKeeper.put(metaPath,metaInfo);
