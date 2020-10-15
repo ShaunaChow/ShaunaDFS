@@ -1,9 +1,11 @@
 package top.shauna.dfs.kingmanager.bean;
 
 import lombok.*;
+import top.shauna.dfs.interfaze.Writable;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Block implements Serializable {
+public class Block implements Serializable,Writable {
     private String filePath;
     private Integer pin;
     private Long timeStamp;
@@ -27,7 +29,8 @@ public class Block implements Serializable {
     private List<ReplicasInfo> replicasInfos;
     private Integer blockLength;
 
-    public void write(DataOutputStream out) throws Exception {
+    @Override
+    public boolean write(DataOutputStream out) throws IOException {
         out.writeByte(replicas);
         for (ReplicasInfo soldierInfo : replicasInfos) {
             String ip = soldierInfo.getIp();
@@ -37,9 +40,10 @@ public class Block implements Serializable {
             String port = soldierInfo.getPort();
             out.writeShort(Integer.parseInt(port));
         }
+        return true;
     }
 
-    public static Block load(DataInputStream in) throws Exception {
+    public static Block load(DataInputStream in) throws IOException {
         int replicaNums = (in.readByte()+256)%256;
         List<ReplicasInfo> soldiers = new ArrayList<>();
         for (int i = 0; i < replicaNums; i++) {

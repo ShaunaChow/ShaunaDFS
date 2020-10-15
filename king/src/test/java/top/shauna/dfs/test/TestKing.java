@@ -5,9 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.junit.Test;
+import top.shauna.dfs.config.KingConfig;
 import top.shauna.dfs.interact.heartbeat.KingHeartBeatStarter;
+import top.shauna.dfs.kingmanager.LogManager;
 import top.shauna.dfs.kingmanager.bean.SoldierInfo;
+import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -24,6 +29,16 @@ public class TestKing {
         KingHeartBeatStarter kingHeartBeatStarter = new KingHeartBeatStarter();
         kingHeartBeatStarter.onStart();
         System.in.read();
+    }
+
+    @Test
+    public void test2() throws Exception {
+        byte[] image = {1,2,3,4,5,6,7,8,9};
+        DataInputStream imageInput = new DataInputStream(new ByteArrayInputStream(image));
+        while (imageInput.available()>0){
+            System.out.println(imageInput.available());
+            imageInput.readByte();
+        }
     }
 
     @Test

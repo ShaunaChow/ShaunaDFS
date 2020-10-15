@@ -1,6 +1,7 @@
 package top.shauna.dfs.interact.client.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import top.shauna.dfs.kingmanager.LogManager;
 import top.shauna.dfs.kingmanager.ShaunaFSManager;
 import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
 import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
@@ -17,7 +18,7 @@ public class ClientProtocolImpl implements ClientProtocol {
     private ShaunaFSManager shaunaFSManager;
 
     public ClientProtocolImpl(){
-        shaunaFSManager = ShaunaFSManagerProxy.getInstance().getProxy();
+        shaunaFSManager = ShaunaFSManagerProxy.getInstance(LogManager.getInstance()).getProxy();
     }
 
     @Override

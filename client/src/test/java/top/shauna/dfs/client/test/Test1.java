@@ -86,19 +86,29 @@ public class Test1 {
     public void test3() throws IOException {
         preparePubConfig();
 
-        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\jdk-8u201-windows-x64.exe",
+        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\example.pdf",
                 "rw").getChannel();
 //      jdk-8u201-windows-x64.exe
 //      2019优秀数模论文.zip
+//      example.pdf
         ClientService clientService = new ClientServiceImpl();
 
         clientService.mkdir("/shauna/");
+        clientService.mkdir("/shauna2/");
+        clientService.mkdir("/shauna3/");
+        clientService.mkdir("/shauna4/");
+        clientService.mkdir("/shauna5/");
+        clientService.mkdir("/shauna6/");
+        clientService.mkdir("/shauna7/");
+        clientService.mkdir("/shauna8/");
+        clientService.mkdir("/shauna9/");
+        clientService.mkdir("/shauna0/");
 
-        clientService.uploadFile("/shauna/okkk.txt", fileChannel);
+        clientService.uploadFile("/shauna/ok22.txt", fileChannel);
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/okkk.txt");
+        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/ok22.txt");
 
-        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\jdk-8u201-windows-x64.exe",
+        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\example.pdf",
                 "rw").getChannel();
 
         fileChannel2.write(byteBuffer);
@@ -131,10 +141,10 @@ public class Test1 {
 
     @Test
     public void test4() throws IOException {
-        preparePubConfig();
+        FileOutputStream fileOutputStream = new FileOutputStream("F:\\java项目\\ShaunaDfsTmp2"+File.separator+"edit_"+".log");
+        fileOutputStream.write(new byte[]{96,95,97,98,100});
+        fileOutputStream.flush();
 
-        ClientService clientService = new ClientServiceImpl();
-
-        System.out.println(clientService.mkdir("/mago/okkkkk"));
+        System.in.read();
     }
 }

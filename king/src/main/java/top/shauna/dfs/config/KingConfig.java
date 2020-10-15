@@ -32,6 +32,8 @@ public class KingConfig implements Starter {
         kingPubConfig.setReplicas(Integer.parseInt(properties.getProperty("replicas","3")));
         int blockSize = Integer.parseInt(properties.getProperty("blockSize", "268435456"));
         kingPubConfig.setBlockSize(blockSize>268435456?268435456:blockSize);
+        kingPubConfig.setMaxEditLog(Integer.parseInt(properties.getProperty("maxEditLog","10000")));
+        kingPubConfig.setEditLogDirs(properties.getProperty("editLogDirs",kingPubConfig.getRootDir()));
         if (properties.getProperty("threadNums")!=null) {
             kingPubConfig.setThreadPoolNums(Integer.valueOf(properties.getProperty("threadNums")));
         }

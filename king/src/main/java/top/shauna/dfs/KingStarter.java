@@ -3,7 +3,7 @@ package top.shauna.dfs;
 import top.shauna.dfs.config.KingConfig;
 import top.shauna.dfs.interact.client.ClientProtocolStarter;
 import top.shauna.dfs.interact.heartbeat.KingHeartBeatStarter;
-import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
+import top.shauna.dfs.kingmanager.ManagerStarter;
 
 /**
  * @Author Shauna.Chou
@@ -14,7 +14,7 @@ public class KingStarter {
     public static void main(String[] args) throws Exception {
         new KingConfig().onStart();
 
-        ShaunaFSManagerProxy.getInstance().getProxy().onStart();
+        new ManagerStarter().onStart();
 
         new KingHeartBeatStarter().onStart();
 

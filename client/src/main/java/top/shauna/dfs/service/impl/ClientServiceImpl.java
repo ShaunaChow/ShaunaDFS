@@ -357,6 +357,7 @@ public class ClientServiceImpl implements ClientService {
                         case SUCCESS:
                             log.info("上传soldier成功");
                     }
+                    break;
                 }
             }
         }

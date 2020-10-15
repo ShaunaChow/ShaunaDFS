@@ -2,6 +2,8 @@ package top.shauna.dfs.kingmanager.interfaze;
 
 import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
 
+import java.io.FileNotFoundException;
+
 /**
  * @Author Shauna.Chou
  * @Date 2020/10/14 20:09
@@ -17,4 +19,6 @@ public interface FSManager {
     void mkdir(ClientFileInfo fileInfo);
 
     void rmr(ClientFileInfo fileInfo, boolean rmAll);
+
+    void initFS() throws Exception;
 }

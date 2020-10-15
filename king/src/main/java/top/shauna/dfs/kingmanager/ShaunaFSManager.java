@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.bean.*;
 import top.shauna.dfs.kingmanager.interfaze.FSManager;
-import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.type.ClientProtocolType;
 
@@ -26,19 +25,24 @@ public class ShaunaFSManager implements Starter,FSManager {
     private static byte[] MAGIC_CODE = {62,02};
     private static byte FILE_FLAG = 0b01111111;
     private static byte DIR_FLAG = 0b1000000;
+    private String rootDir;
 
     public ShaunaFSManager(){
         newFileKeeper = new ConcurrentHashMap<>();
         blocksManager = BlocksManager.getInstance();
+        KingPubConfig kingPubConfig = KingPubConfig.getInstance();
+        rootDir = kingPubConfig.getRootDir()+File.separator+"ShaunaImage.dat";
     }
 
     @Override
     public void onStart() throws Exception {
-        KingPubConfig kingPubConfig = KingPubConfig.getInstance();
-        String rootDir = kingPubConfig.getRootDir();
-        File rootD = new File(rootDir+File.separator+"ShaunaImage.dat");
+        File rootD = new File(rootDir);
         loadRootNode(rootD);
         log.info("KING的root节点初始化完成!!!");
+    }
+
+    private void mergeEditLog(File file){
+
     }
 
     private void loadRootNode(File file) throws Exception {
@@ -167,8 +171,8 @@ public class ShaunaFSManager implements Starter,FSManager {
                     block.write(out);
                 }
             }
-            out.flush();
         }
+        out.flush();
     }
 
     @Override
@@ -338,6 +342,22 @@ public class ShaunaFSManager implements Starter,FSManager {
                 }
             }
         }
+    }
+
+    @Override
+    public void initFS() throws Exception {     /** 慎用 **/
+        File rootD = new File(rootDir);
+        INodeDirectory initNode = new INodeDirectory();
+        initNode.setParent(null);
+        initNode.setStatus(1);
+        initNode.setChildren(new CopyOnWriteArrayList<>());
+        initNode.setName("/");
+        initNode.setPath("");
+        DataOutputStream outputStream = new DataOutputStream(new FileOutputStream(rootD));
+        outputStream.write(MAGIC_CODE);
+        outputStream.write(new byte[]{0,0});
+        outputStream.flush();
+        saveINode(initNode,outputStream);
     }
 
     private void setStatus(INode node, int status, boolean digui){

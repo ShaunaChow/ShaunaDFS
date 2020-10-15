@@ -29,6 +29,24 @@ public class KingPubConfig {
     private Integer threadPoolNums;
     private Integer replicas;
     private Integer blockSize;
+    private Integer maxEditLog;
+    private String editLogDirs;
+
+    public String getEditLogDirs() {
+        return editLogDirs;
+    }
+
+    public void setEditLogDirs(String editLogDirs) {
+        this.editLogDirs = editLogDirs;
+    }
+
+    public Integer getMaxEditLog() {
+        return maxEditLog;
+    }
+
+    public void setMaxEditLog(Integer maxEditLog) {
+        this.maxEditLog = maxEditLog;
+    }
 
     public Integer getBlockSize() {
         return blockSize;

@@ -1,8 +1,12 @@
 package top.shauna.dfs.kingmanager.bean;
 
 import lombok.*;
+import top.shauna.dfs.interfaze.Writable;
 import top.shauna.dfs.type.ClientProtocolType;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -15,10 +19,47 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ClientFileInfo implements Serializable {
+public class ClientFileInfo implements Serializable,Writable {
     private String path;
     private String name;
     private Long fileLength;
     private INodeFile iNodeFile;
     private ClientProtocolType res;
+
+    @Override
+    public boolean write(DataOutputStream fileOutputStream) throws IOException {
+        byte[] pathName = path.getBytes();
+        fileOutputStream.writeInt(pathName.length);
+        fileOutputStream.write(pathName);
+        if (fileLength!=null) {
+            fileOutputStream.writeByte(1);
+            fileOutputStream.writeLong(fileLength);
+        }else{
+            fileOutputStream.writeByte(0);
+        }
+        if (iNodeFile!=null) {
+            fileOutputStream.writeByte(1);
+            iNodeFile.write(fileOutputStream);
+        }else{
+            fileOutputStream.writeByte(0);
+        }
+        return true;
+    }
+
+    public static ClientFileInfo load(DataInputStream fileInputStream) throws IOException {
+        ClientFileInfo clientFileInfo = new ClientFileInfo();
+        int nameLength = fileInputStream.readInt();
+        byte[] nameBytes = new byte[nameLength];
+        fileInputStream.read(nameBytes);
+        clientFileInfo.setPath(new String(nameBytes));
+        byte exitsLength = fileInputStream.readByte();
+        if (exitsLength==1){
+            clientFileInfo.setFileLength(fileInputStream.readLong());
+        }
+        byte exitsFile = fileInputStream.readByte();
+        if (exitsFile==1){
+            clientFileInfo.setINodeFile(INodeFile.load(fileInputStream));
+        }
+        return clientFileInfo;
+    }
 }
