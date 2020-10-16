@@ -22,6 +22,7 @@ public class ManagerStarter implements Starter {
     @Override
     public void onStart() throws Exception {
         ShaunaFSManagerProxy.getInstance(LogManager.getInstance()).getProxy().onStart();
+        LogManager.getInstance().getEditLogSystem().initEditLogSystem(KingPubConfig.getInstance().getEditLogDirs());
         CommonThreadPool.threadPool.execute(()->{
             LocalExportBean localExportBean = new LocalExportBean();
             InetAddress localHost = null;

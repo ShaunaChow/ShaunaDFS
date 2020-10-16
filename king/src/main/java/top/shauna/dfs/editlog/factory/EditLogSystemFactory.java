@@ -12,9 +12,8 @@ import top.shauna.dfs.editlog.interfaze.EditLogSystem;
  */
 public class EditLogSystemFactory {
 
-    public static EditLogSystem getEditLogSystem(String uri){
+    public static EditLogSystem getEditLogSystem(){
         ShaunaEditLogSystem shaunaEditLogSystem = new ShaunaEditLogSystem();
-        shaunaEditLogSystem.initEditLogSystem(uri);
         return shaunaEditLogSystem;
     }
 }

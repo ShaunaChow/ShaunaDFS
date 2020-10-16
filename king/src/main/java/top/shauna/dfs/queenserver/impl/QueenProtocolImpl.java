@@ -28,9 +28,9 @@ public class QueenProtocolImpl implements QueenProtocol {
     }
 
     @Override
-    public CheckPoint doCheckPoint() {
+    public CheckPoint doCheckPoint(CheckPoint checkPoint) {
         try {
-            return queenProtocolService.doCheckPoint();
+            return queenProtocolService.doCheckPoint(checkPoint);
         }catch (Exception e){
             e.printStackTrace();
             return new CheckPoint(0L,null,null,-1);

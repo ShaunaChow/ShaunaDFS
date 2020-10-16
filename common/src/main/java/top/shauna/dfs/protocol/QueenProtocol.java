@@ -10,7 +10,7 @@ import top.shauna.dfs.kingmanager.bean.CheckPoint;
 public interface QueenProtocol {
     boolean needCheckPoint();
 
-    CheckPoint doCheckPoint();
+    CheckPoint doCheckPoint(CheckPoint checkPoint);
 
     void checkPointOk(CheckPoint checkPoint);
 }

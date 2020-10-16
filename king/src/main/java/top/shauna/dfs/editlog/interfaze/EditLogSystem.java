@@ -19,5 +19,7 @@ public interface EditLogSystem {
 
     void changeFile() throws IOException;
 
+    void resetCounter();
+
     File getCurrentFile();
 }

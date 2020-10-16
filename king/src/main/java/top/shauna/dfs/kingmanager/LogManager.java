@@ -18,8 +18,7 @@ public class LogManager {
     private static volatile LogManager logManager;
 
     private LogManager() {
-        String editLogDir = KingPubConfig.getInstance().getEditLogDirs();
-        editLogSystem = EditLogSystemFactory.getEditLogSystem(editLogDir);
+        editLogSystem = EditLogSystemFactory.getEditLogSystem();
     }
 
     public static LogManager getInstance(){

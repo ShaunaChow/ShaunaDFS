@@ -349,6 +349,7 @@ public class ClientServiceImpl implements ClientService {
                 if (replicasInfo.getMaster()!=null&&replicasInfo.getMaster()){
                     SoldierServerProtocol referenceProxy = getSoldierServerProtocol(replicasInfo);
                     replicasInfos.remove(replicasInfo);
+                    block.setReplicas(block.getReplicas()-1);
                     toSendBlock.setReplicasInfos(replicasInfos);
                     SoldierResponse soldierResponse = referenceProxy.uploadFile(toSendBlock);
                     switch (soldierResponse.getRes()){

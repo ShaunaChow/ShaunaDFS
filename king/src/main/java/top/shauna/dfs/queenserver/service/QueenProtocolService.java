@@ -7,8 +7,6 @@ import top.shauna.dfs.kingmanager.bean.CheckPoint;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
 
 import java.io.File;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Author Shauna.Chou
@@ -18,13 +16,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class QueenProtocolService {
     private EditLogSystem editLogSystem;
-    private ConcurrentHashMap<Long,File> fileKeeper;
+    private File fileKeeper;
     private String rootDir;
     private LocalFileStorage fileStorage;
 
     public QueenProtocolService( EditLogSystem editLogSystem){
         this.editLogSystem = editLogSystem;
-        this.fileKeeper = new ConcurrentHashMap<>();
+        this.fileKeeper = null;
         this.rootDir = KingPubConfig.getInstance().getRootDir();
         fileStorage = LocalFileStorage.getInstance();
     }
@@ -34,19 +32,26 @@ public class QueenProtocolService {
         return editLogSystem.getLogCounter()>(maxEditLog ==null?10000:maxEditLog);
     }
 
-    public CheckPoint doCheckPoint() throws Exception {
+    public CheckPoint doCheckPoint(CheckPoint checkPoint) throws Exception {
         File imageFile = new File(rootDir+File.separator+"ShaunaImage.dat");
-        File editFile = editLogSystem.getCurrentFile();
-        editLogSystem.changeFile();
-        Long id = getUniqueId();
-        fileKeeper.put(id,editFile);
-        return new CheckPoint(id, fileStorage.read(imageFile), fileStorage.read(editFile), 1);
+        File editFile;
+        if (fileKeeper!=null){
+            editFile = fileKeeper;
+        }else{
+            editFile = editLogSystem.getCurrentFile();
+            editLogSystem.changeFile();
+            fileKeeper = editFile;
+        }
+        checkPoint.setShaunaImage(fileStorage.read(imageFile));
+        checkPoint.setEditLog(fileStorage.read(editFile));
+        checkPoint.setStatus(1);
+        return checkPoint;
     }
 
     public void checkPointOk(CheckPoint checkPoint) throws Exception {
         if (checkPoint.getStatus()!=null&&checkPoint.getStatus()>=0){
-            Long id = checkPoint.getUuid();
-            File editFile = fileKeeper.get(id);
+            File editFile = fileKeeper;
+            fileKeeper = null;
             byte[] shaunaImage = checkPoint.getShaunaImage();
 
             File oldImageFile = new File(rootDir+File.separator+"ShaunaImage.dat");
@@ -54,18 +59,12 @@ public class QueenProtocolService {
             oldImageFile.renameTo(bakImageFile);
 
             fileStorage.write(rootDir+File.separator+"ShaunaImage.dat",shaunaImage);
+            editLogSystem.resetCounter();
 
-            editFile.deleteOnExit();
-            bakImageFile.deleteOnExit();
+            editFile.delete();
+            bakImageFile.delete();
         }else{
             log.error("检查点异常！！！");
         }
-    }
-
-    private long getUniqueId(){
-        long id = System.nanoTime();
-        int hashCode = Math.abs(UUID.randomUUID().hashCode());
-        id = id|(hashCode<<31);
-        return id;
     }
 }

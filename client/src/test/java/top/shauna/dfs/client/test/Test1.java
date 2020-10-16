@@ -85,8 +85,25 @@ public class Test1 {
     @Test
     public void test3() throws IOException {
         preparePubConfig();
+        ClientService clientService = new ClientServiceImpl();
 
-        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\example.pdf",
+        clientService.mkdir("/sh435542/");
+        clientService.mkdir("/sha567768u22/");
+        clientService.mkdir("/sha89809333/");
+        clientService.mkdir("/sha45un44/");
+        clientService.mkdir("/sha333u55/");
+        clientService.mkdir("/sh225556/");
+        clientService.mkdir("/sha34u57/");
+        clientService.mkdir("/shn6a855/");
+        clientService.mkdir("/sha7u59/");
+        clientService.mkdir("/sha450555/");
+    }
+
+    @Test
+    public void test433() throws IOException {
+        preparePubConfig();
+
+        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\jdk-8u201-windows-x64.exe",
                 "rw").getChannel();
 //      jdk-8u201-windows-x64.exe
 //      2019优秀数模论文.zip
@@ -94,21 +111,12 @@ public class Test1 {
         ClientService clientService = new ClientServiceImpl();
 
         clientService.mkdir("/shauna/");
-        clientService.mkdir("/shauna2/");
-        clientService.mkdir("/shauna3/");
-        clientService.mkdir("/shauna4/");
-        clientService.mkdir("/shauna5/");
-        clientService.mkdir("/shauna6/");
-        clientService.mkdir("/shauna7/");
-        clientService.mkdir("/shauna8/");
-        clientService.mkdir("/shauna9/");
-        clientService.mkdir("/shauna0/");
 
         clientService.uploadFile("/shauna/ok22.txt", fileChannel);
 
         ByteBuffer byteBuffer = clientService.downloadFile("/shauna/ok22.txt");
 
-        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\example.pdf",
+        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\jdk-8u201-windows-x64.exe",
                 "rw").getChannel();
 
         fileChannel2.write(byteBuffer);
@@ -117,7 +125,7 @@ public class Test1 {
         fileChannel2.close();
 
 //        boolean b1 = clientService.rmDir("/shauna");
-        boolean b1 = clientService.rmFile("/shauna/okkk.txt");
+        boolean b1 = clientService.rmFile("/shauna/ok22.txt");
 //        System.out.println(b1);
     }
 
@@ -146,5 +154,11 @@ public class Test1 {
         fileOutputStream.flush();
 
         System.in.read();
+    }
+
+    @Test
+    public void test5() throws IOException {
+        File file = new File("F:\\java项目\\ShaunaDfsTmp\\ShaunaImage-bak.dat");
+        file.deleteOnExit();
     }
 }

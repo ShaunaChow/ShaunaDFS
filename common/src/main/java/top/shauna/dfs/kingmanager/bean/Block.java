@@ -45,7 +45,7 @@ public class Block implements Serializable,Writable {
 
     public static Block load(DataInputStream in) throws IOException {
         int replicaNums = (in.readByte()+256)%256;
-        List<ReplicasInfo> soldiers = new ArrayList<>();
+        List<ReplicasInfo> soldiers = new ArrayList<>(replicaNums);
         for (int i = 0; i < replicaNums; i++) {
             ReplicasInfo soldier = new ReplicasInfo();
             byte[] ip = new byte[4];

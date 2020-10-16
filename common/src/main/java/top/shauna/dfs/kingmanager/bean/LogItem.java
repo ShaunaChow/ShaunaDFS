@@ -31,7 +31,11 @@ public class LogItem implements Serializable,Writable {
             byte _1st = 1<<2;
             _1st |= getStatusCode();
             fileOutputStream.writeByte(_1st);
-            clientFileInfo.write(fileOutputStream);
+            if (status<0) {
+                clientFileInfo.write(fileOutputStream);
+            }else{
+                writePath(fileOutputStream);
+            }
         }else if(method.equalsIgnoreCase("mkdir")){
             byte _1st = 2<<2;
             _1st |= getStatusCode();
@@ -46,6 +50,7 @@ public class LogItem implements Serializable,Writable {
             log.info("占不支持的类型");
             return false;
         }
+        fileOutputStream.flush();
         return true;
     }
 
@@ -56,7 +61,13 @@ public class LogItem implements Serializable,Writable {
         logItem.setStatus(statusCode);
         if ((_1st>>>2)==1){
             logItem.setMethod("uploadFile");
-            logItem.setClientFileInfo(ClientFileInfo.load(fileinputStream));
+            if (statusCode<0) {
+                logItem.setClientFileInfo(ClientFileInfo.load(fileinputStream));
+            }else{
+                ClientFileInfo fileInfo = new ClientFileInfo();
+                fileInfo.setPath(readPath(fileinputStream));
+                logItem.setClientFileInfo(fileInfo);
+            }
         }else if((_1st>>>2)==2){
             logItem.setMethod("mkdir");
             ClientFileInfo fileInfo = new ClientFileInfo();
@@ -67,6 +78,8 @@ public class LogItem implements Serializable,Writable {
             ClientFileInfo fileInfo = new ClientFileInfo();
             fileInfo.setPath(readPath(fileinputStream));
             logItem.setClientFileInfo(fileInfo);
+        }else{
+            return null;
         }
         return logItem;
     }
@@ -99,7 +112,7 @@ public class LogItem implements Serializable,Writable {
 
     private static Integer getStatusCode(byte b){
         byte a = 3;
-        byte tar = (byte)(b|a);
+        byte tar = (byte)(b&a);
         if (tar==3) {
             return null;
         }else if(tar==1){

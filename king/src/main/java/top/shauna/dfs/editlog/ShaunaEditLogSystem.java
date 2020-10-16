@@ -49,10 +49,14 @@ public class ShaunaEditLogSystem implements EditLogSystem {
 
     @Override
     public synchronized void changeFile() throws IOException {
-        logCounter = 0;
         filePin++;
         fileOutputStream.close();
         fileOutputStream = new DataOutputStream(new FileOutputStream(dir+File.separator+"edit_"+filePin+".log",true));
+    }
+
+    @Override
+    public void resetCounter() {
+        logCounter = 0;
     }
 
     @Override

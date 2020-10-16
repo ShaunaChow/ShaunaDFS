@@ -5,9 +5,11 @@ import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.bean.*;
 import top.shauna.dfs.kingmanager.interfaze.FSManager;
 import top.shauna.dfs.starter.Starter;
+import top.shauna.dfs.storage.util.CheckPointUtil;
 import top.shauna.dfs.type.ClientProtocolType;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -23,93 +25,83 @@ public class ShaunaFSManager implements Starter,FSManager {
     private ConcurrentHashMap<String,ClientFileInfo> newFileKeeper;
     private BlocksManager blocksManager;
     private static byte[] MAGIC_CODE = {62,02};
-    private static byte FILE_FLAG = 0b01111111;
-    private static byte DIR_FLAG = 0b1000000;
     private String rootDir;
 
     public ShaunaFSManager(){
         newFileKeeper = new ConcurrentHashMap<>();
         blocksManager = BlocksManager.getInstance();
         KingPubConfig kingPubConfig = KingPubConfig.getInstance();
-        rootDir = kingPubConfig.getRootDir()+File.separator+"ShaunaImage.dat";
+        rootDir = kingPubConfig.getRootDir();
     }
 
     @Override
     public void onStart() throws Exception {
-        File rootD = new File(rootDir);
-        loadRootNode(rootD);
+        DataInputStream in = null;
+        try{
+            in = new DataInputStream(new BufferedInputStream(new FileInputStream(new File(rootDir+File.separator+"ShaunaImage.dat"))));
+            root = CheckPointUtil.loadRootNode(in);
+        }finally {
+            if (in!=null){
+                in.close();
+            }
+        }
+        List<File> files = scanEditLogFiles(KingPubConfig.getInstance().getRootDir());
+        if (files==null){
+            log.info("没有编辑日志文件");
+        }else{
+            for (File file : files) {
+                DataInputStream editInput = null;
+                try {
+                    editInput = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
+                    List<LogItem> logItems = CheckPointUtil.loadEditLogs(editInput);
+                    CheckPointUtil.filtEditLogs(logItems);
+                    CheckPointUtil.mergeEditLogs(root,logItems);
+                    file.delete();
+                }finally {
+                    if (editInput!=null){
+                        editInput.close();
+                    }
+                }
+            }
+        }
+
+        File oldImageFile = new File(rootDir+File.separator+"ShaunaImage.dat");
+        File bakImageFile = new File(rootDir+File.separator+"ShaunaImage-bak.dat");
+        oldImageFile.renameTo(bakImageFile);
+        DataOutputStream rootOutput = null;
+        try {
+            rootOutput = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(oldImageFile)));
+            CheckPointUtil.saveRootNode(root,rootOutput);
+        }finally {
+            if (rootOutput!=null){
+                rootOutput.close();
+            }
+        }
+        bakImageFile.delete();
+        Thread.sleep(10000);
         log.info("KING的root节点初始化完成!!!");
     }
 
-    private void mergeEditLog(File file){
-
-    }
-
-    private void loadRootNode(File file) throws Exception {
-        DataInputStream in = null;
-        try{
-            in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
-            byte magic1 = in.readByte();
-            byte magic2 = in.readByte();
-            if(magic1!=MAGIC_CODE[0]||magic2!=MAGIC_CODE[1]) {
-                log.error("魔术不匹配");
-                throw new Exception("魔术不匹配");
-            }
-            in.skipBytes(2);
-            root = (INodeDirectory) readINode(in,null);
-            root.setName("/");
-            root.setPath("");
-        } catch (FileNotFoundException e) {
-            if(root==null) root = new INodeDirectory();
-            root.setChildren(new CopyOnWriteArrayList<>());
-            root.setName("/");
-            root.setPath("");
-            root.setStatus(1);
-        } finally {
-            try {
-                if (in!=null) {
-                    in.close();
+    private List<File> scanEditLogFiles(String rootD) {
+        File file = new File(rootD);
+        if (!file.isDirectory()){
+            log.error("根目录错误!!!");
+            return null;
+        }else{
+            List<File> res = new ArrayList<>();
+            for (File f : file.listFiles()) {
+                if (f.isFile()&&f.getName().endsWith(".log")&&f.getName().startsWith("edit_")){
+                    res.add(f);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
-    }
-
-    private INode readINode(DataInputStream in, INode father) throws Exception {
-        int nameLen = (in.readByte()+256)%256;
-        byte[] nameBytes = new byte[nameLen];
-        in.read(nameBytes);
-        byte flag = in.readByte();
-        in.skipBytes(1);
-        if((flag&DIR_FLAG)!=0){ /** 目录 **/
-            INodeDirectory directory = new INodeDirectory();
-            directory.setName(new String(nameBytes));
-            directory.setParent(father);
-            int childNodes = (in.readByte() + 256) % 256;
-            CopyOnWriteArrayList<INode> iNodes = new CopyOnWriteArrayList<>();
-            for(int i=0;i<childNodes;i++){
-                INode iNode = readINode(in,directory);
-                iNodes.add(iNode);
-            }
-            directory.setChildren(iNodes);
-            directory.setStatus(1);
-            return directory;
-        }else{                  /** 文件 **/
-            INodeFile file = new INodeFile();
-            file.setName(new String(nameBytes));
-            file.setParent(father);
-            int blocks = (in.readByte() + 256) % 256;
-            CopyOnWriteArrayList<Block> blockList = new CopyOnWriteArrayList<>();
-            for(int i=0;i<blocks;i++){
-                Block load = Block.load(in);
-                load.setPin(i);
-                blockList.add(load);
-            }
-            registBlocks(file.getPath(),blockList);
-            file.setBlocks(blockList);
-            file.setStatus(1);
-            return file;
+            res.stream().sorted((f1,f2)->{
+                String name1 = f1.getName();
+                String name2 = f2.getName();
+                int i1 = Integer.parseInt(name1.substring(name1.indexOf("_") + 1, name1.indexOf(".")));
+                int i2 = Integer.parseInt(name2.substring(name2.indexOf("_") + 1, name2.indexOf(".")));
+                return i1-i2;
+            });
+            return res;
         }
     }
 
@@ -117,63 +109,6 @@ public class ShaunaFSManager implements Starter,FSManager {
         blocksManager.registBlocks(filePath,blockList);
     }
 
-    private void saveRootNode(File newFile) throws Exception {
-        DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(newFile)));
-        try{
-            out.write(MAGIC_CODE);
-            out.write(new byte[]{0,0});
-            out.flush();
-            saveINode(root,out);
-        }finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void saveINode(INode node, DataOutputStream out) throws Exception {
-        if(node.isDirectory()){
-            INodeDirectory dirNode = (INodeDirectory) node;
-            byte[] name = dirNode.getName().getBytes();
-            out.writeByte(name.length);
-            out.write(name);
-            byte flag = 0;
-            flag = (byte)(flag|DIR_FLAG);
-            out.writeByte(flag);
-            out.writeByte(0);
-            List<INode> children = dirNode.getChildren();
-            int nums = 0;
-            for (INode child : children) {
-                if(child.getStatus()!=null&&child.getStatus()>=0) nums++;
-            }
-            out.writeByte(nums);
-            out.flush();
-            for (INode child : children) {
-                if(child.getStatus()!=null&&child.getStatus()>=0) saveINode(child,out);
-            }
-        }else{
-            INodeFile fileNode = (INodeFile) node;
-            byte[] name = fileNode.getName().getBytes();
-            out.writeByte(name.length);
-            out.write(name);
-            byte flag = 0;
-            flag = (byte)(flag&FILE_FLAG);
-            out.writeByte(flag);
-            out.writeByte(0);
-            List<Block> blocks = fileNode.getBlocks();
-            if (blocks==null){
-                out.writeByte(0);
-            }else{
-                out.writeByte(blocks.size());
-                for (Block block : blocks) {
-                    block.write(out);
-                }
-            }
-        }
-        out.flush();
-    }
 
     @Override
     public void uploadFile(ClientFileInfo fileInfo){
@@ -357,7 +292,7 @@ public class ShaunaFSManager implements Starter,FSManager {
         outputStream.write(MAGIC_CODE);
         outputStream.write(new byte[]{0,0});
         outputStream.flush();
-        saveINode(initNode,outputStream);
+        CheckPointUtil.saveINode(initNode,outputStream);
     }
 
     private void setStatus(INode node, int status, boolean digui){
