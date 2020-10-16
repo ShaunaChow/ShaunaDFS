@@ -97,6 +97,8 @@ public class Test1 {
         clientService.mkdir("/shn6a855/");
         clientService.mkdir("/sha7u59/");
         clientService.mkdir("/sha450555/");
+        clientService.mkdir("/sha765u59/");
+        clientService.mkdir("/sha45780555/");
     }
 
     @Test
@@ -125,7 +127,7 @@ public class Test1 {
         fileChannel2.close();
 
 //        boolean b1 = clientService.rmDir("/shauna");
-        boolean b1 = clientService.rmFile("/shauna/ok22.txt");
+//        boolean b1 = clientService.rmFile("/shauna/ok22.txt");
 //        System.out.println(b1);
     }
 

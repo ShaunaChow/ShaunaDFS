@@ -46,7 +46,7 @@ public class ShaunaFSManager implements Starter,FSManager {
             }
         }
         List<File> files = scanEditLogFiles(KingPubConfig.getInstance().getRootDir());
-        if (files==null){
+        if (files==null||files.size()==0){
             log.info("没有编辑日志文件");
         }else{
             for (File file : files) {
@@ -56,6 +56,7 @@ public class ShaunaFSManager implements Starter,FSManager {
                     List<LogItem> logItems = CheckPointUtil.loadEditLogs(editInput);
                     CheckPointUtil.filtEditLogs(logItems);
                     CheckPointUtil.mergeEditLogs(root,logItems);
+                    editInput.close();
                     file.delete();
                 }finally {
                     if (editInput!=null){
@@ -78,7 +79,7 @@ public class ShaunaFSManager implements Starter,FSManager {
             }
         }
         bakImageFile.delete();
-        Thread.sleep(10000);
+
         log.info("KING的root节点初始化完成!!!");
     }
 
@@ -281,7 +282,7 @@ public class ShaunaFSManager implements Starter,FSManager {
 
     @Override
     public void initFS() throws Exception {     /** 慎用 **/
-        File rootD = new File(rootDir);
+        File rootD = new File(rootDir+File.separator+"ShaunaImage.dat");
         INodeDirectory initNode = new INodeDirectory();
         initNode.setParent(null);
         initNode.setStatus(1);
