@@ -1,8 +1,11 @@
 package top.shauna.dfs.checkpoint;
 
 import lombok.extern.slf4j.Slf4j;
+import top.shauna.dfs.config.QueenPubConfig;
 import top.shauna.dfs.kingmanager.bean.*;
 import top.shauna.dfs.protocol.QueenProtocol;
+import top.shauna.dfs.storage.impl.LocalFileStorage;
+import top.shauna.dfs.storage.interfaces.StorageEngine;
 import top.shauna.dfs.storage.util.CheckPointUtil;
 import top.shauna.rpc.service.ShaunaRPCHandler;
 
@@ -18,17 +21,19 @@ import java.util.UUID;
 @Slf4j
 public class DealWithCheckPoint {
     private QueenProtocol queenProtocol;
+    private StorageEngine storageEngine;
 
     public DealWithCheckPoint(){
         queenProtocol = ShaunaRPCHandler.getReferenceProxy(QueenProtocol.class);
+        storageEngine = LocalFileStorage.getInstance();
     }
 
-    public void doCheckPoint() throws Exception {
+    public byte[] doCheckPoint() throws Exception {
         if (queenProtocol.needCheckPoint()){
             CheckPoint checkPoint = queenProtocol.doCheckPoint(new CheckPoint(getUniqueId(),null,null,1));
             if(checkPoint==null||checkPoint.getStatus()<0) {
                 log.error("KING回复的CheckPoint状态出错");
-                return;
+                return new byte[0];
             }
             byte[] image = checkPoint.getShaunaImage();
             DataInputStream imageInput = new DataInputStream(new ByteArrayInputStream(image));
@@ -41,7 +46,9 @@ public class DealWithCheckPoint {
             byte[] newImage = CheckPointUtil.saveRootNode(root);
             CheckPoint newCheckPoint = new CheckPoint(checkPoint.getUuid(), newImage, null, 1);
             queenProtocol.checkPointOk(newCheckPoint);
+            return newImage;
         }
+        return null;
     }
 
     private long getUniqueId(){
@@ -49,5 +56,10 @@ public class DealWithCheckPoint {
         int hashCode = Math.abs(UUID.randomUUID().hashCode());
         id = id|(hashCode<<31);
         return id;
+    }
+
+    public void saveCheckPointLocal(byte[] image) throws Exception {
+        String rootDir = QueenPubConfig.getInstance().getEditLogDirs();
+        storageEngine.write(rootDir+File.separator+"ShaunaImage.dat",image);
     }
 }

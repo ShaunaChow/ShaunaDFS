@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a51f00b-e7d2-44af-8fcb-ff5299584bea" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ShaunaFSManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ShaunaFSManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/SoldierPubConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/SoldierPubConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/QueenStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/QueenStarter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/checkpoint/DealWithCheckPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/checkpoint/DealWithCheckPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/config/SoldierConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/config/SoldierConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/SoldierInteractStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/SoldierInteractStarter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soldier/src/main/resources/soldier.properties" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/resources/soldier.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/king/target/" />
@@ -38,8 +42,8 @@
       <file leaf-file-name="Test1.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-200">
-              <caret line="96" column="42" lean-forward="true" selection-start-line="96" selection-start-column="42" selection-end-line="96" selection-end-column="42" />
+            <state relative-caret-position="297">
+              <caret line="95" column="42" lean-forward="true" selection-start-line="95" selection-start-column="42" selection-end-line="95" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -50,8 +54,8 @@
       <file leaf-file-name="QueenTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/queen/src/test/java/top/shauna/dfs/test/QueenTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+            <state relative-caret-position="223">
+              <caret line="18" column="8" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="65" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -59,23 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DealWithCheckPoint.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/checkpoint/DealWithCheckPoint.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="26" column="44" lean-forward="true" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ShaunaFSManager.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ShaunaFSManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ShaunaFSManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1472">
-              <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+            <state relative-caret-position="365">
+              <caret line="68" column="76" selection-start-line="68" selection-start-column="61" selection-end-line="68" selection-end-column="76" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -83,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QueenProtocolService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/queenserver/service/QueenProtocolService.java">
+      <file leaf-file-name="CheckPointStarter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/checkpoint/CheckPointStarter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="61" column="41" lean-forward="true" selection-start-line="61" selection-start-column="41" selection-end-line="61" selection-end-column="41" />
+            <state relative-caret-position="325">
+              <caret line="28" column="52" lean-forward="true" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -95,35 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CheckPointUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/storage/util/CheckPointUtil.java">
+      <file leaf-file-name="QueenStarter.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/QueenStarter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="529">
-              <caret line="221" column="36" selection-start-line="221" selection-start-column="36" selection-end-line="221" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KingStarter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/KingStarter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SoldierStarter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/SoldierStarter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="108">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -148,13 +116,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/soldiermanager/bean/MetaInfo.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/soldiermanager/bean/BlockInfo.java" />
-        <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/soldiermanager/bean/DataInfo.java" />
-        <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/DataKeeper.java" />
-        <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/interfaces/BlockHandler.java" />
-        <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/LocalBlockHandler.java" />
-        <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/interfaces/AbstractBlockHandler.java" />
         <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/MessageUtil.java" />
         <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/block/MetaKeeper.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/soldiermanager/bean/Block.java" />
@@ -165,7 +126,6 @@
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/editlog/interfaze/LogFileManager.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/interfaze/Writable.java" />
-        <option value="$PROJECT_DIR$/soldier/src/main/resources/soldier.properties" />
         <option value="$PROJECT_DIR$/king/src/main/resources/king.properties" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/editlog/ShaunaLogFileManager.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/factory/LoggerFactory.java" />
@@ -174,7 +134,6 @@
         <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/queenserver/protocolimpl/QueenProtocolImpl.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/protocolimpl/QueenProtocolImpl.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/interfaze/FSManager.java" />
-        <option value="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/QueenStarter.java" />
         <option value="$PROJECT_DIR$/king/src/test/java/top/shauna/dfs/test/checkpoint/DealWithCheckPoint.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/kingmanager/bean/INodeFile.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/kingmanager/bean/ClientFileInfo.java" />
@@ -192,13 +151,22 @@
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/editlog/ShaunaEditLogSystem.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/queenserver/service/QueenProtocolService.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/kingmanager/bean/LogItem.java" />
-        <option value="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/checkpoint/DealWithCheckPoint.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ManagerStarter.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/LogManager.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/editlog/factory/EditLogSystemFactory.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/storage/util/CheckPointUtil.java" />
-        <option value="$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ShaunaFSManager.java" />
+        <option value="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/QueenStarter.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/SoldierPubConfig.java" />
+        <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/config/SoldierConfig.java" />
+        <option value="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/SoldierInteractStarter.java" />
+        <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/QueenPubConfig.java" />
+        <option value="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/config/QueenConfig.java" />
+        <option value="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/checkpoint/DealWithCheckPoint.java" />
+        <option value="$PROJECT_DIR$/queen/src/main/resources/queen.properties" />
+        <option value="$PROJECT_DIR$/soldier/src/main/resources/soldier.properties" />
+        <option value="$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/checkpoint/CheckPointStarter.java" />
+        <option value="$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java" />
       </list>
     </option>
   </component>
@@ -766,6 +734,24 @@
               <item name="ShaunaDFS" type="462c0819:PsiDirectoryNode" />
               <item name="queen" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="dfs" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ShaunaDFS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShaunaDFS" type="462c0819:PsiDirectoryNode" />
+              <item name="queen" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ShaunaDFS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShaunaDFS" type="462c0819:PsiDirectoryNode" />
+              <item name="queen" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -943,6 +929,7 @@
       <recent name="top.shauna.dfs.bean" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\java项目\ShaunaDFS\queen\src\main\resources" />
       <recent name="F:\java项目\ShaunaDFS\king\src\main\resources" />
     </key>
   </component>
@@ -958,11 +945,23 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.Test1.test433">
+  <component name="RunManager" selected="JUnit.Test1.test3">
     <configuration name="KingStarter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="top.shauna.dfs.KingStarter" />
       <module name="king" />
       <option name="VM_PARAMETERS" value="-Dproperties=king.properties" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="top.shauna.dfs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="QueenStarter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="top.shauna.dfs.QueenStarter" />
+      <module name="queen" />
+      <option name="VM_PARAMETERS" value="-Dproperties=queen.properties" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -985,29 +984,6 @@
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-    </configuration>
-    <configuration name="QueenTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="queen" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="top.shauna.dfs.test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="top.shauna.dfs.test" />
-      <option name="MAIN_CLASS_NAME" value="top.shauna.dfs.test.QueenTest" />
-      <option name="METHOD_NAME" value="test" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
     </configuration>
     <configuration name="Test1.test3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="client" />
@@ -1096,17 +1072,17 @@
     <list>
       <item itemvalue="Application.KingStarter" />
       <item itemvalue="Application.SoldierStarter" />
+      <item itemvalue="Application.QueenStarter" />
       <item itemvalue="JUnit.Test1.test3" />
-      <item itemvalue="JUnit.QueenTest.test" />
       <item itemvalue="JUnit.Test1.test433" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.Test1.test3" />
+        <item itemvalue="Application.QueenStarter" />
         <item itemvalue="JUnit.Test1.test433" />
         <item itemvalue="Application.SoldierStarter" />
         <item itemvalue="Application.KingStarter" />
-        <item itemvalue="JUnit.QueenTest.test" />
       </list>
     </recent_temporary>
   </component>
@@ -1142,26 +1118,11 @@
       <workItem from="1602642380028" duration="22867000" />
       <workItem from="1602723645179" duration="35113000" />
       <workItem from="1602829373064" duration="19248000" />
-      <workItem from="1602854906883" duration="1611000" />
+      <workItem from="1602854906883" duration="3558000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Test1_test3 - 2020.10.16 at 21h 37m 20s.xml">
-      <configuration name="Test1.test3" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="QueenTest_test - 2020.10.16 at 21h 37m 38s.xml">
-      <configuration name="QueenTest.test" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Test1_test433 - 2020.10.16 at 21h 38m 49s.xml">
-      <configuration name="Test1.test433" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Test1_test3 - 2020.10.16 at 21h 39m 53s.xml">
-      <configuration name="Test1.test3" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Test1_test3 - 2020.10.16 at 21h 41m 53s.xml">
-      <configuration name="Test1.test3" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="Test1_test3 - 2020.10.16 at 21h 49m 35s.xml">
       <configuration name="Test1.test3" configurationId="JUnit" />
     </history-entry>
@@ -1177,12 +1138,28 @@
     <history-entry file="Test1_test433 - 2020.10.16 at 21h 56m 45s.xml">
       <configuration name="Test1.test433" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="Test1_test3 - 2020.10.16 at 21h 57m 48s.xml">
+      <configuration name="Test1.test3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Test1_test3 - 2020.10.16 at 22h 23m 39s.xml">
+      <configuration name="Test1.test3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Test1_test433 - 2020.10.16 at 22h 24m 53s.xml">
+      <configuration name="Test1.test433" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Test1_test3 - 2020.10.16 at 22h 24m 55s.xml">
+      <configuration name="Test1.test3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Test1_test3 - 2020.10.16 at 22h 27m 23s.xml">
+      <configuration name="Test1.test3" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="272411000" />
+    <option name="totallyTimeSpent" value="274358000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-320" width="1874" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="PlantUML" order="3" />
       <window_info anchor="right" id="Palette" order="3" />
@@ -1197,7 +1174,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.384535" />
       <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.28183717" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.28108674" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49601275" visible="true" weight="0.20231533" />
@@ -1207,7 +1184,7 @@
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39498433" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.35214213" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -1264,76 +1241,13 @@
           <option name="timeStamp" value="57" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="206" />
+      <option name="time" value="207" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/BlocksManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="69" selection-start-line="69" selection-end-line="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/soldiermanager/bean/Block.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
-          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1512">
-          <caret line="56" column="20" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/io/FileOutputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="129" column="56" lean-forward="true" selection-start-line="129" selection-start-column="56" selection-end-line="129" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/interfaze/Writable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/protocol/SoldierServerProtocol.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soldier/src/main/resources/soldier.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="9" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/soldierserver/protocolimpl/SoldierServerProtocolImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="21" column="6" lean-forward="true" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/editlog/interfaze/LogFileManager.java" />
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/editlog/ShaunaLogFileManager.java" />
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/protocolimpl/QueenProtocolImpl.java" />
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/KingPubConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="32" column="30" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/storage/interfaces/StorageEngine.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
@@ -1387,13 +1301,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-85">
           <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/QueenStarter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
@@ -1453,6 +1360,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="590">
           <caret line="350" column="55" lean-forward="true" selection-start-line="350" selection-start-column="55" selection-end-line="350" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1625,28 +1535,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/queen/src/test/java/top/shauna/dfs/test/QueenTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+        <state relative-caret-position="223">
+          <caret line="18" column="8" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java">
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/KingPubConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-200">
-          <caret line="96" column="42" lean-forward="true" selection-start-line="96" selection-start-column="42" selection-end-line="96" selection-end-column="42" />
+        <state relative-caret-position="422">
+          <caret line="96" column="5" lean-forward="true" selection-start-line="25" selection-start-column="4" selection-end-line="96" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#872#873#0" expanded="true" />
+            <element signature="e#906#907#0" expanded="true" />
+            <element signature="e#960#961#0" expanded="true" />
+            <element signature="e#1006#1007#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/SoldierPubConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="32" column="33" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="33" />
+          <folding>
+            <element signature="e#855#856#0" expanded="true" />
+            <element signature="e#891#892#0" expanded="true" />
+            <element signature="e#950#951#0" expanded="true" />
+            <element signature="e#1000#1001#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/config/SoldierConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="32" column="41" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/config/QueenConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="20" column="24" lean-forward="true" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/QueenPubConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="421">
+          <caret line="33" column="34" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="34" />
+          <folding>
+            <element signature="e#924#925#0" expanded="true" />
+            <element signature="e#961#962#0" expanded="true" />
+            <element signature="e#1022#1023#0" expanded="true" />
+            <element signature="e#1074#1075#0" expanded="true" />
+            <element signature="e#847#848#0" expanded="true" />
+            <element signature="e#881#882#0" expanded="true" />
+            <element signature="e#935#936#0" expanded="true" />
+            <element signature="e#981#982#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/SoldierInteractStarter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="29" column="51" selection-start-line="29" selection-start-column="51" selection-end-line="29" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/checkpoint/DealWithCheckPoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="26" column="44" lean-forward="true" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
+        <state relative-caret-position="1620">
+          <caret line="60" column="68" lean-forward="true" selection-start-line="60" selection-start-column="68" selection-end-line="60" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1655,8 +1619,52 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ShaunaFSManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1472">
-          <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+        <state relative-caret-position="365">
+          <caret line="68" column="76" selection-start-line="68" selection-start-column="61" selection-end-line="68" selection-end-column="76" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/queen/src/main/resources/queen.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soldier/src/main/resources/soldier.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="1" column="9" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/checkpoint/CheckPointStarter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="28" column="52" lean-forward="true" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="95" column="42" lean-forward="true" selection-start-line="95" selection-start-column="42" selection-end-line="95" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/queen/src/main/java/top/shauna/dfs/QueenStarter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

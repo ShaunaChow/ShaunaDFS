@@ -87,18 +87,18 @@ public class Test1 {
         preparePubConfig();
         ClientService clientService = new ClientServiceImpl();
 
-        clientService.mkdir("/sh435542/");
-        clientService.mkdir("/sha567768u22/");
-        clientService.mkdir("/sha89809333/");
-        clientService.mkdir("/sha45un44/");
-        clientService.mkdir("/sha333u55/");
-        clientService.mkdir("/sh225556/");
-        clientService.mkdir("/sha34u57/");
-        clientService.mkdir("/shn6a855/");
-        clientService.mkdir("/sha7u59/");
-        clientService.mkdir("/sha450555/");
-        clientService.mkdir("/sha765u59/");
-        clientService.mkdir("/sha45780555/");
+        clientService.mkdir("/sh2432/");
+        clientService.mkdir("/sha2568u22/");
+        clientService.mkdir("/sh3a89333/");
+        clientService.mkdir("/shau2n44/");
+        clientService.mkdir("/sha433u55/");
+        clientService.mkdir("/sh22556/");
+        clientService.mkdir("/sh634u57/");
+        clientService.mkdir("/shn7655/");
+        clientService.mkdir("/sh8a59/");
+        clientService.mkdir("/sh56a55/");
+        clientService.mkdir("/sa763455u59/");
+        clientService.mkdir("/sha345555/");
     }
 
     @Test

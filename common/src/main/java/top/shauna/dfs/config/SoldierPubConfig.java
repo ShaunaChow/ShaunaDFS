@@ -30,6 +30,15 @@ public class SoldierPubConfig {
     private String port;
     private PubConfig rpcPubConfig;
     private Integer threadPoolNums;
+    private Integer heartBeatTime;
+
+    public Integer getHeartBeatTime() {
+        return heartBeatTime;
+    }
+
+    public void setHeartBeatTime(Integer heartBeatTime) {
+        this.heartBeatTime = heartBeatTime;
+    }
 
     public Integer getThreadPoolNums() {
         return threadPoolNums;

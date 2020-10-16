@@ -9,8 +9,6 @@ F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\monitor\MonitorProx
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\MetaFileScanner.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\interact\MessageUtil.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\soldierserver\SoldierServerUtil.java
-F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\storage\impl\LocalFileStorage.java
-F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\storage\interfaces\StorageEngine.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\soldierserver\SoldierServerStarter.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\interfaces\AbstractBlockHandler.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\config\SoldierConfig.java
