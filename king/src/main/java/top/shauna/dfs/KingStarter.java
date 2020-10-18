@@ -2,7 +2,7 @@ package top.shauna.dfs;
 
 import top.shauna.dfs.config.KingConfig;
 import top.shauna.dfs.interact.client.ClientProtocolStarter;
-import top.shauna.dfs.interact.heartbeat.KingHeartBeatStarter;
+import top.shauna.dfs.interact.soldier.KingHeartBeatStarter;
 import top.shauna.dfs.kingmanager.ManagerStarter;
 
 /**

@@ -1,9 +1,9 @@
-package top.shauna.dfs.interact.heartbeat.impl;
+package top.shauna.dfs.interact.soldier.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.bean.HeartBeatResponseBean;
-import top.shauna.dfs.interact.heartbeat.service.HeartBeatProtocolService;
+import top.shauna.dfs.interact.soldier.service.HeartBeatProtocolService;
 import top.shauna.dfs.protocol.HeartBeatProtocol;
 import top.shauna.dfs.type.HeartBeatResponseType;
 
@@ -17,14 +17,14 @@ public class HeartBeatProtocolImpl implements HeartBeatProtocol {
     private HeartBeatProtocolService heartBeatProtocolService = new HeartBeatProtocolService();
 
     @Override
-    public HeartBeatResponseBean reportHeartBeat(HeartBeatRequestBean heartBeatRequestBean) {
+    public HeartBeatResponseBean reportBlocks(HeartBeatRequestBean heartBeatRequestBean) {
         HeartBeatResponseBean heartBeatResponseBean = new HeartBeatResponseBean();
         heartBeatResponseBean.setIp(heartBeatRequestBean.getIp());
         heartBeatResponseBean.setPort(heartBeatRequestBean.getPort());
         try {
-            heartBeatProtocolService.reportHeartBeat(heartBeatRequestBean);
+            heartBeatProtocolService.reportBlocks(heartBeatRequestBean);
         } catch (Exception e) {
-            log.error("心跳出错："+e.getMessage());
+            log.error("Blocks汇报出错："+e.getMessage());
             heartBeatResponseBean.setRes(HeartBeatResponseType.UNKNOWN);
             return heartBeatResponseBean;
         }
@@ -33,4 +33,19 @@ public class HeartBeatProtocolImpl implements HeartBeatProtocol {
         heartBeatResponseBean.setRes(HeartBeatResponseType.SUCCESS);
         return heartBeatResponseBean;
     }
+
+    @Override
+    public HeartBeatResponseBean registerSoldier(HeartBeatRequestBean heartBeatRequestBean) {
+        HeartBeatResponseBean heartBeatResponseBean = new HeartBeatResponseBean();
+        try {
+            heartBeatProtocolService.registerSoldier(heartBeatRequestBean);
+        } catch (Exception e) {
+            log.error("注测soldier出错："+e.getMessage());
+            heartBeatResponseBean.setRes(HeartBeatResponseType.UNKNOWN);
+            return heartBeatResponseBean;
+        }
+        heartBeatResponseBean.setRes(HeartBeatResponseType.SUCCESS);
+        return heartBeatResponseBean;
+    }
+
 }

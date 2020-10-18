@@ -87,18 +87,18 @@ public class Test1 {
         preparePubConfig();
         ClientService clientService = new ClientServiceImpl();
 
-        clientService.mkdir("/sh2432/");
-        clientService.mkdir("/sha2568u22/");
-        clientService.mkdir("/sh3a89333/");
-        clientService.mkdir("/shau2n44/");
-        clientService.mkdir("/sha433u55/");
-        clientService.mkdir("/sh22556/");
-        clientService.mkdir("/sh634u57/");
-        clientService.mkdir("/shn7655/");
-        clientService.mkdir("/sh8a59/");
-        clientService.mkdir("/sh56a55/");
-        clientService.mkdir("/sa763455u59/");
-        clientService.mkdir("/sha345555/");
+        clientService.mkdir("/1/");
+        clientService.mkdir("/2/");
+        clientService.mkdir("/3/");
+        clientService.mkdir("/4/");
+        clientService.mkdir("/5/");
+        clientService.mkdir("/6/");
+        clientService.mkdir("/7/");
+        clientService.mkdir("/8/");
+        clientService.mkdir("/9/");
+        clientService.mkdir("/10/");
+        clientService.mkdir("/11/");
+        clientService.mkdir("/12/");
     }
 
     @Test
@@ -160,7 +160,10 @@ public class Test1 {
 
     @Test
     public void test5() throws IOException {
-        File file = new File("F:\\java项目\\ShaunaDfsTmp\\ShaunaImage-bak.dat");
-        file.deleteOnExit();
+        File file = new File("F:\\java项目\\ShaunaDfsTmp");
+
+        System.out.println(file.getTotalSpace()/1024.0/1024.0/1024.0);
+
+        System.out.println(file.getFreeSpace()/1024.0/1024.0/1024.0);
     }
 }

@@ -4,10 +4,12 @@ import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.bean.Block;
 import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
 import top.shauna.dfs.starter.Starter;
+import top.shauna.dfs.threadpool.CommonThreadPool;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author Shauna.Chou
@@ -20,6 +22,7 @@ public class BlocksManager implements Starter {
     private BlocksManager(){
         blocksMap = new ConcurrentHashMap<>();
         soldierManager = SoldierManager.getInstance();
+        blockStatus = -1;
     }
 
     public static BlocksManager getInstance(){
@@ -36,9 +39,24 @@ public class BlocksManager implements Starter {
     private ConcurrentHashMap<String,List<Block>> blocksMap;
     private SoldierManager soldierManager;
 
+    public int getBlockStatus() {
+        return blockStatus;
+    }
+
+    private volatile int blockStatus;
+
     @Override
     public void onStart() throws Exception {
-
+        CommonThreadPool.threadPool.execute(()->{
+            while(blockStatus<0){
+                scanBlocks();
+                try {
+                    TimeUnit.SECONDS.sleep(KingPubConfig.getInstance().getBlockScanTime());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public List<Block> requireBlocks(String filePath, long fileLength){
@@ -62,10 +80,6 @@ public class BlocksManager implements Starter {
         return blocks;
     }
 
-    public List<Block> requireBlocks(String filePath){
-        return blocksMap.get(filePath);
-    }
-
     public Block getBlock(String filePath, int pin){
         if (!blocksMap.containsKey(filePath)) return null;
         List<Block> blocks = blocksMap.get(filePath);
@@ -74,9 +88,57 @@ public class BlocksManager implements Starter {
     }
 
     public void registBlocks(String filePath, List<Block> blockList){
-        for (Block block : blockList) {
-            block.setOk(true);
+        for (int i=0;i<blockList.size();i++) {
+            Block block = blockList.get(i);
+            block.setPin(i);
+            block.setFilePath(filePath);
+//            block.setTimeStamp(System.currentTimeMillis());
+            int status = -1;
+            for (ReplicasInfo replicasInfo : block.getReplicasInfos()) {
+                if (replicasInfo.getStatus()!=null&&replicasInfo.getStatus()>=0){
+                    status++;
+                }
+            }
+            block.setStatus(status<0?status:(status+1));
         }
         blocksMap.put(filePath,blockList);
+    }
+
+    public void deleteBlocks(String filePath){
+        blocksMap.remove(filePath);
+    }
+
+    private void scanBlocks(){
+        double blocksFaultRate = KingPubConfig.getInstance().getBlocksFaultRate();
+        int sum=0, ok=0;
+        for (List<Block> blocks : blocksMap.values()) {
+            for (Block block : blocks) {
+                sum++;
+                boolean flag = false;
+                int okCounter = -1;
+                for (ReplicasInfo replicasInfo : block.getReplicasInfos()) {
+                    if (replicasInfo.getStatus()!=null){
+                        Integer status = replicasInfo.getStatus();
+                        status--;
+                        if (status>=0){
+                            okCounter++;
+                            flag = true;
+                        }else if (status<-10){
+                            /** 此处要做副本处理操作！！！ **/
+                        }
+                        replicasInfo.setStatus(status);
+                    }
+                }
+                block.setStatus(okCounter);
+                if (flag){
+                    ok++;
+                }
+            }
+        }
+        if (sum==0||(((double)ok/(double)sum)>=blocksFaultRate)) {
+            blockStatus = 1;
+        }else{
+            blockStatus = -1;
+        }
     }
 }

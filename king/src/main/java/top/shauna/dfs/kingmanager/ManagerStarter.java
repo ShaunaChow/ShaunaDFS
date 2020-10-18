@@ -47,5 +47,6 @@ public class ManagerStarter implements Starter {
                     localExportBean
             );
         });
+        BlocksManager.getInstance().onStart();
     }
 }

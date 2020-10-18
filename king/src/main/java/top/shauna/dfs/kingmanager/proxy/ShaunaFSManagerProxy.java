@@ -3,6 +3,7 @@ package top.shauna.dfs.kingmanager.proxy;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import top.shauna.dfs.kingmanager.BlocksManager;
 import top.shauna.dfs.kingmanager.LogManager;
 import top.shauna.dfs.kingmanager.ShaunaFSManager;
 import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
@@ -58,24 +59,40 @@ public class ShaunaFSManagerProxy implements MethodInterceptor {
         LogItem logItem = null;
         if (method.getName().equalsIgnoreCase("uploadFile")){
             ClientFileInfo clientFileInfo = (ClientFileInfo) args[0];
+            if (BlocksManager.getInstance().getBlockStatus()<0){
+                clientFileInfo.setRes(ClientProtocolType.IN_SAFE_MODE);
+                return null;
+            }
             invoke = method.invoke(shaunaFSManager, args);
             if (clientFileInfo.getRes()==ClientProtocolType.SUCCESS) {
                 logItem = new LogItem("uploadFile", clientFileInfo, -1);
             }
         }else if (method.getName().equalsIgnoreCase("uploadFileOk")){
             ClientFileInfo clientFileInfo = (ClientFileInfo) args[0];
+            if (BlocksManager.getInstance().getBlockStatus()<0){
+                clientFileInfo.setRes(ClientProtocolType.IN_SAFE_MODE);
+                return null;
+            }
             invoke = method.invoke(shaunaFSManager, args);
             if (clientFileInfo.getRes()==ClientProtocolType.SUCCESS) {
                 logItem = new LogItem("uploadFile", clientFileInfo, 1);
             }
         }else if (method.getName().equalsIgnoreCase("mkdir")){
             ClientFileInfo clientFileInfo = (ClientFileInfo) args[0];
+            if (BlocksManager.getInstance().getBlockStatus()<0){
+                clientFileInfo.setRes(ClientProtocolType.IN_SAFE_MODE);
+                return null;
+            }
             invoke = method.invoke(shaunaFSManager, args);
             if (clientFileInfo.getRes()==ClientProtocolType.SUCCESS) {
                 logItem = new LogItem("mkdir", clientFileInfo, 1);
             }
         }else if (method.getName().equalsIgnoreCase("rmr")){
             ClientFileInfo clientFileInfo = (ClientFileInfo) args[0];
+            if (BlocksManager.getInstance().getBlockStatus()<0){
+                clientFileInfo.setRes(ClientProtocolType.IN_SAFE_MODE);
+                return null;
+            }
             invoke = method.invoke(shaunaFSManager, args);
             if (clientFileInfo.getRes()==ClientProtocolType.SUCCESS) {
                 logItem = new LogItem("rmr", clientFileInfo, 1);

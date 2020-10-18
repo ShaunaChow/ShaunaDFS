@@ -24,13 +24,14 @@ public class Block implements Serializable,Writable {
     private String filePath;
     private Integer pin;
     private Long timeStamp;
-    private Boolean Ok;
+    private Integer status;
     private Integer replicas;
     private List<ReplicasInfo> replicasInfos;
     private Integer blockLength;
 
     @Override
     public boolean write(DataOutputStream out) throws IOException {
+        out.writeInt(blockLength);
         out.writeByte(replicas);
         for (ReplicasInfo soldierInfo : replicasInfos) {
             String ip = soldierInfo.getIp();
@@ -44,6 +45,7 @@ public class Block implements Serializable,Writable {
     }
 
     public static Block load(DataInputStream in) throws IOException {
+        int length = in.readInt();
         int replicaNums = (in.readByte()+256)%256;
         List<ReplicasInfo> soldiers = new ArrayList<>(replicaNums);
         for (int i = 0; i < replicaNums; i++) {
@@ -59,6 +61,7 @@ public class Block implements Serializable,Writable {
         Block block = new Block();
         block.setReplicas(replicaNums);
         block.setReplicasInfos(soldiers);
+        block.setBlockLength(length);
         return block;
     }
 

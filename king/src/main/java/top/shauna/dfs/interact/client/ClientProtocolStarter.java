@@ -20,7 +20,7 @@ import java.net.UnknownHostException;
 public class ClientProtocolStarter implements Starter {
     @Override
     public void onStart() {
-        prepareRpcConfig();
+        //prepareRpcConfig();
 
         LocalExportBean localExportBean = new LocalExportBean();
         InetAddress localHost = null;

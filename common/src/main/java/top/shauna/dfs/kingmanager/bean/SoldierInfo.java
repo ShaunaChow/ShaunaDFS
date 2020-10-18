@@ -20,6 +20,7 @@ public class SoldierInfo {
     private String port;
     private Boolean OK;
     private Long timeStamp;
+    private Long freeSpace;
     private List<BlockInfo> blockInfos;
     public SoldierInfo next;
     public SoldierInfo pre;

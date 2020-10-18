@@ -6,13 +6,16 @@ import top.shauna.dfs.kingmanager.bean.*;
 import top.shauna.dfs.kingmanager.interfaze.FSManager;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.storage.util.CheckPointUtil;
+import top.shauna.dfs.threadpool.CommonThreadPool;
 import top.shauna.dfs.type.ClientProtocolType;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author Shauna.Chou
@@ -26,12 +29,14 @@ public class ShaunaFSManager implements Starter,FSManager {
     private BlocksManager blocksManager;
     private static byte[] MAGIC_CODE = {62,02};
     private String rootDir;
+    private CopyOnWriteArrayList<INode> deletedNode;
 
     public ShaunaFSManager(){
         newFileKeeper = new ConcurrentHashMap<>();
         blocksManager = BlocksManager.getInstance();
         KingPubConfig kingPubConfig = KingPubConfig.getInstance();
         rootDir = kingPubConfig.getRootDir();
+        deletedNode = new CopyOnWriteArrayList<>();
     }
 
     @Override
@@ -66,6 +71,8 @@ public class ShaunaFSManager implements Starter,FSManager {
             }
         }
 
+        initBlockManager();
+
         File oldImageFile = new File(rootDir+File.separator+"ShaunaImage.dat");
         File bakImageFile = new File(rootDir+File.separator+"ShaunaImage-bak.dat");
         oldImageFile.renameTo(bakImageFile);
@@ -81,6 +88,54 @@ public class ShaunaFSManager implements Starter,FSManager {
         bakImageFile.delete();
 
         log.info("KING的root节点初始化完成!!!");
+
+        CommonThreadPool.threadPool.execute(()->{
+            while (true){
+                doDelete();
+                log.info("执行删除完成!!!");
+                try {
+                    TimeUnit.SECONDS.sleep(30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void doDelete() {
+        for (int i=0;i<deletedNode.size();i++) {
+            INode iNode = deletedNode.get(i);
+            doDelete(iNode);
+            deletedNode.remove(i--);
+        }
+
+        long now = System.currentTimeMillis();
+        Integer uploadTime = KingPubConfig.getInstance().getFileUploadTime();
+        ConcurrentHashMap.KeySetView<String, ClientFileInfo> strings = newFileKeeper.keySet();
+        for (String key : strings) {
+            ClientFileInfo clientFileInfo = newFileKeeper.get(key);
+            if (now-clientFileInfo.getTimeStamp()>=uploadTime*60*1000){
+                INodeFile iNodeFile = clientFileInfo.getINodeFile();
+                blocksManager.deleteBlocks(iNodeFile.getPath());
+                newFileKeeper.remove(key);
+            }
+        }
+    }
+
+    private void doDelete(INode iNode){
+        if (iNode instanceof INodeFile){
+            INodeFile file = (INodeFile) iNode;
+            blocksManager.deleteBlocks(file.getPath());
+            INodeDirectory parent = (INodeDirectory) file.getParent();
+            parent.getChildren().remove(file);
+        }else{
+            INodeDirectory directory = (INodeDirectory) iNode;
+            INodeDirectory parent = (INodeDirectory) directory.getParent();
+            parent.getChildren().remove(directory);
+            for (INode node : directory.getChildren()) {
+                doDelete(node);
+            }
+        }
     }
 
     private List<File> scanEditLogFiles(String rootD) {
@@ -103,6 +158,24 @@ public class ShaunaFSManager implements Starter,FSManager {
                 return i1-i2;
             });
             return res;
+        }
+    }
+
+    private void initBlockManager(){
+        for (INode iNode : root.getChildren()) {
+            initBlockManager(iNode);
+        }
+    }
+
+    private void initBlockManager(INode node){
+        if (node instanceof INodeDirectory){
+            INodeDirectory directory = (INodeDirectory) node;
+            for (INode iNode : directory.getChildren()) {
+                initBlockManager(iNode);
+            }
+        }else{
+            INodeFile file = (INodeFile) node;
+            registBlocks(file.getPath(),file.getBlocks());
         }
     }
 
@@ -138,11 +211,12 @@ public class ShaunaFSManager implements Starter,FSManager {
             newFile.setParent(directory);
             List<Block> blocks = blocksManager.requireBlocks(newFile.getPath(),fileInfo.getFileLength());
             newFile.setBlocks(blocks);
-            newFile.setStatus(-1);      /** 设置状态码！！！！！ **/
+            newFile.setStatus(Integer.MAX_VALUE);      /** 设置状态码！！！！！ **/
             directory.getChildren().add(newFile);
             fileInfo.setINodeFile(newFile);
             registBlocks(newFile.getPath(),newFile.getBlocks());
             fileInfo.setRes(ClientProtocolType.SUCCESS);
+            fileInfo.setTimeStamp(System.currentTimeMillis());
             newFileKeeper.put(path,fileInfo);
         }
     }
@@ -153,6 +227,9 @@ public class ShaunaFSManager implements Starter,FSManager {
             ClientFileInfo clientFileInfo = newFileKeeper.get(fileInfo.getPath());
             clientFileInfo.getINodeFile().setStatus(1);     /** 设置状态码！！！！！ **/
             newFileKeeper.remove(fileInfo.getPath());
+            fileInfo.setRes(ClientProtocolType.SUCCESS);
+        }else{
+            fileInfo.setRes(ClientProtocolType.OUT_OF_DATE);
         }
     }
 
@@ -263,15 +340,18 @@ public class ShaunaFSManager implements Starter,FSManager {
                         INodeDirectory iNodeDirectory = (INodeDirectory) node;
                         if (iNodeDirectory.getChildren()==null||iNodeDirectory.getChildren().size()==0){
                             iNodeDirectory.setStatus(-1);
+                            deletedNode.add(iNodeDirectory);
                             fileInfo.setRes(ClientProtocolType.SUCCESS);
                         }else if (rmAll){
                             setStatus(iNodeDirectory,-1,true);
+                            deletedNode.add(iNodeDirectory);
                             fileInfo.setRes(ClientProtocolType.SUCCESS);
                         }else{
                             fileInfo.setRes(ClientProtocolType.IT_IS_NOT_AN_EMPTY_DIR);
                         }
                     }else {
                         node.setStatus(-1);
+                        deletedNode.add(node);
                         fileInfo.setRes(ClientProtocolType.SUCCESS);
                     }
                     return;

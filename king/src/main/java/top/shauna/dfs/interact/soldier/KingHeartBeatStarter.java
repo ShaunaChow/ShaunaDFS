@@ -1,6 +1,6 @@
-package top.shauna.dfs.interact.heartbeat;
+package top.shauna.dfs.interact.soldier;
 
-import top.shauna.dfs.interact.heartbeat.impl.HeartBeatProtocolImpl;
+import top.shauna.dfs.interact.soldier.impl.HeartBeatProtocolImpl;
 import top.shauna.dfs.protocol.HeartBeatProtocol;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.rpc.bean.FoundBean;
@@ -20,7 +20,7 @@ import java.net.UnknownHostException;
 public class KingHeartBeatStarter implements Starter {
     @Override
     public void onStart() {
-        prepareRpcConfig();
+        //prepareRpcConfig();
 
         LocalExportBean localExportBean = new LocalExportBean();
         InetAddress localHost = null;

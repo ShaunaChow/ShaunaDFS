@@ -9,10 +9,10 @@ F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\monitor\MonitorProx
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\MetaFileScanner.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\interact\MessageUtil.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\soldierserver\SoldierServerUtil.java
+F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\interact\soldier\SoldierHeartBeat.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\soldierserver\SoldierServerStarter.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\interfaces\AbstractBlockHandler.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\config\SoldierConfig.java
-F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\interact\heartbeat\SoldierHeartBeat.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\block\interfaces\BlockHandler.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\monitor\StaticDatas.java
 F:\java项目\ShaunaDFS\soldier\src\main\java\top\shauna\dfs\soldierserver\protocolimpl\SoldierServerProtocolImpl.java

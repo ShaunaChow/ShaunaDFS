@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.bean.HeartBeatResponseBean;
 import top.shauna.dfs.config.SoldierPubConfig;
-import top.shauna.dfs.interact.heartbeat.SoldierHeartBeat;
+import top.shauna.dfs.interact.soldier.SoldierHeartBeat;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.threadpool.CommonThreadPool;
 
@@ -20,8 +20,18 @@ public class SoldierInteractStarter implements Starter {
 
     @Override
     public void onStart() {
+        SoldierHeartBeat soldierHeartBeat = new SoldierHeartBeat();
+        try {
+            HeartBeatRequestBean requestBean = MessageUtil.getHeartBeatRequestBean();
+            requestBean.setBlockInfos(MessageUtil.getBlocks());
+            soldierHeartBeat.reportBlocks(requestBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        log.info("block汇报OK");
+
         CommonThreadPool.threadPool.execute(()->{
-            SoldierHeartBeat soldierHeartBeat = new SoldierHeartBeat();
             while(true){
                 try {
                     HeartBeatRequestBean heartBeatRequestBean = MessageUtil.getHeartBeatRequestBean();

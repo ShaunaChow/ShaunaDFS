@@ -34,6 +34,9 @@ public class KingConfig implements Starter {
         kingPubConfig.setBlockSize(blockSize>268435456?268435456:blockSize);
         kingPubConfig.setMaxEditLog(Integer.parseInt(properties.getProperty("maxEditLog","10000")));
         kingPubConfig.setEditLogDirs(properties.getProperty("editLogDirs",kingPubConfig.getRootDir()));
+        kingPubConfig.setBlocksFaultRate(Double.parseDouble(properties.getProperty("blocksFaultRate","0.9")));
+        kingPubConfig.setBlockScanTime(Integer.parseInt(properties.getProperty("blockScanTime","4")));
+        kingPubConfig.setFileUploadTime(Integer.parseInt(properties.getProperty("fileUploadTime","5")));
         if (properties.getProperty("threadNums")!=null) {
             kingPubConfig.setThreadPoolNums(Integer.valueOf(properties.getProperty("threadNums")));
         }

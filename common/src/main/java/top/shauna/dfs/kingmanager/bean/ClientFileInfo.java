@@ -22,6 +22,7 @@ import java.io.Serializable;
 public class ClientFileInfo implements Serializable,Writable {
     private String path;
     private String name;
+    private Long timeStamp;
     private Long fileLength;
     private INodeFile iNodeFile;
     private ClientProtocolType res;

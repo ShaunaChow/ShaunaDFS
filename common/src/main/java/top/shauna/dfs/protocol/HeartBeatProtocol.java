@@ -2,6 +2,7 @@ package top.shauna.dfs.protocol;
 
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.bean.HeartBeatResponseBean;
+import top.shauna.dfs.kingmanager.bean.SoldierInfo;
 
 /**
  * @Author Shauna.Chou
@@ -9,5 +10,7 @@ import top.shauna.dfs.bean.HeartBeatResponseBean;
  * @E-Mail z1023778132@icloud.com
  */
 public interface HeartBeatProtocol {
-    HeartBeatResponseBean reportHeartBeat(HeartBeatRequestBean heartBeatRequestBean);
+    HeartBeatResponseBean reportBlocks(HeartBeatRequestBean heartBeatRequestBean);
+
+    HeartBeatResponseBean registerSoldier(HeartBeatRequestBean heartBeatRequestBean);
 }

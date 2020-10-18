@@ -31,6 +31,33 @@ public class KingPubConfig {
     private Integer blockSize;
     private Integer maxEditLog;
     private String editLogDirs;
+    private double blocksFaultRate;
+    private Integer blockScanTime;
+    private Integer fileUploadTime;
+
+    public Integer getFileUploadTime() {
+        return fileUploadTime;
+    }
+
+    public void setFileUploadTime(Integer fileUploadTime) {
+        this.fileUploadTime = fileUploadTime;
+    }
+
+    public Integer getBlockScanTime() {
+        return blockScanTime;
+    }
+
+    public void setBlockScanTime(Integer blockScanTime) {
+        this.blockScanTime = blockScanTime;
+    }
+
+    public double getBlocksFaultRate() {
+        return blocksFaultRate;
+    }
+
+    public void setBlocksFaultRate(double blocksFaultRate) {
+        this.blocksFaultRate = blocksFaultRate;
+    }
 
     public String getEditLogDirs() {
         return editLogDirs;

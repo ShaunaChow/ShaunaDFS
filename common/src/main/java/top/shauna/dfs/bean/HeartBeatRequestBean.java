@@ -22,5 +22,6 @@ public class HeartBeatRequestBean implements Serializable {
     private String ip;
     private String port;
     private Long timeStamp;
+    private Long freeSpace;
     private List<BlockInfo> blockInfos;
 }

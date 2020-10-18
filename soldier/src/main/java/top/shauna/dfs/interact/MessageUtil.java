@@ -9,6 +9,7 @@ import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.monitor.StaticDatas;
 import top.shauna.dfs.monitor.bean.StaticBean;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,12 @@ public class MessageUtil {
         long currentTimeMillis = System.currentTimeMillis();
         heartBeatRequestBean.setTimeStamp(currentTimeMillis);
         currentTime = currentTimeMillis;
+        long freeSpace = new File(SoldierPubConfig.getInstance().getRootDir()).getFreeSpace();
+        heartBeatRequestBean.setFreeSpace(freeSpace);
+        return heartBeatRequestBean;
+    }
 
+    public static List<BlockInfo> getBlocks() throws Exception{
         ConcurrentHashMap<String, MetaInfo> allBlocks = MetaKeeper.getBlocks();
         List<BlockInfo> blockInfos = new ArrayList<>();
         for (String filePath : allBlocks.keySet()) {
@@ -44,9 +50,7 @@ public class MessageUtil {
             blockInfo.setTPS(getTPS(filePath));
             blockInfos.add(blockInfo);
         }
-
-        heartBeatRequestBean.setBlockInfos(blockInfos);
-        return heartBeatRequestBean;
+        return blockInfos;
     }
 
     public static void dealWithResponse(HeartBeatResponseBean heartBeatResponseBean){

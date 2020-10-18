@@ -235,11 +235,7 @@ public class CheckPointUtil {
             out.writeByte(flag);
             out.writeByte(0);
             List<INode> children = dirNode.getChildren();
-            int nums = 0;
-            for (INode child : children) {
-                nums++;
-            }
-            out.writeByte(nums);
+            out.writeByte(children.size());
             out.flush();
             for (INode child : children) {
                 saveINode(child,out);

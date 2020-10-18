@@ -1,4 +1,4 @@
-package top.shauna.dfs.interact.heartbeat.service;
+package top.shauna.dfs.interact.soldier.service;
 
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.kingmanager.BlocksManager;
@@ -25,26 +25,7 @@ public class HeartBeatProtocolService {
         blocksManager = BlocksManager.getInstance();
     }
 
-    public void reportHeartBeat(HeartBeatRequestBean heartBeatRequestBean) throws Exception {
-        String ip_port = heartBeatRequestBean.getIp() + ":" + heartBeatRequestBean.getPort();
-        SoldierInfo soldierInfo = soldierManager.getSoldierInfo(ip_port);
-        if (soldierInfo == null) {
-            SoldierInfo info = new SoldierInfo(
-                    heartBeatRequestBean.getIp(),
-                    heartBeatRequestBean.getPort(),
-                    true,
-                    heartBeatRequestBean.getTimeStamp(),
-                    heartBeatRequestBean.getBlockInfos(),
-                    null,
-                    null);
-            soldierManager.registSoldier(ip_port, info);
-        } else {
-            soldierInfo.setOK(true);
-            if (soldierInfo.getTimeStamp() < heartBeatRequestBean.getTimeStamp()) {
-                soldierInfo.setBlockInfos(heartBeatRequestBean.getBlockInfos());
-                soldierManager.adjustSoldierList(soldierInfo);
-            }
-        }
+    public void reportBlocks(HeartBeatRequestBean heartBeatRequestBean) throws Exception {
         List<BlockInfo> blockInfos = heartBeatRequestBean.getBlockInfos();
         for (BlockInfo blockInfo : blockInfos) {
             Block block = blocksManager.getBlock(blockInfo.getFilePath(), blockInfo.getPin());
@@ -65,6 +46,31 @@ public class HeartBeatProtocolService {
                         blockInfo.setRes(HeartBeatResponseType.SUCCESS);
                     }
                 }
+            }
+        }
+    }
+
+    public void registerSoldier(HeartBeatRequestBean heartBeatRequestBean) {
+        String ip_port = heartBeatRequestBean.getIp() + ":" + heartBeatRequestBean.getPort();
+        SoldierInfo tmp = soldierManager.getSoldierInfo(ip_port);
+        if (tmp == null) {
+            SoldierInfo info = new SoldierInfo(
+                    heartBeatRequestBean.getIp(),
+                    heartBeatRequestBean.getPort(),
+                    true,
+                    heartBeatRequestBean.getTimeStamp(),
+                    heartBeatRequestBean.getFreeSpace(),
+                    heartBeatRequestBean.getBlockInfos(),
+                    null,
+                    null);
+            soldierManager.registSoldier(ip_port, info);
+        } else {
+            tmp.setOK(true);
+            if (tmp.getTimeStamp() < heartBeatRequestBean.getTimeStamp()) {
+                tmp.setBlockInfos(heartBeatRequestBean.getBlockInfos());
+                tmp.setTimeStamp(heartBeatRequestBean.getTimeStamp());
+                tmp.setFreeSpace(heartBeatRequestBean.getFreeSpace());
+                soldierManager.adjustSoldierList(tmp);
             }
         }
     }
