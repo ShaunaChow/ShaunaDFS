@@ -25,7 +25,7 @@ public class Block implements Serializable,Writable {
     private String filePath;
     private Integer pin;
     private Long timeStamp;
-    private Integer status;
+    private Integer status; /** 0为初始化状态；1为正常状态；2为新建状态 **/
     private Integer replicas;
     private List<ReplicasInfo> replicasInfos;
     private Integer blockLength;
@@ -42,6 +42,7 @@ public class Block implements Serializable,Writable {
         block.setReplicas(0);
         block.setReplicasInfos(new CopyOnWriteArrayList<>());
         block.setBlockLength(length);
+        block.setStatus(0);
         return block;
     }
 

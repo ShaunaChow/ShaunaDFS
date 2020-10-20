@@ -307,16 +307,20 @@ public class ClientServiceImpl implements ClientService {
             toSendBlock.setUuid("");
             boolean flag = false;
             for (ReplicasInfo replicasInfo : block.getReplicasInfos()) {
-                SoldierServerProtocol referenceProxy = getSoldierServerProtocol(replicasInfo);
-                top.shauna.dfs.soldiermanager.bean.Block resBlock = referenceProxy.getBlock(toSendBlock);
-                if(
-                        resBlock.getContent()!=null
-                        &&resBlock.getContent().length==block.getBlockLength()
-                        ){
-                    res.put(resBlock.getContent());
-                    flag = true;
-                    log.info("下载Block-"+block.getPin()+"成功");
-                    break;
+                try {
+                    SoldierServerProtocol referenceProxy = getSoldierServerProtocol(replicasInfo);
+                    top.shauna.dfs.soldiermanager.bean.Block resBlock = referenceProxy.getBlock(toSendBlock);
+                    if (
+                            resBlock.getContent() != null
+                                    && resBlock.getContent().length == block.getBlockLength()
+                            ) {
+                        res.put(resBlock.getContent());
+                        flag = true;
+                        log.info("下载Block-" + block.getPin() + "成功");
+                        break;
+                    }
+                }catch (Exception e){
+                    log.info("下载Block-" + block.getPin() + "失败，重试中。。。");
                 }
             }
             if (!flag){

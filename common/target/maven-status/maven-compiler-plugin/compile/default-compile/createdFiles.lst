@@ -1,5 +1,6 @@
 top\shauna\dfs\kingmanager\bean\INodeDirectory.class
 top\shauna\dfs\soldiermanager\bean\DataInfo.class
+top\shauna\dfs\kingmanager\bean\Transaction.class
 top\shauna\dfs\type\ClientProtocolType.class
 top\shauna\dfs\soldiermanager\bean\MetaInfo.class
 top\shauna\dfs\starter\Starter.class
@@ -23,10 +24,12 @@ top\shauna\dfs\protocol\ClientProtocol.class
 top\shauna\dfs\config\SoldierPubConfig.class
 top\shauna\dfs\soldiermanager\bean\SoldierResponse.class
 top\shauna\dfs\type\HeartBeatResponseType.class
+top\shauna\dfs\kingmanager\bean\BackupBean.class
 top\shauna\dfs\kingmanager\bean\Block.class
 top\shauna\dfs\kingmanager\bean\ReplicasInfo.class
 top\shauna\dfs\kingmanager\bean\ClientFileInfo.class
 top\shauna\dfs\protocol\SoldierServerProtocol.class
 top\shauna\dfs\threadpool\CommonThreadPool.class
 top\shauna\dfs\storage\util\CheckPointUtil.class
+top\shauna\dfs\type\TransactionType.class
 top\shauna\dfs\protocol\QueenProtocol.class

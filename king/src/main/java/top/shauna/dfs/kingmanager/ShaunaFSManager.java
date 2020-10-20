@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.bean.*;
 import top.shauna.dfs.kingmanager.interfaze.FSManager;
+import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.storage.util.CheckPointUtil;
 import top.shauna.dfs.threadpool.CommonThreadPool;
@@ -180,7 +181,7 @@ public class ShaunaFSManager implements Starter,FSManager {
 
 
     @Override
-    public void uploadFile(ClientFileInfo fileInfo){
+    public void uploadFile(ClientFileInfo fileInfo) throws Exception {
         String path = fileInfo.getPath();
         String dirPath = path.substring(0,1+path.lastIndexOf('/'));
         String fileName = fileInfo.getName();
@@ -205,6 +206,18 @@ public class ShaunaFSManager implements Starter,FSManager {
             newFile.setName(fileName);
             newFile.setParent(directory);
             List<Block> blocks = blocksManager.requireBlocks(newFile.getPath(),fileInfo.getFileLength());
+            KingPubConfig kingPubConfig = KingPubConfig.getInstance();
+            SoldierManager soldierManager = SoldierManager.getInstance();
+            for (Block block : blocks) {
+                List<ReplicasInfo> replicasInfos = soldierManager.getReplicas(kingPubConfig.getReplicas(), kingPubConfig.getBlockSize());
+                if (replicasInfos==null){
+                    throw new Exception("Soldier不足副本要求数量");
+                }else{
+                    block.getReplicasInfos().addAll(replicasInfos);
+                    block.setReplicas(block.getReplicasInfos().size());
+                    block.setStatus(2);
+                }
+            }
             newFile.setBlocks(blocks);
             newFile.setStatus(2);      /** 设置状态码！！！！！2为新建 **/
             directory.getChildren().add(newFile);
@@ -221,6 +234,20 @@ public class ShaunaFSManager implements Starter,FSManager {
         if (newFileKeeper.containsKey(fileInfo.getPath())){
             ClientFileInfo clientFileInfo = newFileKeeper.get(fileInfo.getPath());
             clientFileInfo.getINodeFile().setStatus(1);     /** 设置状态码！！！！！ 1为正常文件**/
+            SoldierManager soldierManager = SoldierManager.getInstance();
+            for (Block block : clientFileInfo.getINodeFile().getBlocks()) {
+                block.setStatus(1);
+                for (ReplicasInfo replicasInfo : block.getReplicasInfos()) {
+                    SoldierInfo soldierInfo = soldierManager.getSoldierInfo(replicasInfo.getId());
+                    BlockInfo blockInfo = new BlockInfo();
+                    blockInfo.setTPS(0F);
+                    blockInfo.setQPS(0F);
+                    blockInfo.setTimeStamp(System.currentTimeMillis());
+                    blockInfo.setFilePath(block.getFilePath());
+                    blockInfo.setPin(block.getPin());
+                    soldierInfo.getBlockInfos().add(blockInfo);
+                }
+            }
             newFileKeeper.remove(fileInfo.getPath());
             fileInfo.setRes(ClientProtocolType.SUCCESS);
         }else{

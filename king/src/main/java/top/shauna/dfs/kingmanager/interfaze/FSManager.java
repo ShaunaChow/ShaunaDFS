@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
  * @E-Mail z1023778132@icloud.com
  */
 public interface FSManager {
-    void uploadFile(ClientFileInfo fileInfo);
+    void uploadFile(ClientFileInfo fileInfo) throws Exception;
 
     void uploadFileOk(ClientFileInfo fileInfo);
 

@@ -64,6 +64,7 @@ public class BlocksManager implements Starter {
                 }
                 sum++;
                 if (block.getReplicas()>0){
+                    block.setStatus(1);
                     ok++;
                     if (block.getReplicas()<KingPubConfig.getInstance().getReplicas()){
                         /**
@@ -88,7 +89,8 @@ public class BlocksManager implements Starter {
 
     private void backup(Block block) {
         int needReplicas = KingPubConfig.getInstance().getReplicas() - block.getReplicas();
-        List<ReplicasInfo> newReplicas = SoldierManager.getInstance().getReplicas(KingPubConfig.getInstance().getReplicas(), block.getBlockLength());
+        SoldierManager soldierManager = SoldierManager.getInstance();
+        List<ReplicasInfo> newReplicas = soldierManager.getReplicas(KingPubConfig.getInstance().getReplicas(), block.getBlockLength());
         if (newReplicas==null){
             log.error("Soldier备份不足");
             return;
@@ -103,7 +105,7 @@ public class BlocksManager implements Starter {
                 needReplicas--;
                 ReplicasInfo goodReplica = good.get((pin++) % good.size());
                 BackupBean backupBean = new BackupBean(block.getFilePath(), block.getPin(), goodReplica, newRep);
-                SoldierInfo soldierInfo = SoldierManager.getInstance().getSoldierInfo(newRep.getId());
+                SoldierInfo soldierInfo = soldierManager.getSoldierInfo(newRep.getId());
                 soldierInfo.getTransactions().add(new Transaction(getBackupId(),TransactionType.BACK_UP,backupBean));
             }
         }

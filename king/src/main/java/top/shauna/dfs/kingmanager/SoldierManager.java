@@ -64,8 +64,8 @@ public class SoldierManager implements Starter {
             SoldierInfo soldierInfo = soldierInfoMap.get(key);
             if (soldierInfo.getOK()==null||!soldierInfo.getOK()){
                 iterator.remove();
-                soldierInfo.pre = soldierInfo.next;
-                soldierInfo.next = soldierInfo.pre;
+                soldierInfo.pre.next = soldierInfo.next;
+                soldierInfo.next.pre = soldierInfo.pre;
                 soldierInfo.next = null;
                 soldierInfo.pre = null;
                 /**
@@ -152,11 +152,12 @@ public class SoldierManager implements Starter {
     }
 
     public List<ReplicasInfo> getReplicas(int nums, long length){
-        if(nums>soldierInfoMap.size()) return null;
+        if(nums > soldierInfoMap.size()) return null;
         int blockSize = KingPubConfig.getInstance().getBlockSize();
         List<ReplicasInfo> res = new ArrayList<>();
         SoldierInfo soldierInfo = header.next;
         for (int i=0;i<nums;i++){
+            if (soldierInfo==tailer) return null;
             if (soldierInfo.getFreeSpace()<length+blockSize*2){
                 soldierInfo = soldierInfo.next;
             }

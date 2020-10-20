@@ -8,6 +8,7 @@ F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\Cli
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\soldiermanager\bean\SoldierResponse.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\config\QueenPubConfig.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\protocol\ClientProtocol.java
+F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\Transaction.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\storage\util\CheckPointUtil.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\INodeFile.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\soldiermanager\bean\MetaInfo.java
@@ -15,6 +16,7 @@ F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\storage\interfaces\S
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\protocol\QueenProtocol.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\protocol\SoldierServerProtocol.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\type\HeartBeatResponseType.java
+F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\type\TransactionType.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\Block.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\soldiermanager\bean\Block.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\starter\Starter.java
@@ -30,3 +32,4 @@ F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\INo
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\type\SoldierResponseType.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\config\SoldierPubConfig.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\interfaze\Writable.java
+F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\BackupBean.java
