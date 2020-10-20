@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @Author Shauna.Chou
@@ -32,62 +33,24 @@ public class Block implements Serializable,Writable {
     @Override
     public boolean write(DataOutputStream out) throws IOException {
         out.writeInt(blockLength);
-        out.writeByte(replicas);
-        for (ReplicasInfo soldierInfo : replicasInfos) {
-            String ip = soldierInfo.getIp();
-            for (String s : ip.split("\\.")) {
-                out.writeByte(Integer.parseInt(s));
-            }
-            String port = soldierInfo.getPort();
-            out.writeShort(Integer.parseInt(port));
-        }
         return true;
     }
 
     public static Block load(DataInputStream in) throws IOException {
         int length = in.readInt();
-        int replicaNums = (in.readByte()+256)%256;
-        List<ReplicasInfo> soldiers = new ArrayList<>(replicaNums);
-        for (int i = 0; i < replicaNums; i++) {
-            ReplicasInfo soldier = new ReplicasInfo();
-            byte[] ip = new byte[4];
-            in.read(ip);
-            soldier.setIp(getIP(ip));
-            int port = (in.readShort()+65536)%65536;
-            soldier.setPort(String.valueOf(port));
-            soldier.setStatus(-1);
-            soldiers.add(soldier);
-        }
         Block block = new Block();
-        block.setReplicas(replicaNums);
-        block.setReplicasInfos(soldiers);
+        block.setReplicas(0);
+        block.setReplicasInfos(new CopyOnWriteArrayList<>());
         block.setBlockLength(length);
         return block;
     }
 
-    private static String getIP(byte[] ip_port){
-        StringBuilder sb = new StringBuilder();
-        for(int i=0;i<4;i++){
-            int num = (ip_port[i] + 256) % 256;
-            if (i!=3){
-                sb.append(num).append(".");
-            }else{
-                sb.append(num);
-            }
-        }
-        return sb.toString();
-    }
-
-    public ReplicasInfo getReplocasInfo(String ip, String port){
+    public ReplicasInfo getReplocasInfo(int id){
         for (ReplicasInfo info : replicasInfos) {
-            if(ip.equals(info.getIp())&&port.equals(info.getPort())) {
+            if(id==info.getId()) {
                 return info;
             }
         }
         return null;
-    }
-
-    public ReplicasInfo getMaster(){
-        return replicasInfos.get(0);
     }
 }

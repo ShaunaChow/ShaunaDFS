@@ -10,7 +10,9 @@ import top.shauna.dfs.kingmanager.bean.SoldierInfo;
  * @E-Mail z1023778132@icloud.com
  */
 public interface HeartBeatProtocol {
+    HeartBeatResponseBean regist(HeartBeatRequestBean heartBeatRequestBean);
+
     HeartBeatResponseBean reportBlocks(HeartBeatRequestBean heartBeatRequestBean);
 
-    HeartBeatResponseBean registerSoldier(HeartBeatRequestBean heartBeatRequestBean);
+    HeartBeatResponseBean heartBeat(HeartBeatRequestBean heartBeatRequestBean);
 }

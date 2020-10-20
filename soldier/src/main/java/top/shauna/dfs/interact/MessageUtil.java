@@ -1,5 +1,9 @@
 package top.shauna.dfs.interact;
 
+import lombok.extern.slf4j.Slf4j;
+import top.shauna.dfs.interact.soldier.SoldierHeartBeat;
+import top.shauna.dfs.kingmanager.bean.Transaction;
+import top.shauna.dfs.soldiermanager.bean.Block;
 import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.bean.HeartBeatResponseBean;
@@ -13,6 +17,7 @@ import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -21,11 +26,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @Date 2020/9/27 15:04
  * @E-Mail z1023778132@icloud.com
  */
+@Slf4j
 public class MessageUtil {
     private static Long currentTime = 0L;
+    private static int idKeeper = -99999999;
+    private static ArrayBlockingQueue<Transaction> undoneTrasactions;
+
+    static {
+        undoneTrasactions = new ArrayBlockingQueue(10);
+    }
 
     public static HeartBeatRequestBean getHeartBeatRequestBean() throws Exception{
         HeartBeatRequestBean heartBeatRequestBean = new HeartBeatRequestBean();
+        heartBeatRequestBean.setId(getIdKeeper());
         heartBeatRequestBean.setIp(InetAddress.getLocalHost().getHostAddress());
         heartBeatRequestBean.setPort(SoldierPubConfig.getInstance().getPort());
         long currentTimeMillis = System.currentTimeMillis();
@@ -36,7 +49,7 @@ public class MessageUtil {
         return heartBeatRequestBean;
     }
 
-    public static List<BlockInfo> getBlocks() throws Exception{
+    public static List<BlockInfo> getBlocks(){
         ConcurrentHashMap<String, MetaInfo> allBlocks = MetaKeeper.getBlocks();
         List<BlockInfo> blockInfos = new ArrayList<>();
         for (String filePath : allBlocks.keySet()) {
@@ -53,23 +66,78 @@ public class MessageUtil {
         return blockInfos;
     }
 
-    public static void dealWithResponse(HeartBeatResponseBean heartBeatResponseBean){
-        Long timeStamp = heartBeatResponseBean.getTimeStamp();
-        if(timeStamp<currentTime){
-            return;
-        }
-        System.out.println(heartBeatResponseBean);
-        List<BlockInfo> blockInfos = heartBeatResponseBean.getBlockInfos();
-        for (BlockInfo blockInfo : blockInfos) {
-            switch (blockInfo.getRes()){
-                case SUCCESS: continue;
-                case NO_SUCH_BLOCK:
-                    MetaInfo metaInfo = MetaKeeper.get(blockInfo.getMetaPath());
-                    MetaKeeper.delete(metaInfo.getMetaPath());
-                    break;
-                case OUT_OF_DATE:
+    public static List<BlockInfo> wrapBlock(Block block){
+        ArrayList<BlockInfo> res = new ArrayList<>(1);
+        BlockInfo blockInfo = new BlockInfo();
+        blockInfo.setFilePath(block.getFilePath());
+        blockInfo.setPin(block.getPin());
+        blockInfo.setTimeStamp(block.getVersion());
+        blockInfo.setQPS(0f);
+        blockInfo.setTPS(0f);
+        res.add(blockInfo);
+        return res;
+    }
 
-            }
+    public static void dealWithRegistResponse(HeartBeatResponseBean heartBeatResponseBean) throws Exception {
+        if (heartBeatResponseBean.getRes()==null){
+            log.error("RES为null！！！");
+            throw new Exception("注测出错");
+        }
+        switch (heartBeatResponseBean.getRes()){
+            case SUCCESS:
+                setIdKeeper(heartBeatResponseBean.getId());
+                log.error("注测ok");
+                break;
+            case UNKNOWN:
+                log.error("未知错误");
+                break;
+        }
+    }
+
+    public static void dealWithBlockResponse(HeartBeatResponseBean heartBeatResponseBean) throws Exception {
+        if (heartBeatResponseBean.getRes()==null){
+            log.error("RES为null！！！");
+            throw new Exception("汇报Block出错");
+        }
+        switch (heartBeatResponseBean.getRes()){
+            case SUCCESS:
+                List<BlockInfo> blockInfos = heartBeatResponseBean.getBlockInfos();
+                for (BlockInfo blockInfo : blockInfos) {
+                    dealWithBlockInfoRes(blockInfo);
+                }
+                break;
+            case UNKNOWN:
+                log.error("未知错误");
+                break;
+        }
+    }
+
+    public static void dealWithHeartBeatResponse(HeartBeatResponseBean heartBeatResponseBean) throws Exception {
+        switch (heartBeatResponseBean.getRes()){
+            case SUCCESS:
+                List<Transaction> transactions = heartBeatResponseBean.getTransactions();
+                undoneTrasactions.addAll(transactions);
+                break;
+            case UNKNOWN:
+                log.error("未知错误！！！");
+                break;
+            case REPORT_BLOCKS_AGAIN:
+                SoldierHeartBeat soldierHeartBeat = SoldierHeartBeat.getInstance();
+                soldierHeartBeat.regist();
+                soldierHeartBeat.reportAllBlocks();
+                break;
+        }
+    }
+
+    private static void dealWithBlockInfoRes(BlockInfo blockInfo){
+        switch (blockInfo.getRes()){
+            case SUCCESS: break;
+            case NO_SUCH_BLOCK:
+                MetaInfo metaInfo = MetaKeeper.get(blockInfo.getMetaPath());
+                MetaKeeper.delete(metaInfo.getMetaPath());
+                break;
+            case OUT_OF_DATE:
+
         }
     }
 
@@ -99,5 +167,17 @@ public class MessageUtil {
             }else break;
         }
         return nums/10f;
+    }
+
+    public synchronized static int getIdKeeper() {
+        return idKeeper;
+    }
+
+    public synchronized static void setIdKeeper(int idKeeper) {
+        MessageUtil.idKeeper = idKeeper;
+    }
+
+    public static ArrayBlockingQueue<Transaction> getUndoneTrasactions() {
+        return undoneTrasactions;
     }
 }

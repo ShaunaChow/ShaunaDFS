@@ -17,6 +17,24 @@ public class HeartBeatProtocolImpl implements HeartBeatProtocol {
     private HeartBeatProtocolService heartBeatProtocolService = new HeartBeatProtocolService();
 
     @Override
+    public HeartBeatResponseBean regist(HeartBeatRequestBean heartBeatRequestBean) {
+        HeartBeatResponseBean heartBeatResponseBean = new HeartBeatResponseBean();
+        heartBeatResponseBean.setIp(heartBeatRequestBean.getIp());
+        heartBeatResponseBean.setPort(heartBeatRequestBean.getPort());
+        try {
+            heartBeatProtocolService.regist(heartBeatRequestBean);
+        } catch (Exception e) {
+            log.error("注测出错："+e.getMessage());
+            heartBeatResponseBean.setRes(HeartBeatResponseType.UNKNOWN);
+            return heartBeatResponseBean;
+        }
+        heartBeatResponseBean.setId(heartBeatRequestBean.getId());
+        heartBeatResponseBean.setTimeStamp(System.currentTimeMillis());
+        heartBeatResponseBean.setRes(HeartBeatResponseType.SUCCESS);
+        return heartBeatResponseBean;
+    }
+
+    @Override
     public HeartBeatResponseBean reportBlocks(HeartBeatRequestBean heartBeatRequestBean) {
         HeartBeatResponseBean heartBeatResponseBean = new HeartBeatResponseBean();
         heartBeatResponseBean.setIp(heartBeatRequestBean.getIp());
@@ -35,16 +53,23 @@ public class HeartBeatProtocolImpl implements HeartBeatProtocol {
     }
 
     @Override
-    public HeartBeatResponseBean registerSoldier(HeartBeatRequestBean heartBeatRequestBean) {
+    public HeartBeatResponseBean heartBeat(HeartBeatRequestBean heartBeatRequestBean) {
         HeartBeatResponseBean heartBeatResponseBean = new HeartBeatResponseBean();
         try {
-            heartBeatProtocolService.registerSoldier(heartBeatRequestBean);
+            if (heartBeatProtocolService.heartBeat(heartBeatRequestBean)) {
+                heartBeatResponseBean.setTimeStamp(System.currentTimeMillis());
+                heartBeatResponseBean.setBlockInfos(heartBeatRequestBean.getBlockInfos());
+                heartBeatResponseBean.setTransactions(heartBeatRequestBean.getTransactions());
+                heartBeatResponseBean.setRes(HeartBeatResponseType.SUCCESS);
+            }else{
+                heartBeatResponseBean.setTimeStamp(System.currentTimeMillis());
+                heartBeatResponseBean.setRes(HeartBeatResponseType.REPORT_BLOCKS_AGAIN);
+            }
         } catch (Exception e) {
-            log.error("注测soldier出错："+e.getMessage());
+            log.error("心跳出错："+e.getMessage());
             heartBeatResponseBean.setRes(HeartBeatResponseType.UNKNOWN);
             return heartBeatResponseBean;
         }
-        heartBeatResponseBean.setRes(HeartBeatResponseType.SUCCESS);
         return heartBeatResponseBean;
     }
 

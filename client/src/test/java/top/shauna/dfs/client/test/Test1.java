@@ -11,8 +11,14 @@ import top.shauna.rpc.config.PubConfig;
 import top.shauna.rpc.service.ShaunaRPCHandler;
 
 import java.io.*;
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Author Shauna.Chou
@@ -105,7 +111,7 @@ public class Test1 {
     public void test433() throws IOException {
         preparePubConfig();
 
-        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\jdk-8u201-windows-x64.exe",
+        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\2019优秀数模论文.zip",
                 "rw").getChannel();
 //      jdk-8u201-windows-x64.exe
 //      2019优秀数模论文.zip
@@ -118,7 +124,7 @@ public class Test1 {
 
         ByteBuffer byteBuffer = clientService.downloadFile("/shauna/ok22.txt");
 
-        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\jdk-8u201-windows-x64.exe",
+        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\2019优秀数模论文.zip",
                 "rw").getChannel();
 
         fileChannel2.write(byteBuffer);
@@ -126,6 +132,7 @@ public class Test1 {
         fileChannel.close();
         fileChannel2.close();
 
+//        clientService.rmDir("/shauna/");
 //        boolean b1 = clientService.rmDir("/shauna");
 //        boolean b1 = clientService.rmFile("/shauna/ok22.txt");
 //        System.out.println(b1);
@@ -165,5 +172,14 @@ public class Test1 {
         System.out.println(file.getTotalSpace()/1024.0/1024.0/1024.0);
 
         System.out.println(file.getFreeSpace()/1024.0/1024.0/1024.0);
+
+        Map<String,Integer> map = new ConcurrentHashMap<>();
+        map.put("1",1);
+        map.put("2",2);
+        map.put("3",3);
+        for (String key:map.keySet()){
+            map.remove(key);
+        }
+        System.out.println(map.get("1"));
     }
 }

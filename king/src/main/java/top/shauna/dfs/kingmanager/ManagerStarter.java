@@ -1,6 +1,7 @@
 package top.shauna.dfs.kingmanager;
 
 import top.shauna.dfs.config.KingPubConfig;
+import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
 import top.shauna.dfs.protocol.QueenProtocol;
 import top.shauna.dfs.queenserver.impl.QueenProtocolImpl;
@@ -48,5 +49,6 @@ public class ManagerStarter implements Starter {
             );
         });
         BlocksManager.getInstance().onStart();
+        SoldierManager.getInstance().onStart();
     }
 }

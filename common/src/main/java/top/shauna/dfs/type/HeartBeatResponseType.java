@@ -14,7 +14,7 @@ public enum HeartBeatResponseType {
     SUCCESS(200,"OK"),
     NO_SUCH_BLOCK(401,"块不存在"),
     OUT_OF_DATE(403,"文件过期"),
-//    ALLREADY_EXITS(402,"路径已经存在"),
+    REPORT_BLOCKS_AGAIN(402,"请重新汇报blocks"),
 //    IT_IS_NOT_AN_EMPTY_DIR(404,"路径为文件"),
     UNKNOWN(499,"未知错误");
 

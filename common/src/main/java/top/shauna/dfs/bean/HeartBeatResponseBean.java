@@ -1,6 +1,7 @@
 package top.shauna.dfs.bean;
 
 import lombok.*;
+import top.shauna.dfs.kingmanager.bean.Transaction;
 import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 import top.shauna.dfs.type.HeartBeatResponseType;
 
@@ -18,9 +19,11 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class HeartBeatResponseBean implements Serializable {
+    private Integer id;
     private String ip;
     private String port;
     private Long timeStamp;
     private List<BlockInfo> blockInfos;
     private HeartBeatResponseType res;
+    private List<Transaction> transactions;
 }

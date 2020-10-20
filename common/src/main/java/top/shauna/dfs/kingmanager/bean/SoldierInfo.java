@@ -16,12 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class SoldierInfo {
+    private Integer id;
     private String ip;
     private String port;
     private Boolean OK;
     private Long timeStamp;
     private Long freeSpace;
     private List<BlockInfo> blockInfos;
+    private List<Transaction> transactions;
     public SoldierInfo next;
     public SoldierInfo pre;
 

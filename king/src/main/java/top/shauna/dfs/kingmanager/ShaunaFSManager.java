@@ -11,7 +11,6 @@ import top.shauna.dfs.type.ClientProtocolType;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -175,12 +174,8 @@ public class ShaunaFSManager implements Starter,FSManager {
             }
         }else{
             INodeFile file = (INodeFile) node;
-            registBlocks(file.getPath(),file.getBlocks());
+            blocksManager.registBlocks(file.getPath(),file.getBlocks());
         }
-    }
-
-    private void registBlocks(String filePath, List<Block> blockList) {
-        blocksManager.registBlocks(filePath,blockList);
     }
 
 
@@ -211,10 +206,10 @@ public class ShaunaFSManager implements Starter,FSManager {
             newFile.setParent(directory);
             List<Block> blocks = blocksManager.requireBlocks(newFile.getPath(),fileInfo.getFileLength());
             newFile.setBlocks(blocks);
-            newFile.setStatus(Integer.MAX_VALUE);      /** 设置状态码！！！！！ **/
+            newFile.setStatus(2);      /** 设置状态码！！！！！2为新建 **/
             directory.getChildren().add(newFile);
             fileInfo.setINodeFile(newFile);
-            registBlocks(newFile.getPath(),newFile.getBlocks());
+            blocksManager.registBlocks(newFile.getPath(),newFile.getBlocks());
             fileInfo.setRes(ClientProtocolType.SUCCESS);
             fileInfo.setTimeStamp(System.currentTimeMillis());
             newFileKeeper.put(path,fileInfo);
@@ -225,7 +220,7 @@ public class ShaunaFSManager implements Starter,FSManager {
     public void uploadFileOk(ClientFileInfo fileInfo) {
         if (newFileKeeper.containsKey(fileInfo.getPath())){
             ClientFileInfo clientFileInfo = newFileKeeper.get(fileInfo.getPath());
-            clientFileInfo.getINodeFile().setStatus(1);     /** 设置状态码！！！！！ **/
+            clientFileInfo.getINodeFile().setStatus(1);     /** 设置状态码！！！！！ 1为正常文件**/
             newFileKeeper.remove(fileInfo.getPath());
             fileInfo.setRes(ClientProtocolType.SUCCESS);
         }else{

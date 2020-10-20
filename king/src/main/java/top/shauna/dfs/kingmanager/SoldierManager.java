@@ -1,12 +1,19 @@
 package top.shauna.dfs.kingmanager;
 
+import top.shauna.dfs.config.KingPubConfig;
+import top.shauna.dfs.kingmanager.bean.Block;
 import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
 import top.shauna.dfs.kingmanager.bean.SoldierInfo;
+import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 import top.shauna.dfs.starter.Starter;
+import top.shauna.dfs.threadpool.CommonThreadPool;
+import top.shauna.dfs.type.HeartBeatResponseType;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author Shauna.Chou
@@ -14,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @E-Mail z1023778132@icloud.com
  */
 public class SoldierManager implements Starter {
-    private static volatile SoldierManager soldierManager;
+    private static volatile SoldierManager soldierManager = new SoldierManager();
 
     private SoldierManager(){
         soldierInfoMap = new ConcurrentHashMap<>();
@@ -22,43 +29,87 @@ public class SoldierManager implements Starter {
         tailer = new SoldierInfo();
         header.next = tailer;
         tailer.pre = header;
+        soldiersStatus = -1;
+        genId = 0;
     }
 
     public static SoldierManager getInstance(){
-        if(soldierManager==null){
-            synchronized (SoldierManager.class){
-                if(soldierManager==null){
-                    soldierManager = new SoldierManager();
-                }
-            }
-        }
         return soldierManager;
     }
 
-    private ConcurrentHashMap<String,SoldierInfo> soldierInfoMap;
+    private ConcurrentHashMap<Integer,SoldierInfo> soldierInfoMap;
     private SoldierInfo header;
     private SoldierInfo tailer;
+    private volatile int soldiersStatus;
+    private int genId;
 
     @Override
     public void onStart() throws Exception {
-
+        CommonThreadPool.threadPool.execute(()->{
+            while(true){
+                try {
+                    doScan();
+                    TimeUnit.SECONDS.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    public SoldierInfo getSoldierInfo(String ip_port){
-        return soldierInfoMap.get(ip_port);
+    private void doScan(){
+        Iterator<Integer> iterator = soldierInfoMap.keySet().iterator();
+        while(iterator.hasNext()){
+            Integer key = iterator.next();
+            SoldierInfo soldierInfo = soldierInfoMap.get(key);
+            if (soldierInfo.getOK()==null||!soldierInfo.getOK()){
+                iterator.remove();
+                soldierInfo.pre = soldierInfo.next;
+                soldierInfo.next = soldierInfo.pre;
+                soldierInfo.next = null;
+                soldierInfo.pre = null;
+                /**
+                 * 转移备份(标记)
+                 * **/
+                Backup(soldierInfo);
+            }
+            long cur = System.currentTimeMillis();
+            if (cur-soldierInfo.getTimeStamp() >= KingPubConfig.getInstance().getSoldierFaultTime()*1000){
+                soldierInfo.setOK(false);
+            }
+        }
     }
 
-    public void registSoldier(String ip_port,SoldierInfo soldierInfo){
-        if(soldierInfoMap.containsKey(ip_port)){
-            SoldierInfo info = soldierInfoMap.get(ip_port);
+    private void Backup(SoldierInfo soldierInfo) {
+        for (BlockInfo blockInfo : soldierInfo.getBlockInfos()) {
+            Block block = BlocksManager.getInstance().getBlock(blockInfo.getFilePath(), blockInfo.getPin());
+            if(block==null) continue;
+            else{
+                ReplicasInfo replocasInfo = block.getReplocasInfo(soldierInfo.getId());
+                if (replocasInfo==null) continue;
+                block.getReplicasInfos().remove(replocasInfo);
+                block.setReplicas(block.getReplicas()-1);
+            }
+        }
+    }
+
+    public SoldierInfo getSoldierInfo(Integer id){
+        return soldierInfoMap.get(id);
+    }
+
+    public void registSoldier(int id,SoldierInfo soldierInfo){
+        if(soldierInfoMap.containsKey(id)){
+            SoldierInfo info = soldierInfoMap.get(id);
             info.setBlockInfos(soldierInfo.getBlockInfos());
             info.setOK(soldierInfo.getOK());
             info.setTimeStamp(soldierInfo.getTimeStamp());
-            adjustSoldierList(info);
+            info.setFreeSpace(soldierInfo.getFreeSpace());
+            info.setIp(soldierInfo.getIp());
+            info.setPort(soldierInfo.getPort());
         }else{
-            soldierInfoMap.put(ip_port, soldierInfo);
-            addIntoList(soldierInfo);
+            soldierInfoMap.put(id, soldierInfo);
         }
+        addIntoList(soldierInfo);
     }
 
     public void adjustSoldierList(SoldierInfo soldierInfo){
@@ -100,12 +151,18 @@ public class SoldierManager implements Starter {
         }
     }
 
-    public List<ReplicasInfo> getReplicas(int nums){
+    public List<ReplicasInfo> getReplicas(int nums, long length){
         if(nums>soldierInfoMap.size()) return null;
+        int blockSize = KingPubConfig.getInstance().getBlockSize();
         List<ReplicasInfo> res = new ArrayList<>();
         SoldierInfo soldierInfo = header.next;
         for (int i=0;i<nums;i++){
+            if (soldierInfo.getFreeSpace()<length+blockSize*2){
+                soldierInfo = soldierInfo.next;
+            }
+            if (soldierInfo==tailer) return null;
             ReplicasInfo replicasInfo = new ReplicasInfo();
+            replicasInfo.setId(soldierInfo.getId());
             replicasInfo.setTimeStamp(System.currentTimeMillis());
             replicasInfo.setStatus(-1);
             replicasInfo.setTPS(0f);
@@ -113,9 +170,14 @@ public class SoldierManager implements Starter {
             replicasInfo.setIp(soldierInfo.getIp());
             replicasInfo.setPort(soldierInfo.getPort());
             if(i==0) replicasInfo.setMaster(true);
+            else replicasInfo.setMaster(false);
             res.add(replicasInfo);
             soldierInfo = soldierInfo.next;
         }
         return res;
+    }
+
+    public synchronized int getGenId() {
+        return genId++;
     }
 }

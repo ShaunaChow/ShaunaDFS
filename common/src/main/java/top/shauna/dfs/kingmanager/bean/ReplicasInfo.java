@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Setter
 @Getter
 public class ReplicasInfo implements Serializable {
+    private Integer id;
     private String ip;
     private String port;
     private Integer status;
@@ -20,4 +21,17 @@ public class ReplicasInfo implements Serializable {
     private Boolean master;
     private Float QPS;
     private Float TPS;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this==obj) return true;
+        if (obj==null) return false;
+        if (obj instanceof ReplicasInfo){
+            ReplicasInfo replicasInfo = (ReplicasInfo) obj;
+            if (replicasInfo.getIp().equals(this.ip)&&replicasInfo.getPort().equals(this.port)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

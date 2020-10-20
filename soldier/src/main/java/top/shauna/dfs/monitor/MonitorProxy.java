@@ -16,9 +16,21 @@ import java.lang.reflect.Proxy;
  */
 public class MonitorProxy implements InvocationHandler {
     private BlockHandler abstractBlockHandler;
+    private static volatile MonitorProxy monitorProxy;
 
-    public MonitorProxy(){
+    private MonitorProxy(){
         abstractBlockHandler = new LocalBlockHandler();
+    }
+
+    public static MonitorProxy getInstance(){
+        if (monitorProxy==null){
+            synchronized (MonitorProxy.class){
+                if (monitorProxy==null){
+                    monitorProxy = new MonitorProxy();
+                }
+            }
+        }
+        return monitorProxy;
     }
 
     public MonitorProxy(BlockHandler blockHandler){

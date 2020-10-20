@@ -1,15 +1,16 @@
 package top.shauna.dfs.interact.soldier.service;
 
 import top.shauna.dfs.bean.HeartBeatRequestBean;
+import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.BlocksManager;
 import top.shauna.dfs.kingmanager.SoldierManager;
-import top.shauna.dfs.kingmanager.bean.Block;
-import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
-import top.shauna.dfs.kingmanager.bean.SoldierInfo;
+import top.shauna.dfs.kingmanager.bean.*;
 import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 import top.shauna.dfs.type.HeartBeatResponseType;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @Author Shauna.Chou
@@ -26,53 +27,87 @@ public class HeartBeatProtocolService {
     }
 
     public void reportBlocks(HeartBeatRequestBean heartBeatRequestBean) throws Exception {
+        int id = heartBeatRequestBean.getId();
         List<BlockInfo> blockInfos = heartBeatRequestBean.getBlockInfos();
+        List<BlockInfo> newBlockInfos = new CopyOnWriteArrayList<>();
         for (BlockInfo blockInfo : blockInfos) {
             Block block = blocksManager.getBlock(blockInfo.getFilePath(), blockInfo.getPin());
             if(block==null) blockInfo.setRes(HeartBeatResponseType.NO_SUCH_BLOCK);
             else{
-                ReplicasInfo replocasInfo = block.getReplocasInfo(heartBeatRequestBean.getIp(), heartBeatRequestBean.getPort());
-                if(replocasInfo==null) blockInfo.setRes(HeartBeatResponseType.NO_SUCH_BLOCK);
-                else {
-                    if (blockInfo.getTimeStamp()<replocasInfo.getTimeStamp()) {
-                        blockInfo.setRes(HeartBeatResponseType.OUT_OF_DATE);
-                        ReplicasInfo master = block.getMaster();
-                        blockInfo.setMsg("master#"+master.getIp()+":"+master.getPort());
-                    }else{
-                        replocasInfo.setStatus(1);
-                        replocasInfo.setTimeStamp(blockInfo.getTimeStamp());
-                        replocasInfo.setQPS(blockInfo.getQPS());
-                        replocasInfo.setTPS(blockInfo.getTPS());
+                ReplicasInfo replicasInfo = block.getReplocasInfo(heartBeatRequestBean.getId());
+                if(replicasInfo==null) {    /** 不存在 **/
+                    if(block.getReplicas()>= KingPubConfig.getInstance().getReplicas()){    /** 备份条件满足 不需要创建 **/
+                        blockInfo.setRes(HeartBeatResponseType.NO_SUCH_BLOCK);
+                    }else{                  /** 创建 **/
+                        replicasInfo = new ReplicasInfo();
+                        replicasInfo.setId(id);
+                        replicasInfo.setStatus(1);
+                        replicasInfo.setIp(heartBeatRequestBean.getIp());
+                        replicasInfo.setPort(heartBeatRequestBean.getPort());
+                        replicasInfo.setTimeStamp(blockInfo.getTimeStamp());
+                        replicasInfo.setQPS(blockInfo.getQPS());
+                        replicasInfo.setTPS(blockInfo.getTPS());
+                        block.getReplicasInfos().add(replicasInfo);
+                        block.setReplicas(block.getReplicas()+1);
                         blockInfo.setRes(HeartBeatResponseType.SUCCESS);
+                        newBlockInfos.add(blockInfo);
                     }
+                }else {     /** 更新操作 **/
+                    replicasInfo.setId(id);
+                    replicasInfo.setStatus(1);
+                    replicasInfo.setTimeStamp(blockInfo.getTimeStamp());
+                    replicasInfo.setQPS(blockInfo.getQPS());
+                    replicasInfo.setTPS(blockInfo.getTPS());
+                    blockInfo.setRes(HeartBeatResponseType.SUCCESS);
+                    newBlockInfos.add(blockInfo);
                 }
             }
         }
+        SoldierInfo tmp = soldierManager.getSoldierInfo(id);
+        if (heartBeatRequestBean.getReportFlag()==null||heartBeatRequestBean.getReportFlag()==0){   /** 整体汇报 **/
+            tmp.setBlockInfos(newBlockInfos);
+        }else{      /** 增量汇报 **/
+            tmp.getBlockInfos().addAll(newBlockInfos);
+        }
     }
 
-    public void registerSoldier(HeartBeatRequestBean heartBeatRequestBean) {
-        String ip_port = heartBeatRequestBean.getIp() + ":" + heartBeatRequestBean.getPort();
-        SoldierInfo tmp = soldierManager.getSoldierInfo(ip_port);
+    public boolean heartBeat(HeartBeatRequestBean heartBeatRequestBean) {
+        int id = heartBeatRequestBean.getId();
+        SoldierInfo tmp = soldierManager.getSoldierInfo(id);
         if (tmp == null) {
-            SoldierInfo info = new SoldierInfo(
-                    heartBeatRequestBean.getIp(),
-                    heartBeatRequestBean.getPort(),
-                    true,
-                    heartBeatRequestBean.getTimeStamp(),
-                    heartBeatRequestBean.getFreeSpace(),
-                    heartBeatRequestBean.getBlockInfos(),
-                    null,
-                    null);
-            soldierManager.registSoldier(ip_port, info);
+            return false;
         } else {
             tmp.setOK(true);
             if (tmp.getTimeStamp() < heartBeatRequestBean.getTimeStamp()) {
-                tmp.setBlockInfos(heartBeatRequestBean.getBlockInfos());
-                tmp.setTimeStamp(heartBeatRequestBean.getTimeStamp());
+                tmp.setTimeStamp(System.currentTimeMillis());
                 tmp.setFreeSpace(heartBeatRequestBean.getFreeSpace());
+                ArrayList<Transaction> transactions = new ArrayList<>();
+                if (tmp.getTransactions()!=null&&tmp.getTransactions().size()!=0) {
+                    transactions.addAll(tmp.getTransactions());
+                    tmp.getTransactions().clear();
+                }
+                heartBeatRequestBean.setTransactions(transactions);
                 soldierManager.adjustSoldierList(tmp);
             }
+            return true;
         }
+    }
+
+    public void regist(HeartBeatRequestBean heartBeatRequestBean) {
+        int id = soldierManager.getGenId();
+        SoldierInfo info = new SoldierInfo(
+                id,
+                heartBeatRequestBean.getIp(),
+                heartBeatRequestBean.getPort(),
+                true,
+                System.currentTimeMillis(),
+                heartBeatRequestBean.getFreeSpace(),
+                new CopyOnWriteArrayList<>(),
+                new CopyOnWriteArrayList<>(),
+                null,
+                null);
+        soldierManager.registSoldier(id, info);
+        heartBeatRequestBean.setId(id);
     }
 }
 

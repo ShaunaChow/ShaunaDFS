@@ -97,7 +97,7 @@ public class Test1 {
         block.setVersion(1L);
         SoldierPubConfig instance = SoldierPubConfig.getInstance();
         instance.setRootDir("F:\\java项目\\ShaunaDfsTmp");
-        BlockHandler abstractBlockHandler = new MonitorProxy().getProxy();
+        BlockHandler abstractBlockHandler = MonitorProxy.getInstance().getProxy();
         abstractBlockHandler.write(block);
 
         System.out.println("====================================");

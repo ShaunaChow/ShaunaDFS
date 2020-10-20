@@ -37,6 +37,7 @@ public class KingConfig implements Starter {
         kingPubConfig.setBlocksFaultRate(Double.parseDouble(properties.getProperty("blocksFaultRate","0.9")));
         kingPubConfig.setBlockScanTime(Integer.parseInt(properties.getProperty("blockScanTime","4")));
         kingPubConfig.setFileUploadTime(Integer.parseInt(properties.getProperty("fileUploadTime","5")));
+        kingPubConfig.setSoldierFaultTime(Integer.parseInt(properties.getProperty("soldierFaultTime","5")));
         if (properties.getProperty("threadNums")!=null) {
             kingPubConfig.setThreadPoolNums(Integer.valueOf(properties.getProperty("threadNums")));
         }

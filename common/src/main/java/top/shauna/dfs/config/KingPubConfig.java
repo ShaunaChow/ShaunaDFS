@@ -34,6 +34,15 @@ public class KingPubConfig {
     private double blocksFaultRate;
     private Integer blockScanTime;
     private Integer fileUploadTime;
+    private Integer soldierFaultTime;
+
+    public Integer getSoldierFaultTime() {
+        return soldierFaultTime;
+    }
+
+    public void setSoldierFaultTime(Integer soldierFaultTime) {
+        this.soldierFaultTime = soldierFaultTime;
+    }
 
     public Integer getFileUploadTime() {
         return fileUploadTime;

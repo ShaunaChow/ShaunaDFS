@@ -1,10 +1,11 @@
 package top.shauna.dfs.kingmanager;
 
+import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
-import top.shauna.dfs.kingmanager.bean.Block;
-import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
+import top.shauna.dfs.kingmanager.bean.*;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.threadpool.CommonThreadPool;
+import top.shauna.dfs.type.TransactionType;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,42 +17,36 @@ import java.util.concurrent.TimeUnit;
  * @Date 2020/10/10 16:33
  * @E-Mail z1023778132@icloud.com
  */
+@Slf4j
 public class BlocksManager implements Starter {
-    private static volatile BlocksManager blocksManager;
+    private static volatile BlocksManager blocksManager = new BlocksManager();
 
     private BlocksManager(){
         blocksMap = new ConcurrentHashMap<>();
-        soldierManager = SoldierManager.getInstance();
         blockStatus = -1;
+        backupId = 0;
     }
 
     public static BlocksManager getInstance(){
-        if(blocksManager==null){
-            synchronized (BlocksManager.class){
-                if(blocksManager==null){
-                    blocksManager = new BlocksManager();
-                }
-            }
-        }
         return blocksManager;
     }
 
     private ConcurrentHashMap<String,List<Block>> blocksMap;
-    private SoldierManager soldierManager;
 
     public int getBlockStatus() {
         return blockStatus;
     }
 
     private volatile int blockStatus;
+    private int backupId;
 
     @Override
     public void onStart() throws Exception {
         CommonThreadPool.threadPool.execute(()->{
-            while(blockStatus<0){
-                scanBlocks();
+            while(true){                /** 日常循环，检查坏块哦 **/
                 try {
                     TimeUnit.SECONDS.sleep(KingPubConfig.getInstance().getBlockScanTime());
+                    scanReplicas();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -59,21 +54,84 @@ public class BlocksManager implements Starter {
         });
     }
 
+    private void scanReplicas() {
+        double blocksFaultRate = KingPubConfig.getInstance().getBlocksFaultRate();
+        int sum=0, ok=0;
+        for (List<Block> blocks : blocksMap.values()) {
+            for (Block block : blocks) {
+                if (block.getStatus()==2){  /** 新建文件跳过 **/
+                    continue;
+                }
+                sum++;
+                if (block.getReplicas()>0){
+                    ok++;
+                    if (block.getReplicas()<KingPubConfig.getInstance().getReplicas()){
+                        /**
+                         * 转移备份(挂载)
+                         * **/
+                        if (blockStatus>=0) {
+                            backup(block);
+                        }
+                    }
+                }else{
+                    log.error("Block失效！！！"+block.toString());
+                    block.setStatus(-1);
+                }
+            }
+        }
+        if (sum==0||(((double)ok/(double)sum)>=blocksFaultRate)) {
+            blockStatus = 1;
+        }else{
+            blockStatus = -1;
+        }
+    }
+
+    private void backup(Block block) {
+        int needReplicas = KingPubConfig.getInstance().getReplicas() - block.getReplicas();
+        List<ReplicasInfo> newReplicas = SoldierManager.getInstance().getReplicas(KingPubConfig.getInstance().getReplicas(), block.getBlockLength());
+        if (newReplicas==null){
+            log.error("Soldier备份不足");
+            return;
+        }
+        List<ReplicasInfo> good = block.getReplicasInfos();
+        int pin = 0;
+        for (int i=0;i<newReplicas.size()&&needReplicas>0;i++) {
+            ReplicasInfo newRep = newReplicas.get(i);
+            if(isExits(good,newRep)){
+                continue;
+            }else{
+                needReplicas--;
+                ReplicasInfo goodReplica = good.get((pin++) % good.size());
+                BackupBean backupBean = new BackupBean(block.getFilePath(), block.getPin(), goodReplica, newRep);
+                SoldierInfo soldierInfo = SoldierManager.getInstance().getSoldierInfo(newRep.getId());
+                soldierInfo.getTransactions().add(new Transaction(getBackupId(),TransactionType.BACK_UP,backupBean));
+            }
+        }
+    }
+
+    private boolean isExits(List<ReplicasInfo> replicas, ReplicasInfo tar){
+        for (ReplicasInfo goodReplica : replicas) {
+            if (goodReplica.getId()==tar.getId()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Block> requireBlocks(String filePath, long fileLength){
         KingPubConfig kingPubConfig = KingPubConfig.getInstance();
         int blockSize = kingPubConfig.getBlockSize();
-        int replicas = kingPubConfig.getReplicas();
         int pin = 0;
         CopyOnWriteArrayList<Block> blocks = new CopyOnWriteArrayList<>();
         while(fileLength>0){
             Block block = new Block();
             block.setFilePath(filePath);
             block.setPin(pin++);
-            block.setReplicas(replicas);
-            block.setBlockLength(fileLength>blockSize?blockSize:(int)fileLength);
+            block.setReplicas(0);
+            int length = fileLength > blockSize ? blockSize : (int) fileLength;
+            block.setBlockLength(length);
             block.setTimeStamp(System.currentTimeMillis());
-            List<ReplicasInfo> replicasInfos = soldierManager.getReplicas(replicas);
-            block.setReplicasInfos(replicasInfos);
+            block.setReplicasInfos(new CopyOnWriteArrayList<>());
             blocks.add(block);
             fileLength -= blockSize;
         }
@@ -88,19 +146,6 @@ public class BlocksManager implements Starter {
     }
 
     public void registBlocks(String filePath, List<Block> blockList){
-        for (int i=0;i<blockList.size();i++) {
-            Block block = blockList.get(i);
-            block.setPin(i);
-            block.setFilePath(filePath);
-//            block.setTimeStamp(System.currentTimeMillis());
-            int status = -1;
-            for (ReplicasInfo replicasInfo : block.getReplicasInfos()) {
-                if (replicasInfo.getStatus()!=null&&replicasInfo.getStatus()>=0){
-                    status++;
-                }
-            }
-            block.setStatus(status<0?status:(status+1));
-        }
         blocksMap.put(filePath,blockList);
     }
 
@@ -108,37 +153,7 @@ public class BlocksManager implements Starter {
         blocksMap.remove(filePath);
     }
 
-    private void scanBlocks(){
-        double blocksFaultRate = KingPubConfig.getInstance().getBlocksFaultRate();
-        int sum=0, ok=0;
-        for (List<Block> blocks : blocksMap.values()) {
-            for (Block block : blocks) {
-                sum++;
-                boolean flag = false;
-                int okCounter = -1;
-                for (ReplicasInfo replicasInfo : block.getReplicasInfos()) {
-                    if (replicasInfo.getStatus()!=null){
-                        Integer status = replicasInfo.getStatus();
-                        status--;
-                        if (status>=0){
-                            okCounter++;
-                            flag = true;
-                        }else if (status<-10){
-                            /** 此处要做副本处理操作！！！ **/
-                        }
-                        replicasInfo.setStatus(status);
-                    }
-                }
-                block.setStatus(okCounter);
-                if (flag){
-                    ok++;
-                }
-            }
-        }
-        if (sum==0||(((double)ok/(double)sum)>=blocksFaultRate)) {
-            blockStatus = 1;
-        }else{
-            blockStatus = -1;
-        }
+    public synchronized int getBackupId() {
+        return backupId++;
     }
 }

@@ -1,6 +1,7 @@
 package top.shauna.dfs.soldierserver.protocolimpl;
 
 import lombok.extern.slf4j.Slf4j;
+import top.shauna.dfs.interact.soldier.SoldierHeartBeat;
 import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
 import top.shauna.dfs.soldiermanager.bean.Block;
 import top.shauna.dfs.block.interfaces.BlockHandler;
@@ -25,7 +26,7 @@ public class SoldierServerProtocolImpl implements SoldierServerProtocol {
     private ConcurrentHashMap<String,SoldierServerProtocol> connectKeeper;
 
     public SoldierServerProtocolImpl(){
-        blockHandler = new MonitorProxy().getProxy();
+        blockHandler = MonitorProxy.getInstance().getProxy();
         connectKeeper = new ConcurrentHashMap<>();
     }
 
@@ -49,6 +50,9 @@ public class SoldierServerProtocolImpl implements SoldierServerProtocol {
         SoldierResponse soldierResponse = new SoldierResponse();
         try {
             blockHandler.write(block);
+            /** 触发一次汇报Block **/
+            SoldierHeartBeat.getInstance().reportBlock(block);
+            /************************/
             List<ReplicasInfo> replicasInfos = block.getReplicasInfos();
             if (replicasInfos==null||replicasInfos.size()==0) {
                 soldierResponse.setRes(SoldierResponseType.SUCCESS);
