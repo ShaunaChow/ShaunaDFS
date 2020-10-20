@@ -7,7 +7,6 @@ import top.shauna.dfs.kingmanager.bean.SoldierInfo;
 import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.threadpool.CommonThreadPool;
-import top.shauna.dfs.type.HeartBeatResponseType;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,7 +48,7 @@ public class SoldierManager implements Starter {
             while(true){
                 try {
                     doScan();
-                    TimeUnit.SECONDS.sleep(5);
+                    TimeUnit.SECONDS.sleep(KingPubConfig.getInstance().getSoldierScanTime());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

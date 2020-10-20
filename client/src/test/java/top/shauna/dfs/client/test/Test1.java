@@ -120,7 +120,7 @@ public class Test1 {
 
         clientService.mkdir("/shauna/");
 
-//        clientService.uploadFile("/shauna/ok22.txt", fileChannel);
+        clientService.uploadFile("/shauna/ok22.txt", fileChannel);
 
         ByteBuffer byteBuffer = clientService.downloadFile("/shauna/ok22.txt");
 

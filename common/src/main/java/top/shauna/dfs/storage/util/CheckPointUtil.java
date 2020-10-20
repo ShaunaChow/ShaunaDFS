@@ -174,6 +174,7 @@ public class CheckPointUtil {
                 iNodes.add(iNode);
             }
             directory.setChildren(iNodes);
+            directory.setStatus(1);
             return directory;
         }else{                  /** 文件 **/
             INodeFile file = new INodeFile();
@@ -187,6 +188,7 @@ public class CheckPointUtil {
                 blockList.add(load);
             }
             file.setBlocks(blockList);
+            file.setStatus(1);
             return file;
         }
     }

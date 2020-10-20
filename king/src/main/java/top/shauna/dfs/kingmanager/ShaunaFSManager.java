@@ -110,7 +110,7 @@ public class ShaunaFSManager implements Starter,FSManager {
         }
 
         long now = System.currentTimeMillis();
-        Integer uploadTime = KingPubConfig.getInstance().getFileUploadTime();
+        Integer uploadTime = KingPubConfig.getInstance().getFileOutOfTime();
         ConcurrentHashMap.KeySetView<String, ClientFileInfo> strings = newFileKeeper.keySet();
         for (String key : strings) {
             ClientFileInfo clientFileInfo = newFileKeeper.get(key);

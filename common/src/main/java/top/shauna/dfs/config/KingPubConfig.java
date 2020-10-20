@@ -33,8 +33,17 @@ public class KingPubConfig {
     private String editLogDirs;
     private double blocksFaultRate;
     private Integer blockScanTime;
-    private Integer fileUploadTime;
+    private Integer fileOutOfTime;
     private Integer soldierFaultTime;
+    private Integer soldierScanTime;
+
+    public Integer getSoldierScanTime() {
+        return soldierScanTime;
+    }
+
+    public void setSoldierScanTime(Integer soldierScanTime) {
+        this.soldierScanTime = soldierScanTime;
+    }
 
     public Integer getSoldierFaultTime() {
         return soldierFaultTime;
@@ -44,12 +53,12 @@ public class KingPubConfig {
         this.soldierFaultTime = soldierFaultTime;
     }
 
-    public Integer getFileUploadTime() {
-        return fileUploadTime;
+    public Integer getFileOutOfTime() {
+        return fileOutOfTime;
     }
 
-    public void setFileUploadTime(Integer fileUploadTime) {
-        this.fileUploadTime = fileUploadTime;
+    public void setFileOutOfTime(Integer fileOutOfTime) {
+        this.fileOutOfTime = fileOutOfTime;
     }
 
     public Integer getBlockScanTime() {
