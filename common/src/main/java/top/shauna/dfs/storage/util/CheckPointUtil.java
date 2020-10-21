@@ -58,9 +58,21 @@ public class CheckPointUtil {
                     path = path.substring(1);
                     father = getINodeDirectory(root,path);
                 }
-                INodeFile newFile = fileInfo.getINodeFile();
+                List<INode> children = father.getChildren();
+                INodeFile newFile = null;
+                for (INode child : children) {
+                    if (child.getName().equals(name)) {
+                        newFile = (INodeFile) child;
+                        newFile.setStatus(1);
+                        break;
+                    }
+                }
+                if (newFile!=null){
+                    continue;
+                }
+                newFile = fileInfo.getINodeFile();
                 newFile.setParent(father);
-                newFile.setStatus(-1);
+                newFile.setStatus(1);
                 newFile.setName(name);
                 father.getChildren().add(newFile);
             }else if (editLog.getMethod().equalsIgnoreCase("mkdir")){
@@ -76,10 +88,22 @@ public class CheckPointUtil {
                     path = path.substring(1);
                     father = getINodeDirectory(root,path);
                 }
-                INodeDirectory directory = new INodeDirectory();
+                List<INode> children = father.getChildren();
+                INodeDirectory directory = null;
+                for (INode child : children) {
+                    if (child.getName().equals(name)) {
+                        directory = (INodeDirectory) child;
+                        directory.setStatus(1);
+                        break;
+                    }
+                }
+                if (directory!=null) {
+                    continue;
+                }
+                directory = new INodeDirectory();
                 directory.setName(name);
                 directory.setChildren(new CopyOnWriteArrayList<>());
-                directory.setStatus(-1);
+                directory.setStatus(1);
                 directory.setParent(father);
                 father.getChildren().add(directory);
             }else if (editLog.getMethod().equalsIgnoreCase("rmr")){
@@ -185,6 +209,7 @@ public class CheckPointUtil {
             for(int i=0;i<blocks;i++){
                 Block load = Block.load(in);
                 load.setPin(i);
+                load.setFilePath(file.getPath());
                 blockList.add(load);
             }
             file.setBlocks(blockList);

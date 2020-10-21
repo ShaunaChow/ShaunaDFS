@@ -120,9 +120,9 @@ public class Test1 {
 
         clientService.mkdir("/shauna/");
 
-        clientService.uploadFile("/shauna/ok22.txt", fileChannel);
+//        clientService.uploadFile("/shauna/mago.txt", fileChannel);
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/ok22.txt");
+        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/mago.txt");
 
         FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\2019优秀数模论文.zip",
                 "rw").getChannel();

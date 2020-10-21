@@ -26,10 +26,12 @@ public class SoldierManager implements Starter {
         soldierInfoMap = new ConcurrentHashMap<>();
         header = new SoldierInfo();
         tailer = new SoldierInfo();
+        oldHeader = new SoldierInfo();
         header.next = tailer;
         tailer.pre = header;
         soldiersStatus = -1;
         genId = 0;
+        MinSpace = KingPubConfig.getInstance().getBlockSize()*2;
     }
 
     public static SoldierManager getInstance(){
@@ -37,10 +39,12 @@ public class SoldierManager implements Starter {
     }
 
     private ConcurrentHashMap<Integer,SoldierInfo> soldierInfoMap;
-    private SoldierInfo header;
-    private SoldierInfo tailer;
+    private SoldierInfo header;     /** 工作代链表头 **/
+    private SoldierInfo tailer;     /** 工作代链表尾 **/
+    private SoldierInfo oldHeader;  /** 养老代链表，不再做分配处理 **/
     private volatile int soldiersStatus;
     private int genId;
+    private Integer MinSpace;
 
     @Override
     public void onStart() throws Exception {
@@ -76,7 +80,42 @@ public class SoldierManager implements Starter {
             if (cur-soldierInfo.getTimeStamp() >= KingPubConfig.getInstance().getSoldierFaultTime()*1000){
                 soldierInfo.setOK(false);
             }
+            if (soldierInfo.getStatus()>0&&soldierInfo.getFreeSpace()<MinSpace){
+                moveToOldGen(soldierInfo);
+                soldierInfo.setStatus(-1);
+            }
+            if (soldierInfo.getStatus()<0&&soldierInfo.getFreeSpace()>MinSpace){
+                moveToWorkGen(soldierInfo);
+                soldierInfo.setStatus(1);
+            }
         }
+    }
+
+    private void moveToWorkGen(SoldierInfo soldierInfo) {
+        /** 从链表中取下来 **/
+        soldierInfo.pre.next = soldierInfo.next;
+        soldierInfo.next.pre = soldierInfo.pre;
+        /** 加入到工作代链表,需要排序 **/
+        soldierInfo.next = header.next;
+        soldierInfo.pre = header;
+        if(soldierInfo.next!=null) {
+            soldierInfo.next.pre = soldierInfo;
+        }
+        header.next = soldierInfo;
+        adjustSoldierList(soldierInfo);
+    }
+
+    private void moveToOldGen(SoldierInfo soldierInfo){
+        /** 从链表中取下来 **/
+        soldierInfo.pre.next = soldierInfo.next;
+        soldierInfo.next.pre = soldierInfo.pre;
+        /** 加入到养老代链表,无需排序！！！ **/
+        soldierInfo.next = oldHeader.next;
+        soldierInfo.pre = oldHeader;
+        if(soldierInfo.next!=null) {
+            soldierInfo.next.pre = soldierInfo;
+        }
+        oldHeader.next = soldierInfo;
     }
 
     private void Backup(SoldierInfo soldierInfo) {
@@ -96,7 +135,7 @@ public class SoldierManager implements Starter {
         return soldierInfoMap.get(id);
     }
 
-    public void registSoldier(int id,SoldierInfo soldierInfo){
+    public void registSoldier(int id, SoldierInfo soldierInfo){
         if(soldierInfoMap.containsKey(id)){
             SoldierInfo info = soldierInfoMap.get(id);
             info.setBlockInfos(soldierInfo.getBlockInfos());
@@ -105,6 +144,9 @@ public class SoldierManager implements Starter {
             info.setFreeSpace(soldierInfo.getFreeSpace());
             info.setIp(soldierInfo.getIp());
             info.setPort(soldierInfo.getPort());
+            info.setTPS(soldierInfo.getTPS());
+            info.setQPS(soldierInfo.getQPS());
+            info.setStatus(soldierInfo.getStatus());
         }else{
             soldierInfoMap.put(id, soldierInfo);
         }
@@ -152,12 +194,16 @@ public class SoldierManager implements Starter {
 
     public List<ReplicasInfo> getReplicas(int nums, long length){
         if(nums > soldierInfoMap.size()) return null;
-        int blockSize = KingPubConfig.getInstance().getBlockSize();
         List<ReplicasInfo> res = new ArrayList<>();
         SoldierInfo soldierInfo = header.next;
         for (int i=0;i<nums;i++){
             if (soldierInfo==tailer) return null;
-            if (soldierInfo.getFreeSpace()<length+blockSize*2){
+            if (soldierInfo.getFreeSpace()<length+MinSpace){
+                SoldierInfo tmp = soldierInfo;
+                soldierInfo = soldierInfo.next;
+                moveToOldGen(tmp);
+            }
+            if (System.currentTimeMillis() - soldierInfo.getLastUsedTime()<5000){   /** 避免Soldier上线瞬间压力暴增 **/
                 soldierInfo = soldierInfo.next;
             }
             if (soldierInfo==tailer) return null;

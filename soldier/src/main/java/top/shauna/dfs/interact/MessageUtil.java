@@ -46,6 +46,8 @@ public class MessageUtil {
         currentTime = currentTimeMillis;
         long freeSpace = new File(SoldierPubConfig.getInstance().getRootDir()).getFreeSpace();
         heartBeatRequestBean.setFreeSpace(freeSpace);
+        heartBeatRequestBean.setTPS(getTPS());
+        heartBeatRequestBean.setQPS(getQPS());
         return heartBeatRequestBean;
     }
 
@@ -59,8 +61,6 @@ public class MessageUtil {
             blockInfo.setFilePath(metaInfo.getFilePath());
             blockInfo.setPin(metaInfo.getPin());
             blockInfo.setTimeStamp(metaInfo.getVersion());
-            blockInfo.setQPS(getQPS(filePath));
-            blockInfo.setTPS(getTPS(filePath));
             blockInfos.add(blockInfo);
         }
         return blockInfos;
@@ -72,8 +72,6 @@ public class MessageUtil {
         blockInfo.setFilePath(block.getFilePath());
         blockInfo.setPin(block.getPin());
         blockInfo.setTimeStamp(block.getVersion());
-        blockInfo.setQPS(0f);
-        blockInfo.setTPS(0f);
         res.add(blockInfo);
         return res;
     }
@@ -141,32 +139,20 @@ public class MessageUtil {
         }
     }
 
-    private static Float getTPS(String filePath) {
-        CopyOnWriteArrayList<StaticBean> writeList = StaticDatas.getWriteList(filePath);
+    private static float getTPS() {
+        CopyOnWriteArrayList<StaticBean> writeList = StaticDatas.getWriteList();
         if (writeList==null) return 0f;
-        long time = System.currentTimeMillis();
-        int nums = 0;
-        for(int i=writeList.size()-1;i>=0;i--){
-            StaticBean staticBean = writeList.get(i);
-            if(staticBean.getStartTime()>=time-10000){
-                nums++;
-            }else break;
-        }
-        return nums/10f;
+        int size = writeList.size();
+        StaticDatas.resetWriteList();
+        return size/(float)(SoldierPubConfig.getInstance().getHeartBeatTime());
     }
 
-    private static Float getQPS(String filePath) {
-        CopyOnWriteArrayList<StaticBean> readList = StaticDatas.getReadList(filePath);
+    private static float getQPS() {
+        CopyOnWriteArrayList<StaticBean> readList = StaticDatas.getReadList();
         if (readList==null) return 0f;
-        long time = System.currentTimeMillis();
-        int nums = 0;
-        for(int i=readList.size()-1;i>=0;i--){
-            StaticBean staticBean = readList.get(i);
-            if(staticBean.getStartTime()>=time-10000){
-                nums++;
-            }else break;
-        }
-        return nums/10f;
+        int size = readList.size();
+        StaticDatas.resetReadList();
+        return size/(float)(SoldierPubConfig.getInstance().getHeartBeatTime());
     }
 
     public synchronized static int getIdKeeper() {

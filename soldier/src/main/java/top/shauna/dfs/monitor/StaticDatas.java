@@ -11,41 +11,30 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @E-Mail z1023778132@icloud.com
  */
 public class StaticDatas {
-    private static ConcurrentHashMap<String,CopyOnWriteArrayList<StaticBean>> readList = new ConcurrentHashMap();
-    private static ConcurrentHashMap<String,CopyOnWriteArrayList<StaticBean>> writeList = new ConcurrentHashMap();
+    private static CopyOnWriteArrayList<StaticBean> readList = new CopyOnWriteArrayList<>();
+    private static CopyOnWriteArrayList<StaticBean> writeList = new CopyOnWriteArrayList<>();
 
     public static void addReadData(StaticBean staticBean){
-        String key = staticBean.getBlock().getFilePath();
-        if(readList.containsKey(key)){
-            readList.get(key).add(staticBean);
-        }else{
-            CopyOnWriteArrayList<StaticBean> bean = new CopyOnWriteArrayList<>();
-            bean.add(staticBean);
-            readList.put(key,bean);
-        }
+        readList.add(staticBean);
     }
 
     public static void addWriteData(StaticBean staticBean){
-        String key = staticBean.getBlock().getFilePath();
-        if(writeList.containsKey(key)){
-            writeList.get(key).add(staticBean);
-        }else{
-            CopyOnWriteArrayList<StaticBean> bean = new CopyOnWriteArrayList<>();
-            bean.add(staticBean);
-            writeList.put(key,bean);
-        }
+        writeList.add(staticBean);
     }
 
-    public static CopyOnWriteArrayList<StaticBean> getReadList(String filePath) {
-        return readList.get(filePath);
+    public static CopyOnWriteArrayList<StaticBean> getReadList() {
+        return readList;
     }
 
-    public static CopyOnWriteArrayList<StaticBean> getWriteList(String filePath) {
-        return writeList.get(filePath);
+    public static CopyOnWriteArrayList<StaticBean> getWriteList() {
+        return writeList;
     }
 
-    public static void restart(){
-        readList = new ConcurrentHashMap<>();
-        writeList = new ConcurrentHashMap<>();
+    public static void resetReadList(){
+        readList.clear();
+    }
+
+    public static void resetWriteList(){
+        writeList.clear();
     }
 }

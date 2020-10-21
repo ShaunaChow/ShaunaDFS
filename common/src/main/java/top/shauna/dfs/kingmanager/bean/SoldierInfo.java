@@ -24,15 +24,14 @@ public class SoldierInfo {
     private Long freeSpace;
     private List<BlockInfo> blockInfos;
     private List<Transaction> transactions;
+    private Float QPS;
+    private Float TPS;
+    private Long lastUsedTime;
+    private Integer status;     /** 区分是养老代（-1）还是工作代（1） **/
     public SoldierInfo next;
     public SoldierInfo pre;
 
     public Float getPS(){
-        if(blockInfos==null) return 0f;
-        float sum = 0f;
-        for (BlockInfo blockInfo : blockInfos) {
-            sum += (blockInfo.getQPS()+blockInfo.getTPS());
-        }
-        return sum;
+        return QPS+TPS;
     }
 }

@@ -28,4 +28,6 @@ public class HeartBeatRequestBean implements Serializable {
     private Integer reportFlag; /** 0或null表示整体汇报，1表示增量汇报 **/
     private List<BlockInfo> blockInfos;
     private List<Transaction> transactions;
+    private Float QPS;
+    private Float TPS;
 }

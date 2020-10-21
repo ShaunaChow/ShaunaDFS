@@ -269,7 +269,9 @@ public class ShaunaFSManager implements Starter,FSManager {
                     if(child instanceof INodeFile){
                         INodeFile file = (INodeFile) child;
                         if(file.getStatus()!=null&&file.getStatus()>=0) {
-                            fileInfo.setINodeFile((INodeFile) child);
+                            INodeFile nodeFile = (INodeFile) child;
+                            resortReplicas(nodeFile);
+                            fileInfo.setINodeFile(nodeFile);
                             fileInfo.setRes(ClientProtocolType.SUCCESS);
                         }else{
                             fileInfo.setRes(ClientProtocolType.NO_SUCH_File);
@@ -281,6 +283,22 @@ public class ShaunaFSManager implements Starter,FSManager {
                 }
             }
             fileInfo.setRes(ClientProtocolType.NO_SUCH_File);
+        }
+    }
+
+    private void resortReplicas(INodeFile nodeFile) {
+        for (Block block : nodeFile.getBlocks()) {
+            block.getReplicasInfos().sort((r1,r2)->{
+                Float ps1 = SoldierManager.getInstance().getSoldierInfo(r1.getId()).getPS();
+                Float ps2 = SoldierManager.getInstance().getSoldierInfo(r2.getId()).getPS();
+                if (ps1==ps2) {
+                    return 0;
+                }else if(ps1>ps2){
+                    return 1;
+                }else{
+                    return -1;
+                }
+            });
         }
     }
 

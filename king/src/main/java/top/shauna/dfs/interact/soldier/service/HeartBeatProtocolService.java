@@ -45,8 +45,6 @@ public class HeartBeatProtocolService {
                         replicasInfo.setIp(heartBeatRequestBean.getIp());
                         replicasInfo.setPort(heartBeatRequestBean.getPort());
                         replicasInfo.setTimeStamp(blockInfo.getTimeStamp());
-                        replicasInfo.setQPS(blockInfo.getQPS());
-                        replicasInfo.setTPS(blockInfo.getTPS());
                         block.getReplicasInfos().add(replicasInfo);
                         block.setReplicas(block.getReplicas()+1);
                         blockInfo.setRes(HeartBeatResponseType.SUCCESS);
@@ -56,8 +54,6 @@ public class HeartBeatProtocolService {
                     replicasInfo.setId(id);
                     replicasInfo.setStatus(1);
                     replicasInfo.setTimeStamp(blockInfo.getTimeStamp());
-                    replicasInfo.setQPS(blockInfo.getQPS());
-                    replicasInfo.setTPS(blockInfo.getTPS());
                     blockInfo.setRes(HeartBeatResponseType.SUCCESS);
                     newBlockInfos.add(blockInfo);
                 }
@@ -81,6 +77,8 @@ public class HeartBeatProtocolService {
             if (tmp.getTimeStamp() < heartBeatRequestBean.getTimeStamp()) {
                 tmp.setTimeStamp(System.currentTimeMillis());
                 tmp.setFreeSpace(heartBeatRequestBean.getFreeSpace());
+                tmp.setQPS(heartBeatRequestBean.getQPS());
+                tmp.setTPS(heartBeatRequestBean.getTPS());
                 ArrayList<Transaction> transactions = new ArrayList<>();
                 if (tmp.getTransactions()!=null&&tmp.getTransactions().size()!=0) {
                     transactions.addAll(tmp.getTransactions());
@@ -104,6 +102,10 @@ public class HeartBeatProtocolService {
                 heartBeatRequestBean.getFreeSpace(),
                 new CopyOnWriteArrayList<>(),
                 new CopyOnWriteArrayList<>(),
+                heartBeatRequestBean.getQPS()==null?0F:heartBeatRequestBean.getQPS(),
+                heartBeatRequestBean.getTPS()==null?0F:heartBeatRequestBean.getTPS(),
+                0L,
+                1,
                 null,
                 null);
         soldierManager.registSoldier(id, info);
