@@ -112,6 +112,9 @@ public class ClientServiceImpl implements ClientService {
             case ALLREADY_EXITS:
                 log.error("文件已存在");
                 break;
+            case IN_SAFE_MODE:
+                log.error("保护模式");
+                break;
         }
         return false;
     }
@@ -164,6 +167,9 @@ public class ClientServiceImpl implements ClientService {
             case ALLREADY_EXITS:
                 log.error("文件已存在");
                 break;
+            case IN_SAFE_MODE:
+                log.error("保护模式");
+                break;
         }
         return null;
     }
@@ -203,6 +209,9 @@ public class ClientServiceImpl implements ClientService {
                 break;
             case ALLREADY_EXITS:
                 log.error("文件已存在");
+                break;
+            case IN_SAFE_MODE:
+                log.error("保护模式");
                 break;
         }
         return false;
@@ -247,6 +256,9 @@ public class ClientServiceImpl implements ClientService {
             case ALLREADY_EXITS:
                 log.error("文件已存在");
                 break;
+            case IN_SAFE_MODE:
+                log.error("保护模式");
+                break;
         }
         return false;
     }
@@ -286,6 +298,9 @@ public class ClientServiceImpl implements ClientService {
                 break;
             case ALLREADY_EXITS:
                 log.error("文件已存在");
+                break;
+            case IN_SAFE_MODE:
+                log.error("保护模式");
                 break;
         }
         return false;

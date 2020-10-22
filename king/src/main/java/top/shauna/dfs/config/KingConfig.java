@@ -39,6 +39,8 @@ public class KingConfig implements Starter {
         kingPubConfig.setFileOutOfTime(Integer.parseInt(properties.getProperty("fileOutOfTime","5")));
         kingPubConfig.setSoldierFaultTime(Integer.parseInt(properties.getProperty("soldierFaultTime","5")));
         kingPubConfig.setSoldierScanTime(Integer.parseInt(properties.getProperty("soldierScanTime","5")));
+        kingPubConfig.setQueenFaultTime(Integer.parseInt(properties.getProperty("queenFaultTime","5")));
+        kingPubConfig.setQueenScanTime(Integer.parseInt(properties.getProperty("queenScanTime","5")));
         if (properties.getProperty("threadNums")!=null) {
             kingPubConfig.setThreadPoolNums(Integer.valueOf(properties.getProperty("threadNums")));
         }

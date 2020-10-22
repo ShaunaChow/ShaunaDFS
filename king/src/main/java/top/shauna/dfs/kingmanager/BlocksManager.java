@@ -3,6 +3,7 @@ package top.shauna.dfs.kingmanager;
 import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.bean.*;
+import top.shauna.dfs.safemode.SafeModeLock;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.threadpool.CommonThreadPool;
 import top.shauna.dfs.type.TransactionType;
@@ -70,20 +71,20 @@ public class BlocksManager implements Starter {
                         /**
                          * 转移备份(挂载)
                          * **/
-                        if (blockStatus>=0) {
+                        if (!SafeModeLock.inSafeMode()) {
                             backup(block);
                         }
                     }
-                }else{
+                }else if (!SafeModeLock.inSafeMode()){  /** 保护模式期间不报失效 **/
                     log.error("Block失效！！！"+block.toString());
                     block.setStatus(-1);
                 }
             }
         }
         if (sum==0||(((double)ok/(double)sum)>=blocksFaultRate)) {
-            blockStatus = 1;
+            SafeModeLock.setBlockOk(true);
         }else{
-            blockStatus = -1;
+            SafeModeLock.setBlockOk(false);
         }
     }
 

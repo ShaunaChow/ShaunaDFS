@@ -2,6 +2,7 @@ package top.shauna.dfs.queenserver.impl;
 
 import top.shauna.dfs.editlog.interfaze.EditLogSystem;
 import top.shauna.dfs.kingmanager.bean.CheckPoint;
+import top.shauna.dfs.kingmanager.bean.QueenInfo;
 import top.shauna.dfs.protocol.QueenProtocol;
 import top.shauna.dfs.queenserver.service.QueenProtocolService;
 
@@ -18,12 +19,22 @@ public class QueenProtocolImpl implements QueenProtocol {
     }
 
     @Override
-    public boolean needCheckPoint() {
+    public QueenInfo regist(QueenInfo queenInfo) {
         try{
-            return queenProtocolService.needCheckPoint();
+            return queenProtocolService.regist(queenInfo);
         }catch (Exception e){
             e.printStackTrace();
-            return false;
+            return queenInfo;
+        }
+    }
+
+    @Override
+    public QueenInfo heartBeat(QueenInfo queenInfo) {
+        try{
+            return queenProtocolService.heartBeat(queenInfo);
+        }catch (Exception e){
+            e.printStackTrace();
+            return queenInfo;
         }
     }
 

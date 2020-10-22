@@ -8,6 +8,7 @@ import top.shauna.dfs.kingmanager.LogManager;
 import top.shauna.dfs.kingmanager.ShaunaFSManager;
 import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
 import top.shauna.dfs.kingmanager.bean.LogItem;
+import top.shauna.dfs.safemode.SafeModeLock;
 import top.shauna.dfs.type.ClientProtocolType;
 
 import java.lang.reflect.Method;
@@ -59,7 +60,7 @@ public class ShaunaFSManagerProxy implements MethodInterceptor {
         LogItem logItem = null;
         if (method.getName().equalsIgnoreCase("uploadFile")){
             ClientFileInfo clientFileInfo = (ClientFileInfo) args[0];
-            if (BlocksManager.getInstance().getBlockStatus()<0){
+            if (SafeModeLock.inSafeMode()){
                 clientFileInfo.setRes(ClientProtocolType.IN_SAFE_MODE);
                 return null;
             }
@@ -69,7 +70,7 @@ public class ShaunaFSManagerProxy implements MethodInterceptor {
             }
         }else if (method.getName().equalsIgnoreCase("uploadFileOk")){
             ClientFileInfo clientFileInfo = (ClientFileInfo) args[0];
-            if (BlocksManager.getInstance().getBlockStatus()<0){
+            if (SafeModeLock.inSafeMode()){
                 clientFileInfo.setRes(ClientProtocolType.IN_SAFE_MODE);
                 return null;
             }
@@ -79,7 +80,7 @@ public class ShaunaFSManagerProxy implements MethodInterceptor {
             }
         }else if (method.getName().equalsIgnoreCase("mkdir")){
             ClientFileInfo clientFileInfo = (ClientFileInfo) args[0];
-            if (BlocksManager.getInstance().getBlockStatus()<0){
+            if (SafeModeLock.inSafeMode()){
                 clientFileInfo.setRes(ClientProtocolType.IN_SAFE_MODE);
                 return null;
             }
@@ -89,7 +90,7 @@ public class ShaunaFSManagerProxy implements MethodInterceptor {
             }
         }else if (method.getName().equalsIgnoreCase("rmr")){
             ClientFileInfo clientFileInfo = (ClientFileInfo) args[0];
-            if (BlocksManager.getInstance().getBlockStatus()<0){
+            if (SafeModeLock.inSafeMode()){
                 clientFileInfo.setRes(ClientProtocolType.IN_SAFE_MODE);
                 return null;
             }

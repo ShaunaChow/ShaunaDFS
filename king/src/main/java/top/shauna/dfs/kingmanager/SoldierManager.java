@@ -218,6 +218,7 @@ public class SoldierManager implements Starter {
             if(i==0) replicasInfo.setMaster(true);
             else replicasInfo.setMaster(false);
             res.add(replicasInfo);
+            soldierInfo.setLastUsedTime(System.currentTimeMillis());
             soldierInfo = soldierInfo.next;
         }
         return res;

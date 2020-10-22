@@ -36,6 +36,24 @@ public class KingPubConfig {
     private Integer fileOutOfTime;
     private Integer soldierFaultTime;
     private Integer soldierScanTime;
+    private Integer queenFaultTime;
+    private Integer queenScanTime;
+
+    public Integer getQueenFaultTime() {
+        return queenFaultTime;
+    }
+
+    public void setQueenFaultTime(Integer queenFaultTime) {
+        this.queenFaultTime = queenFaultTime;
+    }
+
+    public Integer getQueenScanTime() {
+        return queenScanTime;
+    }
+
+    public void setQueenScanTime(Integer queenScanTime) {
+        this.queenScanTime = queenScanTime;
+    }
 
     public Integer getSoldierScanTime() {
         return soldierScanTime;

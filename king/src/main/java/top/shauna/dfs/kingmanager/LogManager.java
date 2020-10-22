@@ -1,6 +1,5 @@
 package top.shauna.dfs.kingmanager;
 
-import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.editlog.factory.EditLogSystemFactory;
 import top.shauna.dfs.editlog.interfaze.EditLogSystem;
 import top.shauna.dfs.kingmanager.bean.LogItem;

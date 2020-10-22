@@ -93,25 +93,25 @@ public class Test1 {
         preparePubConfig();
         ClientService clientService = new ClientServiceImpl();
 
-        clientService.mkdir("/1/");
-        clientService.mkdir("/2/");
-        clientService.mkdir("/3/");
-        clientService.mkdir("/4/");
-        clientService.mkdir("/5/");
-        clientService.mkdir("/6/");
-        clientService.mkdir("/7/");
-        clientService.mkdir("/8/");
-        clientService.mkdir("/9/");
-        clientService.mkdir("/10/");
-        clientService.mkdir("/11/");
-        clientService.mkdir("/12/");
+        clientService.mkdir("/12221/");
+        clientService.mkdir("/12222/");
+        clientService.mkdir("/12223/");
+        clientService.mkdir("/12224/");
+        clientService.mkdir("/5222/");
+        clientService.mkdir("/6222/");
+        clientService.mkdir("/72222/");
+        clientService.mkdir("/8222/");
+        clientService.mkdir("/2229/");
+        clientService.mkdir("/22210/");
+        clientService.mkdir("/12221/");
+        clientService.mkdir("/12222/");
     }
 
     @Test
     public void test433() throws IOException {
         preparePubConfig();
 
-        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\2019优秀数模论文.zip",
+        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\jdk-8u201-windows-x64.exe",
                 "rw").getChannel();
 //      jdk-8u201-windows-x64.exe
 //      2019优秀数模论文.zip
@@ -120,11 +120,11 @@ public class Test1 {
 
         clientService.mkdir("/shauna/");
 
-//        clientService.uploadFile("/shauna/mago.txt", fileChannel);
+        clientService.uploadFile("/shauna/ok22.txt", fileChannel);
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/mago.txt");
+        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/ok22.txt");
 
-        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\2019优秀数模论文.zip",
+        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\jdk-8u201-windows-x64.exe",
                 "rw").getChannel();
 
         fileChannel2.write(byteBuffer);

@@ -50,5 +50,6 @@ public class ManagerStarter implements Starter {
         });
         BlocksManager.getInstance().onStart();
         SoldierManager.getInstance().onStart();
+        QueenManager.getInstance().onStart();
     }
 }
