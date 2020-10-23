@@ -196,8 +196,20 @@ public class SoldierManager implements Starter {
         if(nums > soldierInfoMap.size()) return null;
         List<ReplicasInfo> res = new ArrayList<>();
         SoldierInfo soldierInfo = header.next;
+        int scanAgain = 1;
         for (int i=0;i<nums;i++){
-            if (soldierInfo==tailer) return null;
+            if (soldierInfo==tailer) {  /** 给一次重刷的机会 **/
+                if (scanAgain>0){
+                    soldierInfo = header.next;
+                    try {
+                        TimeUnit.SECONDS.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    return null;
+                }
+            }
             if (soldierInfo.getFreeSpace()<length+MinSpace){
                 SoldierInfo tmp = soldierInfo;
                 soldierInfo = soldierInfo.next;
@@ -205,8 +217,10 @@ public class SoldierManager implements Starter {
             }
             if (System.currentTimeMillis() - soldierInfo.getLastUsedTime()<5000){   /** 避免Soldier上线瞬间压力暴增 **/
                 soldierInfo = soldierInfo.next;
+                if (soldierInfo==tailer) {
+                    continue;
+                }
             }
-            if (soldierInfo==tailer) return null;
             ReplicasInfo replicasInfo = new ReplicasInfo();
             replicasInfo.setId(soldierInfo.getId());
             replicasInfo.setTimeStamp(System.currentTimeMillis());

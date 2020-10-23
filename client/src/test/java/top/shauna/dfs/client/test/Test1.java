@@ -11,13 +11,9 @@ import top.shauna.rpc.config.PubConfig;
 import top.shauna.rpc.service.ShaunaRPCHandler;
 
 import java.io.*;
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -120,9 +116,9 @@ public class Test1 {
 
         clientService.mkdir("/shauna/");
 
-        clientService.uploadFile("/shauna/ok22.txt", fileChannel);
+        clientService.uploadFile("/shauna/new.txt", fileChannel);
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/ok22.txt");
+        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/new.txt");
 
         FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\jdk-8u201-windows-x64.exe",
                 "rw").getChannel();
