@@ -23,7 +23,7 @@ import java.security.MessageDigest;
 public abstract class AbstractBlockHandler implements BlockHandler{
 
     @Override
-    public void write(Block block) throws Exception {
+    public final void write(Block block) throws Exception {
         String md5 = getMD5(block.getContent());
         if(!isValid(block,md5)) {
             throw new Exception("block不合法！！！");
@@ -77,7 +77,7 @@ public abstract class AbstractBlockHandler implements BlockHandler{
     }
 
     @Override
-    public void read(Block block) throws Exception {
+    public final void read(Block block) throws Exception {
         SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
         String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
         String metaPath = metaDataDir + block.getFilePath()+"_"+block.getPin()+".block";
@@ -98,7 +98,7 @@ public abstract class AbstractBlockHandler implements BlockHandler{
     }
 
     @Override
-    public void readAndTransfer(Block block, WritableByteChannel channel) throws Exception {
+    public final void readAndTransfer(Block block, WritableByteChannel channel) throws Exception {
         SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
         String metaDataDir = soldierPubConfig.getRootDir()+ File.separator+"Meta";
         String metaPath = metaDataDir + block.getFilePath()+"_"+block.getPin()+".block";
