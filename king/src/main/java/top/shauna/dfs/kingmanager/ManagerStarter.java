@@ -40,7 +40,7 @@ public class ManagerStarter implements Starter {
 
             localExportBean.setProtocol("netty");
             localExportBean.setIp(hostAddress);
-            localExportBean.setPort(9002);
+            localExportBean.setPort(Integer.parseInt(KingPubConfig.getInstance().getQueenServerPort()));
 
             ShaunaRPCHandler.publishServiceBean(
                     QueenProtocol.class,

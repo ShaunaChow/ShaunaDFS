@@ -5,14 +5,17 @@ import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
 import top.shauna.dfs.protocol.ClientProtocol;
 import top.shauna.dfs.service.ClientService;
 import top.shauna.dfs.service.impl.ClientServiceImpl;
+import top.shauna.dfs.util.CommonUtil;
 import top.shauna.rpc.bean.FoundBean;
 import top.shauna.rpc.bean.RegisterBean;
 import top.shauna.rpc.config.PubConfig;
 import top.shauna.rpc.service.ShaunaRPCHandler;
+import top.shauna.rpc.supports.ZKSupportKit;
 
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -177,5 +180,23 @@ public class Test1 {
             map.remove(key);
         }
         System.out.println(map.get("1"));
+    }
+
+    @Test
+    public void ok(){
+        ZKSupportKit zkSupportKit = new ZKSupportKit("39.105.89.185:2181",5000);
+        List<String> strings = zkSupportKit.readChildren("/shauna/top.shauna.dfs.protocol.ClientProtocol/providers");
+        for (String string : strings) {
+            System.out.println(string);
+        }
+        strings = zkSupportKit.readChildren("/shauna/top.shauna.dfs.protocol.HeartBeatProtocol/providers");
+        for (String string : strings) {
+            System.out.println(string);
+        }
+        strings = zkSupportKit.readChildren("/shauna/top.shauna.dfs.protocol.SoldierServerProtocol/providers");
+        for (String string : strings) {
+            System.out.println(string);
+        }
+        System.out.println(CommonUtil.getLocalHostIp());
     }
 }

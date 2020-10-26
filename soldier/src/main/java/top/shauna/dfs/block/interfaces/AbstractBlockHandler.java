@@ -7,12 +7,11 @@ import top.shauna.dfs.soldiermanager.bean.MetaInfo;
 import top.shauna.dfs.block.DataKeeper;
 import top.shauna.dfs.block.MetaKeeper;
 import top.shauna.dfs.config.SoldierPubConfig;
+import top.shauna.dfs.util.CommonUtil;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.channels.WritableByteChannel;
-import java.security.MessageDigest;
 
 /**
  * @Author Shauna.Chou
@@ -24,7 +23,7 @@ public abstract class AbstractBlockHandler implements BlockHandler{
 
     @Override
     public final void write(Block block) throws Exception {
-        String md5 = getMD5(block.getContent());
+        String md5 = CommonUtil.getMD5(block.getContent());
         if(!isValid(block,md5)) {
             throw new Exception("block不合法！！！");
         }
@@ -124,24 +123,7 @@ public abstract class AbstractBlockHandler implements BlockHandler{
         long maxMemory = runtime.maxMemory();
         long freeMemory = runtime.freeMemory();
         long totalMemory = runtime.totalMemory();
-        if( ((double) (freeMemory+maxMemory-totalMemory)/(double) maxMemory)<0.2 ){
-            return false;
-        }
-        return true;
-    }
-
-    private String getMD5(byte[] bb){
-        MessageDigest md = null;
-        String res = null;
-        try {
-            String str = new String(bb);
-            md = MessageDigest.getInstance("MD5");
-            md.update(str.getBytes());
-            res = new BigInteger(1, md.digest()).toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return res;
+        return !(((double) (freeMemory + maxMemory - totalMemory) / (double) maxMemory) < 0.2);
     }
 
     protected abstract void writeToData(String dataPath, Block block) throws Exception;

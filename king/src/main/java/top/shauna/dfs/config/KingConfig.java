@@ -8,7 +8,9 @@ import top.shauna.rpc.config.PubConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @Author Shauna.Chou
@@ -28,7 +30,10 @@ public class KingConfig implements Starter {
         properties.load(new InputStreamReader(in,"UTF-8"));
         KingPubConfig kingPubConfig = KingPubConfig.getInstance();
         kingPubConfig.setRootDir(properties.getProperty("rootPath","/tmp/ShaunaDfs"));
-        kingPubConfig.setPort(properties.getProperty("port","9000"));
+        kingPubConfig.setSoldierServerPort(properties.getProperty("soldierServerPort","9000"));
+        kingPubConfig.setClientServerPort(properties.getProperty("clientServerPort","9001"));
+        kingPubConfig.setQueenServerPort(properties.getProperty("queenServerPort","9002"));
+        kingPubConfig.setHaPort(properties.getProperty("haPort","9003"));
         kingPubConfig.setReplicas(Integer.parseInt(properties.getProperty("replicas","3")));
         int blockSize = Integer.parseInt(properties.getProperty("blockSize", "268435456"));
         kingPubConfig.setBlockSize(blockSize>268435456?268435456:blockSize);
@@ -41,6 +46,14 @@ public class KingConfig implements Starter {
         kingPubConfig.setSoldierScanTime(Integer.parseInt(properties.getProperty("soldierScanTime","5")));
         kingPubConfig.setQueenFaultTime(Integer.parseInt(properties.getProperty("queenFaultTime","5")));
         kingPubConfig.setQueenScanTime(Integer.parseInt(properties.getProperty("queenScanTime","5")));
+
+        if (properties.getProperty("ha")!=null) {
+            String property = properties.getProperty("ha");
+            String[] split = property.split(",");
+            CopyOnWriteArrayList<String> strings = new CopyOnWriteArrayList<>(split);
+            kingPubConfig.setHa(strings);
+        }
+
         if (properties.getProperty("threadNums")!=null) {
             kingPubConfig.setThreadPoolNums(Integer.valueOf(properties.getProperty("threadNums")));
         }

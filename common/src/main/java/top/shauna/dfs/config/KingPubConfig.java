@@ -2,6 +2,8 @@ package top.shauna.dfs.config;
 
 import top.shauna.rpc.config.PubConfig;
 
+import java.util.List;
+
 /**
  * @Author Shauna.Chou
  * @Date 2020/10/9 17:13
@@ -24,7 +26,10 @@ public class KingPubConfig {
     }
 
     private String rootDir;
-    private String port;
+    private String soldierServerPort;
+    private String clientServerPort;
+    private String queenServerPort;
+    private String haPort;
     private PubConfig rpcPubConfig;
     private Integer threadPoolNums;
     private Integer replicas;
@@ -38,6 +43,39 @@ public class KingPubConfig {
     private Integer soldierScanTime;
     private Integer queenFaultTime;
     private Integer queenScanTime;
+    private List<String> ha;
+
+    public List<String> getHa() {
+        return ha;
+    }
+
+    public void setHa(List<String> ha) {
+        this.ha = ha;
+    }
+
+    public String getHaPort() {
+        return haPort;
+    }
+
+    public void setHaPort(String haPort) {
+        this.haPort = haPort;
+    }
+
+    public String getClientServerPort() {
+        return clientServerPort;
+    }
+
+    public void setClientServerPort(String clientServerPort) {
+        this.clientServerPort = clientServerPort;
+    }
+
+    public String getQueenServerPort() {
+        return queenServerPort;
+    }
+
+    public void setQueenServerPort(String queenServerPort) {
+        this.queenServerPort = queenServerPort;
+    }
 
     public Integer getQueenFaultTime() {
         return queenFaultTime;
@@ -135,12 +173,12 @@ public class KingPubConfig {
         this.rootDir = rootDir;
     }
 
-    public String getPort() {
-        return port;
+    public String getSoldierServerPort() {
+        return soldierServerPort;
     }
 
-    public void setPort(String port) {
-        this.port = port;
+    public void setSoldierServerPort(String soldierServerPort) {
+        this.soldierServerPort = soldierServerPort;
     }
 
     public PubConfig getRpcPubConfig() {

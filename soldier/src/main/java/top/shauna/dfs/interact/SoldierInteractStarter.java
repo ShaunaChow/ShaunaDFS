@@ -1,21 +1,16 @@
 package top.shauna.dfs.interact;
 
 import lombok.extern.slf4j.Slf4j;
-import top.shauna.dfs.bean.HeartBeatRequestBean;
-import top.shauna.dfs.bean.HeartBeatResponseBean;
-import top.shauna.dfs.block.MetaKeeper;
 import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.interact.soldier.SoldierHeartBeat;
 import top.shauna.dfs.kingmanager.bean.BackupBean;
-import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
 import top.shauna.dfs.kingmanager.bean.Transaction;
 import top.shauna.dfs.monitor.MonitorProxy;
 import top.shauna.dfs.protocol.SoldierServerProtocol;
 import top.shauna.dfs.soldiermanager.bean.Block;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.threadpool.CommonThreadPool;
-import top.shauna.rpc.bean.LocalExportBean;
-import top.shauna.rpc.service.ShaunaRPCHandler;
+import top.shauna.dfs.util.CommonUtil;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -68,7 +63,7 @@ public class SoldierInteractStarter implements Starter {
                     switch (undone.getType()){
                         case BACK_UP:
                             BackupBean msg = (BackupBean) undone.getMsg();
-                            SoldierServerProtocol protocol = getSoldierServerProtocol(msg.getGoodReplicas());
+                            SoldierServerProtocol protocol = CommonUtil.getSoldierServerProtocol(msg.getGoodReplicas());
                             Block toSendBlock = new Block();
                             toSendBlock.setFilePath(msg.getFilePath());
                             toSendBlock.setPin(msg.getPin());
@@ -84,14 +79,5 @@ public class SoldierInteractStarter implements Starter {
                 }
             }
         });
-    }
-
-    private SoldierServerProtocol getSoldierServerProtocol(ReplicasInfo replicasInfo) throws Exception {
-        String key = replicasInfo.getIp()+":"+replicasInfo.getPort();
-        if (connectKeeper.containsKey(key)) return connectKeeper.get(key);
-        LocalExportBean localExportBean = new LocalExportBean("netty", Integer.parseInt(replicasInfo.getPort()), replicasInfo.getIp());
-        SoldierServerProtocol referenceProxy = ShaunaRPCHandler.getReferenceProxy(SoldierServerProtocol.class, localExportBean);
-        connectKeeper.put(key,referenceProxy);
-        return referenceProxy;
     }
 }

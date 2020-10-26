@@ -8,8 +8,7 @@ import top.shauna.dfs.monitor.MonitorProxy;
 import top.shauna.dfs.protocol.SoldierServerProtocol;
 import top.shauna.dfs.soldiermanager.bean.SoldierResponse;
 import top.shauna.dfs.type.SoldierResponseType;
-import top.shauna.rpc.bean.LocalExportBean;
-import top.shauna.rpc.service.ShaunaRPCHandler;
+import top.shauna.dfs.util.CommonUtil;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,7 +54,7 @@ public class SoldierServerProtocolImpl implements SoldierServerProtocol {
                 soldierResponse.setUuid(block.getUuid());
                 return soldierResponse;
             }else{
-                SoldierServerProtocol soldierServerProtocol = getSoldierServerProtocol(replicasInfos.get(0));
+                SoldierServerProtocol soldierServerProtocol = CommonUtil.getSoldierServerProtocol(replicasInfos.get(0));
                 block.getReplicasInfos().remove(0);
                 return soldierServerProtocol.uploadFile(block);
             }
@@ -65,14 +64,5 @@ public class SoldierServerProtocolImpl implements SoldierServerProtocol {
             soldierResponse.setUuid(block.getUuid());
             return soldierResponse;
         }
-    }
-
-    private SoldierServerProtocol getSoldierServerProtocol(ReplicasInfo replicasInfo) throws Exception {
-        String key = replicasInfo.getIp()+":"+replicasInfo.getPort();
-        if (connectKeeper.containsKey(key)) return connectKeeper.get(key);
-        LocalExportBean localExportBean = new LocalExportBean("netty", Integer.parseInt(replicasInfo.getPort()), replicasInfo.getIp());
-        SoldierServerProtocol referenceProxy = ShaunaRPCHandler.getReferenceProxy(SoldierServerProtocol.class, localExportBean);
-        connectKeeper.put(key,referenceProxy);
-        return referenceProxy;
     }
 }

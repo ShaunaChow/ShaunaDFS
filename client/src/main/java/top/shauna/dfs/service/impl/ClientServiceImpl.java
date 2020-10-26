@@ -9,17 +9,15 @@ import top.shauna.dfs.protocol.ClientProtocol;
 import top.shauna.dfs.protocol.SoldierServerProtocol;
 import top.shauna.dfs.service.ClientService;
 import top.shauna.dfs.soldiermanager.bean.SoldierResponse;
+import top.shauna.dfs.util.CommonUtil;
 import top.shauna.rpc.bean.FoundBean;
-import top.shauna.rpc.bean.LocalExportBean;
 import top.shauna.rpc.bean.RegisterBean;
 import top.shauna.rpc.config.PubConfig;
 import top.shauna.rpc.service.ShaunaRPCHandler;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.security.MessageDigest;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -323,7 +321,7 @@ public class ClientServiceImpl implements ClientService {
             boolean flag = false;
             for (ReplicasInfo replicasInfo : block.getReplicasInfos()) {
                 try {
-                    SoldierServerProtocol referenceProxy = getSoldierServerProtocol(replicasInfo);
+                    SoldierServerProtocol referenceProxy = CommonUtil.getSoldierServerProtocol(replicasInfo);
                     top.shauna.dfs.soldiermanager.bean.Block resBlock = referenceProxy.getBlock(toSendBlock);
                     if (
                             resBlock.getContent() != null
@@ -361,12 +359,12 @@ public class ClientServiceImpl implements ClientService {
             byte[] toSendData = buffer.array();
 
             toSendBlock.setContent(toSendData);
-            toSendBlock.setMd5(getMD5(toSendData));
+            toSendBlock.setMd5(CommonUtil.getMD5(toSendData));
 
             List<ReplicasInfo> replicasInfos = block.getReplicasInfos();
             for (ReplicasInfo replicasInfo:replicasInfos){
                 if (replicasInfo.getMaster()!=null&&replicasInfo.getMaster()){
-                    SoldierServerProtocol referenceProxy = getSoldierServerProtocol(replicasInfo);
+                    SoldierServerProtocol referenceProxy = CommonUtil.getSoldierServerProtocol(replicasInfo);
                     replicasInfos.remove(replicasInfo);
                     block.setReplicas(block.getReplicas()-1);
                     toSendBlock.setReplicasInfos(replicasInfos);
@@ -382,31 +380,6 @@ public class ClientServiceImpl implements ClientService {
             }
         }
     }
-
-    private SoldierServerProtocol getSoldierServerProtocol(ReplicasInfo replicasInfo) throws Exception {
-        String key = replicasInfo.getIp()+":"+replicasInfo.getPort();
-        if (connectKeeper.containsKey(key)) return connectKeeper.get(key);
-        LocalExportBean localExportBean = new LocalExportBean("netty", Integer.parseInt(replicasInfo.getPort()), replicasInfo.getIp());
-        SoldierServerProtocol referenceProxy = ShaunaRPCHandler.getReferenceProxy(SoldierServerProtocol.class, localExportBean);
-        connectKeeper.put(key,referenceProxy);
-        return referenceProxy;
-    }
-
-    private String getMD5(byte[] bb){
-        MessageDigest md = null;
-        String res = null;
-        try {
-            String str = new String(bb);
-            md = MessageDigest.getInstance("MD5");
-            md.update(str.getBytes());
-            res = new BigInteger(1, md.digest()).toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
-
-
 }
 
 

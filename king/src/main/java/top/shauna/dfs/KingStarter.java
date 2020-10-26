@@ -1,6 +1,7 @@
 package top.shauna.dfs;
 
 import top.shauna.dfs.config.KingConfig;
+import top.shauna.dfs.ha.KingHAStarter;
 import top.shauna.dfs.interact.client.ClientProtocolStarter;
 import top.shauna.dfs.interact.soldier.KingHeartBeatStarter;
 import top.shauna.dfs.kingmanager.ManagerStarter;
@@ -14,10 +15,6 @@ public class KingStarter {
     public static void main(String[] args) throws Exception {
         new KingConfig().onStart();
 
-        new ManagerStarter().onStart();
-
-        new KingHeartBeatStarter().onStart();
-
-        new ClientProtocolStarter().onStart();
+        new KingHAStarter().onStart();
     }
 }
