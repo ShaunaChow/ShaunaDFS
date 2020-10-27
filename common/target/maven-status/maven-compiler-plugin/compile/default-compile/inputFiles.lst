@@ -1,4 +1,6 @@
+F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\type\KingHAMsgType.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\ReplicasInfo.java
+F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\QueenInfo.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\soldiermanager\bean\BlockInfo.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\soldiermanager\bean\DataInfo.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\type\ClientProtocolType.java
@@ -11,8 +13,10 @@ F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\protocol\ClientProto
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\Transaction.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\storage\util\CheckPointUtil.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\INodeFile.java
+F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\protocol\KingHAProtocol.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\soldiermanager\bean\MetaInfo.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\storage\interfaces\StorageEngine.java
+F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\KingHAMsgBean.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\protocol\QueenProtocol.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\protocol\SoldierServerProtocol.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\type\HeartBeatResponseType.java
@@ -23,6 +27,7 @@ F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\starter\Starter.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\LogItem.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\protocol\HeartBeatProtocol.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\SoldierInfo.java
+F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\util\CommonUtil.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\storage\impl\LocalFileStorage.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\kingmanager\bean\INodeDirectory.java
 F:\java项目\ShaunaDFS\common\src\main\java\top\shauna\dfs\config\KingPubConfig.java

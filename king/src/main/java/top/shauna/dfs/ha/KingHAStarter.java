@@ -55,11 +55,11 @@ public class KingHAStarter implements Starter {
         }else{                              /** 高可用模式 **/
             String thisKing = ip+":"+port;
             if (ha.contains(thisKing)){
-                serviceBean = publishHAProtocol();
-                ha.remove(thisKing);
                 kingHAStatus.setNextMaster(true);
                 kingHAStatus.setMaster(false);
                 kingHAStatus.setId(System.currentTimeMillis());
+                serviceBean = publishHAProtocol();
+                ha.remove(thisKing);
                 while(connectAll()<1){      /** 至少需要一个僚机 **/
                     log.info("高可用模式----等待队友上线...");
                     TimeUnit.SECONDS.sleep(2);
@@ -118,14 +118,21 @@ public class KingHAStarter implements Starter {
             if (haProtocol==null) {
                 continue;
             }else{
-                KingHAMsgBean resp = haProtocol.electMaster(msgBean);
-                switch (resp.getMsg()) {
-                    case YOU_ARE_OK:
-                        log.info("投票+1");
-                    case YOU_ARE_NOOK:
-                        kingHAStatus.setNextMaster(false);
-                    case ERROR:
-                        log.error("未知错误");
+                try {
+                    KingHAMsgBean resp = haProtocol.electMaster(msgBean);
+                    switch (resp.getMsg()) {
+                        case YOU_ARE_OK:
+                            log.info("投票+1");
+                            break;
+                        case YOU_ARE_NOOK:
+                            kingHAStatus.setNextMaster(false);
+                            break;
+                        case ERROR:
+                            log.error("未知错误");
+                            break;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }
