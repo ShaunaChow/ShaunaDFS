@@ -6,5 +6,6 @@ package top.shauna.dfs.type;
  * @E-Mail z1023778132@icloud.com
  */
 public enum TransactionType {
-    BACK_UP;
+    BACK_UP,
+    DELETE
 }

@@ -37,4 +37,13 @@ public class KingHAProtocolImpl implements KingHAProtocol {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void refreshImage(KingHAMsgBean msg) {
+        try{
+            kingHAProtocolService.refreshImage(msg);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -5,16 +5,21 @@ import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.ha.impl.KingHAProtocolImpl;
 import top.shauna.dfs.interact.client.ClientProtocolStarter;
 import top.shauna.dfs.interact.soldier.KingHeartBeatStarter;
+import top.shauna.dfs.kingmanager.LogManager;
 import top.shauna.dfs.kingmanager.ManagerStarter;
+import top.shauna.dfs.kingmanager.bean.CheckPoint;
 import top.shauna.dfs.kingmanager.bean.KingHAMsgBean;
 import top.shauna.dfs.protocol.KingHAProtocol;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.util.CommonUtil;
+import top.shauna.dfs.util.KingUtils;
 import top.shauna.rpc.bean.LocalExportBean;
 import top.shauna.rpc.bean.ServiceBean;
 import top.shauna.rpc.service.ShaunaRPCHandler;
 import top.shauna.rpc.supports.ZKSupportKit;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -68,12 +73,29 @@ public class KingHAStarter implements Starter {
                 if (kingHAStatus.becomeMaster()){
                     ShaunaRPCHandler.doRegister(serviceBean);
                     startThisKing();
+                    refreshAll();
                 }else {
                     zkSupportKit.subscribeChildChanges(top.shauna.rpc.util.CommonUtil.getZookeeperPath(KingHAProtocol.class),
                             (parentPath, currentChilds) -> doChange(parentPath, currentChilds));
                 }
             }else{
                 throw new Exception("本机不在高可用集群列表中!!!");
+            }
+        }
+    }
+
+    private void refreshAll() throws Exception {
+        File imageFile = new File(KingPubConfig.getInstance().getRootDir() + File.separator + "ShaunaImage.dat");
+        List<File> logFiles = CommonUtil.scanEditLogFiles(KingPubConfig.getInstance().getEditLogDirs());
+        CheckPoint checkPoint = CommonUtil.getCheckPoint(imageFile, logFiles.toArray(new File[0]));
+        KingHAMsgBean msgBean = new KingHAMsgBean(ip+":"+port, kingHAStatus.getId(), null,checkPoint);
+        Iterator<KingHAProtocol> iterator = keeper.values().iterator();
+        while (iterator.hasNext()) {
+            KingHAProtocol haProtocol = iterator.next();
+            try {
+                haProtocol.refreshImage(msgBean);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
     }
@@ -91,7 +113,7 @@ public class KingHAStarter implements Starter {
                 count++;
                 keeper.put(s,referenceProxy);
             }catch (Exception e){
-                e.printStackTrace();
+                log.info("僚机未准备好");
             }
         }
         return count;
@@ -111,7 +133,7 @@ public class KingHAStarter implements Starter {
     }
 
     private void vote(){
-        KingHAMsgBean msgBean = new KingHAMsgBean(ip+":"+port, kingHAStatus.getId(), null);
+        KingHAMsgBean msgBean = new KingHAMsgBean(ip+":"+port, kingHAStatus.getId(), null,null);
         Iterator<KingHAProtocol> iterator = keeper.values().iterator();
         while (iterator.hasNext()){
             KingHAProtocol haProtocol = iterator.next();
@@ -126,6 +148,13 @@ public class KingHAStarter implements Starter {
                             break;
                         case YOU_ARE_NOOK:
                             kingHAStatus.setNextMaster(false);
+                            break;
+                        case NEED_REFRESH:
+                            kingHAStatus.setNextMaster(false);
+                            KingUtils.deleteLogs();
+                            byte[] newImage = CommonUtil.dealWithCheckPoint(resp.getCheckPoint());
+                            CommonUtil.saveCheckPointLocal(newImage,KingPubConfig.getInstance().getRootDir()+File.separator+"ShaunaImage.dat");
+                            log.info("Image Refresh完成!!!");
                             break;
                         case ERROR:
                             log.error("未知错误");

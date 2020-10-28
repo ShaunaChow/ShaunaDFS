@@ -36,20 +36,16 @@ public class HeartBeatProtocolService {
             else{
                 ReplicasInfo replicasInfo = block.getReplocasInfo(heartBeatRequestBean.getId());
                 if(replicasInfo==null) {    /** 不存在 **/
-                    if(block.getReplicas()>= KingPubConfig.getInstance().getReplicas()){    /** 备份条件满足 不需要创建 **/
-                        blockInfo.setRes(HeartBeatResponseType.NO_SUCH_BLOCK);
-                    }else{                  /** 创建 **/
-                        replicasInfo = new ReplicasInfo();
-                        replicasInfo.setId(id);
-                        replicasInfo.setStatus(1);
-                        replicasInfo.setIp(heartBeatRequestBean.getIp());
-                        replicasInfo.setPort(heartBeatRequestBean.getPort());
-                        replicasInfo.setTimeStamp(blockInfo.getTimeStamp());
-                        block.getReplicasInfos().add(replicasInfo);
-                        block.setReplicas(block.getReplicas()+1);
-                        blockInfo.setRes(HeartBeatResponseType.SUCCESS);
-                        newBlockInfos.add(blockInfo);
-                    }
+                    replicasInfo = new ReplicasInfo();
+                    replicasInfo.setId(id);
+                    replicasInfo.setStatus(1);
+                    replicasInfo.setIp(heartBeatRequestBean.getIp());
+                    replicasInfo.setPort(heartBeatRequestBean.getPort());
+                    replicasInfo.setTimeStamp(blockInfo.getTimeStamp());
+                    block.getReplicasInfos().add(replicasInfo);
+                    block.setReplicas(block.getReplicas()+1);
+                    blockInfo.setRes(HeartBeatResponseType.SUCCESS);
+                    newBlockInfos.add(blockInfo);
                 }else {     /** 更新操作 **/
                     replicasInfo.setId(id);
                     replicasInfo.setStatus(1);

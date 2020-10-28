@@ -7,6 +7,7 @@ import top.shauna.dfs.protocol.QueenProtocol;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
 import top.shauna.dfs.storage.interfaces.StorageEngine;
 import top.shauna.dfs.storage.util.CheckPointUtil;
+import top.shauna.dfs.util.CommonUtil;
 import top.shauna.rpc.service.ShaunaRPCHandler;
 
 import java.io.*;
@@ -57,18 +58,10 @@ public class DealWithCheckPoint {
             log.error("KING回复的CheckPoint状态出错");
             return;
         }
-        byte[] image = checkPoint.getShaunaImage();
-        DataInputStream imageInput = new DataInputStream(new ByteArrayInputStream(image));
-        byte[] editLog = checkPoint.getEditLog();
-        DataInputStream logInput = new DataInputStream(new ByteArrayInputStream(editLog));
-        INodeDirectory root = CheckPointUtil.loadRootNode(imageInput);
-        List<LogItem> editLogs = CheckPointUtil.loadEditLogs(logInput);
-        CheckPointUtil.filtEditLogs(editLogs);
-        CheckPointUtil.mergeEditLogs(root,editLogs);
-        byte[] newImage = CheckPointUtil.saveRootNode(root);
+        byte[] newImage = CommonUtil.dealWithCheckPoint(checkPoint);
         CheckPoint newCheckPoint = new CheckPoint(checkPoint.getUuid(), newImage, null, 1);
         queenProtocol.checkPointOk(newCheckPoint);
-        saveCheckPointLocal(newImage);
+        CommonUtil.saveCheckPointLocal(newImage,rootDir+File.separator+"ShaunaImage.dat");
     }
 
     private long getUniqueId(){
@@ -76,10 +69,6 @@ public class DealWithCheckPoint {
         int hashCode = Math.abs(UUID.randomUUID().hashCode());
         id = id|(hashCode<<31);
         return id;
-    }
-
-    public void saveCheckPointLocal(byte[] image) throws Exception {
-        storageEngine.write(rootDir+File.separator+"ShaunaImage.dat",image);
     }
 
     private QueenInfo getQueenInfo() throws UnknownHostException {

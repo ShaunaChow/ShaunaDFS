@@ -21,4 +21,5 @@ public class KingHAMsgBean implements Serializable {
     private String ip_port;
     private Long id;
     private KingHAMsgType msg;
+    private CheckPoint checkPoint;
 }

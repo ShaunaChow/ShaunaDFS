@@ -20,23 +20,23 @@ public class CheckPointUtil {
     private static byte FILE_FLAG = 0b01111111;
     private static byte DIR_FLAG = 0b1000000;
 
-    public static void filtEditLogs(List<LogItem> editLogs) {
-        HashMap<String,LogItem> keeper = new HashMap<>();
-        for (int i=0;i<editLogs.size();i++) {
-            LogItem editLog = editLogs.get(i);
-            if (editLog.getMethod().equalsIgnoreCase("uploadFile")){
-                if (editLog.getStatus()==null||editLog.getStatus()<0){
-                    keeper.put(editLog.getClientFileInfo().getPath(),editLog);
-                }else{
-                    String path = editLog.getClientFileInfo().getPath();
-                    if (keeper.containsKey(path)){
-                        LogItem logItem = keeper.get(path);
-                        editLog.setClientFileInfo(logItem.getClientFileInfo());
-                    }
-                }
-            }
-        }
-    }
+//    public static void filtEditLogs(List<LogItem> editLogs) {
+//        HashMap<String,LogItem> keeper = new HashMap<>();
+//        for (int i=0;i<editLogs.size();i++) {
+//            LogItem editLog = editLogs.get(i);
+//            if (editLog.getMethod().equalsIgnoreCase("uploadFile")){
+//                if (editLog.getStatus()==null||editLog.getStatus()<0){
+//                    keeper.put(editLog.getClientFileInfo().getPath(),editLog);
+//                }else{
+//                    String path = editLog.getClientFileInfo().getPath();
+//                    if (keeper.containsKey(path)){
+//                        LogItem logItem = keeper.get(path);
+//                        editLog.setClientFileInfo(logItem.getClientFileInfo());
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     public static void mergeEditLogs(INodeDirectory root, List<LogItem> editLogs) {
         for (LogItem editLog : editLogs) {

@@ -8,5 +8,7 @@ package top.shauna.dfs.type;
 public enum KingHAMsgType {
     YOU_ARE_OK,
     YOU_ARE_NOOK,
-    ERROR
+    ERROR,
+    SUCCESS,
+    NEED_REFRESH
 }

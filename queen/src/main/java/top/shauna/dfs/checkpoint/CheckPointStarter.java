@@ -22,20 +22,20 @@ public class CheckPointStarter implements Starter {
         checkPoint.regist();
 
         CommonThreadPool.threadPool.execute(()->{
-            try {
-                while (true) {
-                    TimeUnit.SECONDS.sleep(QueenPubConfig.getInstance().getCheckPointTime());
-                    QueenInfo queenInfo = checkPoint.heartBeat();
-                    if (queenInfo.getOK()==null||!queenInfo.getOK()){
-                        checkPoint.regist();
-                        continue;
-                    }
-                    if (queenInfo.getNeedCheck()!=null&&queenInfo.getNeedCheck()) {
-                        checkPoint.doCheckPoint();
-                    }
+            while (true) {
+                try {
+                        TimeUnit.SECONDS.sleep(QueenPubConfig.getInstance().getCheckPointTime());
+                        QueenInfo queenInfo = checkPoint.heartBeat();
+                        if (queenInfo.getOK()==null||!queenInfo.getOK()){
+                            checkPoint.regist();
+                            continue;
+                        }
+                        if (queenInfo.getNeedCheck()!=null&&queenInfo.getNeedCheck()) {
+                            checkPoint.doCheckPoint();
+                        }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         });
     }

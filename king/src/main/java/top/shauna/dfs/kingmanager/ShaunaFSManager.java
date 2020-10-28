@@ -9,9 +9,10 @@ import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.storage.util.CheckPointUtil;
 import top.shauna.dfs.threadpool.CommonThreadPool;
 import top.shauna.dfs.type.ClientProtocolType;
+import top.shauna.dfs.util.CommonUtil;
+import top.shauna.dfs.util.KingUtils;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -50,7 +51,7 @@ public class ShaunaFSManager implements Starter,FSManager {
                 in.close();
             }
         }
-        List<File> files = scanEditLogFiles(KingPubConfig.getInstance().getRootDir());
+        List<File> files = CommonUtil.scanEditLogFiles(KingPubConfig.getInstance().getEditLogDirs());
         if (files==null||files.size()==0){
             log.info("没有编辑日志文件");
         }else{
@@ -59,7 +60,6 @@ public class ShaunaFSManager implements Starter,FSManager {
                 try {
                     editInput = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
                     List<LogItem> logItems = CheckPointUtil.loadEditLogs(editInput);
-                    CheckPointUtil.filtEditLogs(logItems);
                     CheckPointUtil.mergeEditLogs(root,logItems);
                     editInput.close();
                     file.delete();
@@ -91,9 +91,9 @@ public class ShaunaFSManager implements Starter,FSManager {
 
         CommonThreadPool.threadPool.execute(()->{
             while (true){
-                doDelete();
-                log.info("执行删除完成!!!");
                 try {
+                    doDelete();
+                    log.info("执行删除完成!!!");
                     TimeUnit.SECONDS.sleep(30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -135,29 +135,6 @@ public class ShaunaFSManager implements Starter,FSManager {
             for (INode node : directory.getChildren()) {
                 doDelete(node);
             }
-        }
-    }
-
-    private List<File> scanEditLogFiles(String rootD) {
-        File file = new File(rootD);
-        if (!file.isDirectory()){
-            log.error("根目录错误!!!");
-            return null;
-        }else{
-            List<File> res = new ArrayList<>();
-            for (File f : file.listFiles()) {
-                if (f.isFile()&&f.getName().endsWith(".log")&&f.getName().startsWith("edit_")){
-                    res.add(f);
-                }
-            }
-            res.stream().sorted((f1,f2)->{
-                String name1 = f1.getName();
-                String name2 = f2.getName();
-                int i1 = Integer.parseInt(name1.substring(name1.indexOf("_") + 1, name1.indexOf(".")));
-                int i2 = Integer.parseInt(name2.substring(name2.indexOf("_") + 1, name2.indexOf(".")));
-                return i1-i2;
-            });
-            return res;
         }
     }
 
@@ -288,17 +265,7 @@ public class ShaunaFSManager implements Starter,FSManager {
 
     private void resortReplicas(INodeFile nodeFile) {
         for (Block block : nodeFile.getBlocks()) {
-            block.getReplicasInfos().sort((r1,r2)->{
-                Float ps1 = SoldierManager.getInstance().getSoldierInfo(r1.getId()).getPS();
-                Float ps2 = SoldierManager.getInstance().getSoldierInfo(r2.getId()).getPS();
-                if (ps1==ps2) {
-                    return 0;
-                }else if(ps1>ps2){
-                    return 1;
-                }else{
-                    return -1;
-                }
-            });
+            KingUtils.resortReplicas(block);
         }
     }
 
@@ -376,7 +343,7 @@ public class ShaunaFSManager implements Starter,FSManager {
             for (int i = 0; i< children.size(); i++) {
                 INode node = children.get(i);
                 if(node.getName().equals(fileName)){
-                    if(node instanceof INodeDirectory) {
+                    if(node instanceof INodeDirectory) {        /** 删除目录 **/
                         INodeDirectory iNodeDirectory = (INodeDirectory) node;
                         if (iNodeDirectory.getChildren()==null||iNodeDirectory.getChildren().size()==0){
                             iNodeDirectory.setStatus(-1);
@@ -389,7 +356,7 @@ public class ShaunaFSManager implements Starter,FSManager {
                         }else{
                             fileInfo.setRes(ClientProtocolType.IT_IS_NOT_AN_EMPTY_DIR);
                         }
-                    }else {
+                    }else {                                     /** 删除文件 **/
                         node.setStatus(-1);
                         deletedNode.add(node);
                         fileInfo.setRes(ClientProtocolType.SUCCESS);

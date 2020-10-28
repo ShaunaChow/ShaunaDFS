@@ -12,4 +12,6 @@ public interface KingHAProtocol {
     KingHAMsgBean electMaster(KingHAMsgBean msg);
 
     void addLogItem(LogItem logItem);
+
+    void refreshImage(KingHAMsgBean msg);
 }

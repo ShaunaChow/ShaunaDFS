@@ -15,7 +15,7 @@ import java.io.*;
 public class ShaunaEditLogSystem implements EditLogSystem {
     private DataOutputStream fileOutputStream;
     private String dir;
-    private int filePin;
+    private int filePin = -999;
     private int logCounter;
 
     public ShaunaEditLogSystem(){
@@ -25,14 +25,26 @@ public class ShaunaEditLogSystem implements EditLogSystem {
     @Override
     public void initEditLogSystem(String dir){
         this.dir = dir;
-        filePin = 0;
+        if (filePin<0) filePin = 0;
         try {
-            fileOutputStream = new DataOutputStream(new FileOutputStream(dir+File.separator+"edit_"+filePin+".log",true));
+            if (fileOutputStream==null) {
+                File file = getEmptyFile(dir);
+                fileOutputStream = new DataOutputStream(new FileOutputStream(file));
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             log.error("编辑日志目录打不开哦！！！");
         }
         logCounter = 0;
+    }
+
+    private File getEmptyFile(String path) {
+        File file = new File(path +File.separator+ "edit_" + filePin + ".log");
+        while (file.exists()){
+            filePin++;
+            file = new File(path +File.separator+ "edit_" + filePin + ".log");
+        }
+        return file;
     }
 
     @Override
@@ -51,7 +63,8 @@ public class ShaunaEditLogSystem implements EditLogSystem {
     public synchronized void changeFile() throws IOException {
         filePin++;
         fileOutputStream.close();
-        fileOutputStream = new DataOutputStream(new FileOutputStream(dir+File.separator+"edit_"+filePin+".log",true));
+        File file = getEmptyFile(dir);
+        fileOutputStream = new DataOutputStream(new FileOutputStream(file));
     }
 
     @Override

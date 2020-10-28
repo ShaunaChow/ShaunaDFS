@@ -7,6 +7,7 @@ import top.shauna.dfs.safemode.SafeModeLock;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.threadpool.CommonThreadPool;
 import top.shauna.dfs.type.TransactionType;
+import top.shauna.dfs.util.KingUtils;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -74,6 +75,8 @@ public class BlocksManager implements Starter {
                         if (!SafeModeLock.inSafeMode()) {
                             backup(block);
                         }
+                    }else if(block.getReplicas()>KingPubConfig.getInstance().getReplicas()){
+                        deleteReplicas(block,KingPubConfig.getInstance().getReplicas());
                     }
                 }else if (!SafeModeLock.inSafeMode()){  /** 保护模式期间不报失效 **/
                     log.error("Block失效！！！"+block.toString());
@@ -85,6 +88,19 @@ public class BlocksManager implements Starter {
             SafeModeLock.setBlockOk(true);
         }else{
             SafeModeLock.setBlockOk(false);
+        }
+    }
+
+    private void deleteReplicas(Block block, int remain) {
+        SoldierManager soldierManager = SoldierManager.getInstance();
+        KingUtils.resortReplicas(block);
+        List<ReplicasInfo> replicasInfos = block.getReplicasInfos();
+        while(block.getReplicas()>remain) {
+            ReplicasInfo remove = replicasInfos.remove(replicasInfos.size() - 1);
+            block.setReplicas(replicasInfos.size());
+            SoldierInfo soldierInfo = soldierManager.getSoldierInfo(remove.getId());
+            DeleteBean deleteBean = new DeleteBean(block.getFilePath(),block.getPin());
+            soldierInfo.getTransactions().add(new Transaction(getBackupId(),TransactionType.DELETE,deleteBean));
         }
     }
 
@@ -153,7 +169,10 @@ public class BlocksManager implements Starter {
     }
 
     public void deleteBlocks(String filePath){
-        blocksMap.remove(filePath);
+        List<Block> remove = blocksMap.remove(filePath);
+        for (Block block : remove) {
+            deleteReplicas(block,0);
+        }
     }
 
     public synchronized int getBackupId() {

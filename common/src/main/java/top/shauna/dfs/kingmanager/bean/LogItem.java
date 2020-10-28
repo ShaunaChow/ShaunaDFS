@@ -31,11 +31,7 @@ public class LogItem implements Serializable,Writable {
             byte _1st = 1<<2;
             _1st |= getStatusCode();
             fileOutputStream.writeByte(_1st);
-            if (status<0) {
-                clientFileInfo.write(fileOutputStream);
-            }else{
-                writePath(fileOutputStream);
-            }
+            clientFileInfo.write(fileOutputStream);
         }else if(method.equalsIgnoreCase("mkdir")){
             byte _1st = 2<<2;
             _1st |= getStatusCode();
@@ -47,7 +43,7 @@ public class LogItem implements Serializable,Writable {
             fileOutputStream.writeByte(_1st);
             writePath(fileOutputStream);
         }else{
-            log.info("占不支持的类型");
+            log.info("暂不支持的类型");
             return false;
         }
         fileOutputStream.flush();
@@ -61,13 +57,7 @@ public class LogItem implements Serializable,Writable {
         logItem.setStatus(statusCode);
         if ((_1st>>>2)==1){
             logItem.setMethod("uploadFile");
-            if (statusCode<0) {
-                logItem.setClientFileInfo(ClientFileInfo.load(fileinputStream));
-            }else{
-                ClientFileInfo fileInfo = new ClientFileInfo();
-                fileInfo.setPath(readPath(fileinputStream));
-                logItem.setClientFileInfo(fileInfo);
-            }
+            logItem.setClientFileInfo(ClientFileInfo.load(fileinputStream));
         }else if((_1st>>>2)==2){
             logItem.setMethod("mkdir");
             ClientFileInfo fileInfo = new ClientFileInfo();

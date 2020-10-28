@@ -70,6 +70,9 @@ public class MessageUtil {
         ArrayList<BlockInfo> res = new ArrayList<>(1);
         BlockInfo blockInfo = new BlockInfo();
         blockInfo.setFilePath(block.getFilePath());
+        blockInfo.setMetaPath(
+                SoldierPubConfig.getInstance().getRootDir()+ File.separator+"Meta"+block.getFilePath()+"_"+block.getPin()+".block"
+        );
         blockInfo.setPin(block.getPin());
         blockInfo.setTimeStamp(block.getVersion());
         res.add(blockInfo);

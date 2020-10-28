@@ -15,6 +15,7 @@ import top.shauna.rpc.supports.ZKSupportKit;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -92,13 +93,13 @@ public class Test1 {
         preparePubConfig();
         ClientService clientService = new ClientServiceImpl();
 
-        clientService.mkdir("/12221/");
-        clientService.mkdir("/12222/");
-        clientService.mkdir("/12223/");
-        clientService.mkdir("/12224/");
-        clientService.mkdir("/5222/");
-        clientService.mkdir("/6222/");
-        clientService.mkdir("/72222/");
+        clientService.mkdir("/1/");
+        clientService.mkdir("/2/");
+        clientService.mkdir("/3/");
+        clientService.mkdir("/4/");
+        clientService.mkdir("/5/");
+        clientService.mkdir("/6/");
+        clientService.mkdir("/7/");
         clientService.mkdir("/8222/");
         clientService.mkdir("/2229/");
         clientService.mkdir("/22210/");
@@ -119,9 +120,9 @@ public class Test1 {
 
         clientService.mkdir("/shauna/");
 
-        clientService.uploadFile("/shauna/new.txt", fileChannel);
+        clientService.uploadFile("/shauna/1.txt", fileChannel);
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/new.txt");
+        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/1.txt");
 
         FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\jdk-8u201-windows-x64.exe",
                 "rw").getChannel();
@@ -132,8 +133,8 @@ public class Test1 {
         fileChannel2.close();
 
 //        clientService.rmDir("/shauna/");
-//        boolean b1 = clientService.rmDir("/shauna");
-//        boolean b1 = clientService.rmFile("/shauna/ok22.txt");
+        boolean b1 = clientService.rmDir("/shauna");
+//        boolean b1 = clientService.rmFile("/shauna/okkkkk.txt");
 //        System.out.println(b1);
     }
 

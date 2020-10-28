@@ -7,6 +7,7 @@ import top.shauna.dfs.kingmanager.QueenManager;
 import top.shauna.dfs.kingmanager.bean.CheckPoint;
 import top.shauna.dfs.kingmanager.bean.QueenInfo;
 import top.shauna.dfs.storage.impl.LocalFileStorage;
+import top.shauna.dfs.util.CommonUtil;
 
 import java.io.File;
 
@@ -41,10 +42,7 @@ public class QueenProtocolService {
             editLogSystem.changeFile();
             fileKeeper = editFile;
         }
-        checkPoint.setShaunaImage(fileStorage.read(imageFile));
-        checkPoint.setEditLog(fileStorage.read(editFile));
-        checkPoint.setStatus(1);
-        return checkPoint;
+        return CommonUtil.getCheckPoint(imageFile, editFile);
     }
 
     public void checkPointOk(CheckPoint checkPoint) throws Exception {

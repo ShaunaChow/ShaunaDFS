@@ -1,9 +1,11 @@
 package top.shauna.dfs.interact;
 
 import lombok.extern.slf4j.Slf4j;
+import top.shauna.dfs.block.MetaKeeper;
 import top.shauna.dfs.config.SoldierPubConfig;
 import top.shauna.dfs.interact.soldier.SoldierHeartBeat;
 import top.shauna.dfs.kingmanager.bean.BackupBean;
+import top.shauna.dfs.kingmanager.bean.DeleteBean;
 import top.shauna.dfs.kingmanager.bean.Transaction;
 import top.shauna.dfs.monitor.MonitorProxy;
 import top.shauna.dfs.protocol.SoldierServerProtocol;
@@ -12,6 +14,7 @@ import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.threadpool.CommonThreadPool;
 import top.shauna.dfs.util.CommonUtil;
 
+import java.io.File;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -72,6 +75,13 @@ public class SoldierInteractStarter implements Starter {
                             MonitorProxy.getInstance().getProxy().write(block);
                             /** 触发一次汇报Blocks **/
                             soldierHeartBeat.reportBlock(block);
+                            break;
+                        case DELETE:
+                            DeleteBean deleteBean = (DeleteBean) undone.getMsg();
+                            MetaKeeper.delete(
+                                    SoldierPubConfig.getInstance().getRootDir()+
+                                            File.separator+"Meta"+deleteBean.getFilePath()+"_"+deleteBean.getPin()+".block"
+                            );
                             break;
                     }
                 } catch (Exception e) {
