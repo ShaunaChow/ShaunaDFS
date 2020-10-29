@@ -53,6 +53,7 @@ public class SoldierInteractStarter implements Starter {
                 } catch (Exception e) {
                     e.printStackTrace();
                     log.error("发送心跳出现错误："+e.getMessage());
+                    MessageUtil.setIdKeeper(-99999);
                 }
             }
         });

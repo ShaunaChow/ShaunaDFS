@@ -50,7 +50,7 @@ public class LogItem implements Serializable,Writable {
         return true;
     }
 
-    public static LogItem load(DataInputStream fileinputStream) throws IOException {
+    public static LogItem load(DataInputStream fileinputStream) throws Exception {
         LogItem logItem = new LogItem();
         byte _1st = fileinputStream.readByte();
         Integer statusCode = getStatusCode(_1st);

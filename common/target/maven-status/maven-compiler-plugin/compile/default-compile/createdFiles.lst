@@ -6,6 +6,7 @@ top\shauna\dfs\type\ClientProtocolType.class
 top\shauna\dfs\soldiermanager\bean\MetaInfo.class
 top\shauna\dfs\starter\Starter.class
 top\shauna\dfs\type\SoldierResponseType.class
+top\shauna\dfs\kingmanager\bean\DeleteBean.class
 top\shauna\dfs\storage\impl\LocalFileStorage.class
 top\shauna\dfs\interfaze\Writable.class
 top\shauna\dfs\kingmanager\bean\INode.class

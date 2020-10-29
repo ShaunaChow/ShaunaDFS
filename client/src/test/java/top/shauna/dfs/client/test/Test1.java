@@ -16,6 +16,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -99,19 +100,19 @@ public class Test1 {
         clientService.mkdir("/4/");
         clientService.mkdir("/5/");
         clientService.mkdir("/6/");
-        clientService.mkdir("/7/");
-        clientService.mkdir("/8222/");
-        clientService.mkdir("/2229/");
-        clientService.mkdir("/22210/");
-        clientService.mkdir("/12221/");
-        clientService.mkdir("/12222/");
+//        clientService.mkdir("/7/");
+//        clientService.mkdir("/8222/");
+//        clientService.mkdir("/2229/");
+//        clientService.mkdir("/22210/");
+//        clientService.mkdir("/12221/");
+//        clientService.mkdir("/12222/");
     }
 
     @Test
     public void test433() throws IOException {
         preparePubConfig();
 
-        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\jdk-8u201-windows-x64.exe",
+        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\2019优秀数模论文.zip",
                 "rw").getChannel();
 //      jdk-8u201-windows-x64.exe
 //      2019优秀数模论文.zip
@@ -120,11 +121,11 @@ public class Test1 {
 
         clientService.mkdir("/shauna/");
 
-        clientService.uploadFile("/shauna/1.txt", fileChannel);
+        clientService.uploadFile("/shauna/2.txt", fileChannel);
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/1.txt");
+        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/2.txt");
 
-        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\jdk-8u201-windows-x64.exe",
+        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\2019优秀数模论文.zip",
                 "rw").getChannel();
 
         fileChannel2.write(byteBuffer);
@@ -133,8 +134,8 @@ public class Test1 {
         fileChannel2.close();
 
 //        clientService.rmDir("/shauna/");
-        boolean b1 = clientService.rmDir("/shauna");
-//        boolean b1 = clientService.rmFile("/shauna/okkkkk.txt");
+//        boolean b1 = clientService.rmDir("/shauna");
+//        boolean b1 = clientService.rmFile("/shauna/2.txt");
 //        System.out.println(b1);
     }
 
@@ -199,5 +200,7 @@ public class Test1 {
             System.out.println(string);
         }
         System.out.println(CommonUtil.getLocalHostIp());
+        Map<Integer,Integer> map = new HashMap<>();
+        System.out.println(map.containsKey(null));
     }
 }

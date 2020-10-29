@@ -4,16 +4,20 @@ import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.ha.KingHAStatus;
 import top.shauna.dfs.kingmanager.LogManager;
+import top.shauna.dfs.kingmanager.ShaunaFSManager;
 import top.shauna.dfs.kingmanager.bean.CheckPoint;
 import top.shauna.dfs.kingmanager.bean.KingHAMsgBean;
 import top.shauna.dfs.kingmanager.bean.LogItem;
 import top.shauna.dfs.protocol.KingHAProtocol;
+import top.shauna.dfs.storage.util.CheckPointUtil;
 import top.shauna.dfs.type.KingHAMsgType;
 import top.shauna.dfs.util.CommonUtil;
 import top.shauna.dfs.util.KingUtils;
 import top.shauna.rpc.bean.LocalExportBean;
 import top.shauna.rpc.service.ShaunaRPCHandler;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -87,6 +91,7 @@ public class KingHAProtocolService {
         KingUtils.deleteLogs();
         byte[] newImage = CommonUtil.dealWithCheckPoint(checkPoint);
         CommonUtil.saveCheckPointLocal(newImage,KingPubConfig.getInstance().getRootDir()+File.separator + "ShaunaImage.dat");
+        ShaunaFSManager.getInstance().refreshRoot(new DataInputStream(new ByteArrayInputStream(newImage)));
         log.info("Image Refresh完成!!!");
     }
 }

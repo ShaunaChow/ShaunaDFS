@@ -32,16 +32,28 @@ public class Block implements Serializable,Writable {
 
     @Override
     public boolean write(DataOutputStream out) throws IOException {
+        byte[] pathBytes = filePath.getBytes();
+        out.writeInt(pathBytes.length);
+        out.write(pathBytes);
+        out.writeInt(pin);
         out.writeInt(blockLength);
         return true;
     }
 
     public static Block load(DataInputStream in) throws IOException {
-        int length = in.readInt();
         Block block = new Block();
+        /** 设置FilePath **/
+        int pathLen = in.readInt();
+        byte[] bytes = new byte[pathLen];
+        in.read(bytes);
+        block.setFilePath(new String(bytes));
+        /** 设置Pin **/
+        block.setPin(in.readInt());
+        /** 设置BlockLength **/
+        block.setBlockLength(in.readInt());
+        /** 后处理**/
         block.setReplicas(0);
         block.setReplicasInfos(new CopyOnWriteArrayList<>());
-        block.setBlockLength(length);
         block.setStatus(0);
         return block;
     }

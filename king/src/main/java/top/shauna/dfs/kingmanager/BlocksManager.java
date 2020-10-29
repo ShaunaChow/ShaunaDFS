@@ -9,7 +9,10 @@ import top.shauna.dfs.threadpool.CommonThreadPool;
 import top.shauna.dfs.type.TransactionType;
 import top.shauna.dfs.util.KingUtils;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +30,7 @@ public class BlocksManager implements Starter {
         blocksMap = new ConcurrentHashMap<>();
         blockStatus = -1;
         backupId = 0;
+        backupMap = new HashMap<>();    /** 单线程扫描直接用HashMap **/
     }
 
     public static BlocksManager getInstance(){
@@ -41,6 +45,7 @@ public class BlocksManager implements Starter {
 
     private volatile int blockStatus;
     private int backupId;
+    private Map<Block,Integer> backupMap;
 
     @Override
     public void onStart() throws Exception {
@@ -49,7 +54,7 @@ public class BlocksManager implements Starter {
                 try {
                     TimeUnit.SECONDS.sleep(KingPubConfig.getInstance().getBlockScanTime());
                     scanReplicas();
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -65,6 +70,13 @@ public class BlocksManager implements Starter {
                     continue;
                 }
                 sum++;
+                Iterator<ReplicasInfo> iterator = block.getReplicasInfos().iterator();
+                while (iterator.hasNext()){
+                    ReplicasInfo replicasInfo = iterator.next();
+                    if (!SoldierManager.getInstance().contains(replicasInfo.getId())){
+                        iterator.remove();
+                    }
+                }
                 if (block.getReplicas()>0){
                     block.setStatus(1);
                     ok++;
@@ -77,6 +89,9 @@ public class BlocksManager implements Starter {
                         }
                     }else if(block.getReplicas()>KingPubConfig.getInstance().getReplicas()){
                         deleteReplicas(block,KingPubConfig.getInstance().getReplicas());
+                        backupMap.remove(block);
+                    }else{
+                        backupMap.remove(block);
                     }
                 }else if (!SafeModeLock.inSafeMode()){  /** 保护模式期间不报失效 **/
                     log.error("Block失效！！！"+block.toString());
@@ -105,6 +120,11 @@ public class BlocksManager implements Starter {
     }
 
     private void backup(Block block) {
+        Integer faultTimes = backupMap.getOrDefault(block, 0);
+        if (faultTimes<5){  /** 给出5倍的容错时间 **/
+            backupMap.put(block,faultTimes+1);
+            return;
+        }
         int needReplicas = KingPubConfig.getInstance().getReplicas() - block.getReplicas();
         SoldierManager soldierManager = SoldierManager.getInstance();
         List<ReplicasInfo> newReplicas = soldierManager.getReplicas(KingPubConfig.getInstance().getReplicas(), block.getBlockLength());

@@ -34,6 +34,7 @@ public class CheckPointStarter implements Starter {
                             checkPoint.doCheckPoint();
                         }
                 } catch (Exception e) {
+                    DealWithCheckPoint.setId(-9999);
                     e.printStackTrace();
                 }
             }

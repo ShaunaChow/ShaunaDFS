@@ -26,7 +26,7 @@ public class DealWithCheckPoint {
     private QueenProtocol queenProtocol;
     private StorageEngine storageEngine;
     private String rootDir;
-    private int id;
+    private static int id;
 
     public DealWithCheckPoint(){
         queenProtocol = ShaunaRPCHandler.getReferenceProxy(QueenProtocol.class);
@@ -80,5 +80,13 @@ public class DealWithCheckPoint {
         long freeSpace = new File(rootDir).getFreeSpace();
         queenInfo.setFreeSpace(freeSpace);
         return queenInfo;
+    }
+
+    public static int getId() {
+        return id;
+    }
+
+    public static void setId(int ID) {
+        id = ID;
     }
 }

@@ -47,7 +47,7 @@ public class ClientFileInfo implements Serializable,Writable {
         return true;
     }
 
-    public static ClientFileInfo load(DataInputStream fileInputStream) throws IOException {
+    public static ClientFileInfo load(DataInputStream fileInputStream) throws Exception {
         ClientFileInfo clientFileInfo = new ClientFileInfo();
         int nameLength = fileInputStream.readInt();
         byte[] nameBytes = new byte[nameLength];
@@ -59,7 +59,7 @@ public class ClientFileInfo implements Serializable,Writable {
         }
         byte exitsFile = fileInputStream.readByte();
         if (exitsFile==1){
-            clientFileInfo.setINodeFile(INodeFile.load(fileInputStream));
+            clientFileInfo.setINodeFile((INodeFile) INodeFile.load(fileInputStream,null));
         }
         return clientFileInfo;
     }

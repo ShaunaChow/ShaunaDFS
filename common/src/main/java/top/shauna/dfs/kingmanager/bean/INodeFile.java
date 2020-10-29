@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class INodeFile extends INode implements Serializable,Writable {
+public class INodeFile extends INode implements Serializable {
     private List<Block> blocks;
 
     @Override
@@ -30,21 +30,23 @@ public class INodeFile extends INode implements Serializable,Writable {
 
     @Override
     public boolean write(DataOutputStream fileOutputStream) throws IOException {
-        fileOutputStream.writeInt(blocks.size());
-        for (Block block : blocks) {
-            block.write(fileOutputStream);
+        byte[] name = getName().getBytes();
+        fileOutputStream.writeByte(name.length);
+        fileOutputStream.write(name);
+        byte flag = 0;
+        flag = (byte)(flag&0b01111111);
+        fileOutputStream.writeByte(flag);
+        fileOutputStream.writeByte(0);
+        List<Block> blocks = getBlocks();
+        if (blocks==null){
+            fileOutputStream.writeByte(0);
+        }else{
+            fileOutputStream.writeByte(blocks.size());
+            for (Block block : blocks) {
+                block.write(fileOutputStream);
+            }
         }
+        fileOutputStream.flush();
         return true;
-    }
-
-    public static INodeFile load(DataInputStream fileInputStream) throws IOException {
-        INodeFile iNodeFile = new INodeFile();
-        int size = fileInputStream.readInt();
-        ArrayList<Block> blocks = new ArrayList<>(size);
-        for (int i=0;i<size;i++){
-            blocks.add(Block.load(fileInputStream));
-        }
-        iNodeFile.setBlocks(blocks);
-        return iNodeFile;
     }
 }

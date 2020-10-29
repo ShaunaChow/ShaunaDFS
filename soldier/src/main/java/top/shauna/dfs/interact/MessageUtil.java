@@ -117,7 +117,9 @@ public class MessageUtil {
         switch (heartBeatResponseBean.getRes()){
             case SUCCESS:
                 List<Transaction> transactions = heartBeatResponseBean.getTransactions();
-                undoneTrasactions.addAll(transactions);
+                if(transactions!=null) {
+                    undoneTrasactions.addAll(transactions);
+                }
                 break;
             case UNKNOWN:
                 log.error("未知错误！！！");

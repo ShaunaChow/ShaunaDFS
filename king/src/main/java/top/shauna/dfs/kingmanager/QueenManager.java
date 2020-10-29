@@ -93,6 +93,7 @@ public class QueenManager implements Starter {
     }
 
     public QueenInfo getQueenInfo(int id){
+        if (id<0) return null;
         return queens.get(id);
     }
 

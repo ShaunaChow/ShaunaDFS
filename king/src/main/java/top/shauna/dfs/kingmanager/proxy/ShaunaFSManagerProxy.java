@@ -26,7 +26,7 @@ public class ShaunaFSManagerProxy implements MethodInterceptor {
     private LogManager logManager;
 
     private ShaunaFSManagerProxy(LogManager logManager){
-        this.shaunaFSManager = new ShaunaFSManager();
+        this.shaunaFSManager = ShaunaFSManager.getInstance();
         this.logManager = logManager;
     }
 

@@ -5,8 +5,8 @@ import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.ha.impl.KingHAProtocolImpl;
 import top.shauna.dfs.interact.client.ClientProtocolStarter;
 import top.shauna.dfs.interact.soldier.KingHeartBeatStarter;
-import top.shauna.dfs.kingmanager.LogManager;
 import top.shauna.dfs.kingmanager.ManagerStarter;
+import top.shauna.dfs.kingmanager.ShaunaFSManager;
 import top.shauna.dfs.kingmanager.bean.CheckPoint;
 import top.shauna.dfs.kingmanager.bean.KingHAMsgBean;
 import top.shauna.dfs.protocol.KingHAProtocol;
@@ -18,8 +18,9 @@ import top.shauna.rpc.bean.ServiceBean;
 import top.shauna.rpc.service.ShaunaRPCHandler;
 import top.shauna.rpc.supports.ZKSupportKit;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -57,12 +58,14 @@ public class KingHAStarter implements Starter {
         ha = kingPubConfig.getHa();
         if (ha==null||ha.size()<=1){        /** 不启动高可用 **/
             startThisKing();
+            registThisKing();
         }else{                              /** 高可用模式 **/
             String thisKing = ip+":"+port;
             if (ha.contains(thisKing)){
                 kingHAStatus.setNextMaster(true);
                 kingHAStatus.setMaster(false);
                 kingHAStatus.setId(System.currentTimeMillis());
+                startThisKing();
                 serviceBean = publishHAProtocol();
                 ha.remove(thisKing);
                 while(connectAll()<1){      /** 至少需要一个僚机 **/
@@ -72,7 +75,7 @@ public class KingHAStarter implements Starter {
                 vote();
                 if (kingHAStatus.becomeMaster()){
                     ShaunaRPCHandler.doRegister(serviceBean);
-                    startThisKing();
+                    registThisKing();
                     refreshAll();
                 }else {
                     zkSupportKit.subscribeChildChanges(top.shauna.rpc.util.CommonUtil.getZookeeperPath(KingHAProtocol.class),
@@ -127,6 +130,7 @@ public class KingHAStarter implements Starter {
             vote();
             if (kingHAStatus.becomeMaster()){
                 ShaunaRPCHandler.doRegister(serviceBean);
+                registThisKing();
                 startThisKing();
             }
         }
@@ -154,6 +158,7 @@ public class KingHAStarter implements Starter {
                             KingUtils.deleteLogs();
                             byte[] newImage = CommonUtil.dealWithCheckPoint(resp.getCheckPoint());
                             CommonUtil.saveCheckPointLocal(newImage,KingPubConfig.getInstance().getRootDir()+File.separator+"ShaunaImage.dat");
+                            ShaunaFSManager.getInstance().refreshRoot(new DataInputStream(new ByteArrayInputStream(newImage)));
                             log.info("Image Refresh完成!!!");
                             break;
                         case ERROR:
@@ -175,10 +180,18 @@ public class KingHAStarter implements Starter {
     }
 
     private void startThisKing() throws Exception {
-        new ManagerStarter().onStart();
+        ManagerStarter.getInstance().onStart();
 
-        new KingHeartBeatStarter().onStart();
+        KingHeartBeatStarter.getInstance().onStart();
 
-        new ClientProtocolStarter().onStart();
+        ClientProtocolStarter.getInstance().onStart();
+    }
+
+    private void registThisKing() {
+        ManagerStarter.getInstance().doRegist();
+
+        KingHeartBeatStarter.getInstance().doRegist();
+
+        ClientProtocolStarter.getInstance().doRegist();
     }
 }

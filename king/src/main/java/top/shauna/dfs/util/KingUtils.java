@@ -4,6 +4,7 @@ import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.LogManager;
 import top.shauna.dfs.kingmanager.SoldierManager;
 import top.shauna.dfs.kingmanager.bean.Block;
+import top.shauna.dfs.kingmanager.bean.SoldierInfo;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,8 +19,16 @@ public class KingUtils {
 
     public static void resortReplicas(Block block){
         block.getReplicasInfos().sort((r1,r2)->{
-            Float ps1 = SoldierManager.getInstance().getSoldierInfo(r1.getId()).getPS();
-            Float ps2 = SoldierManager.getInstance().getSoldierInfo(r2.getId()).getPS();
+            SoldierInfo soldierInfo1 = SoldierManager.getInstance().getSoldierInfo(r1.getId());
+            if (soldierInfo1==null){
+                return 1;
+            }
+            SoldierInfo soldierInfo2 = SoldierManager.getInstance().getSoldierInfo(r2.getId());
+            if (soldierInfo2==null){
+                return -1;
+            }
+            Float ps1 = soldierInfo1.getPS();
+            Float ps2 = soldierInfo2.getPS();
             if (ps1==ps2) {
                 return 0;
             }else if(ps1>ps2){

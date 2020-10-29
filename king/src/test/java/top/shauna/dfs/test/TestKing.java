@@ -21,7 +21,7 @@ public class TestKing {
 
     @Test
     public void test5() throws IOException {
-        KingHeartBeatStarter kingHeartBeatStarter = new KingHeartBeatStarter();
+        KingHeartBeatStarter kingHeartBeatStarter = KingHeartBeatStarter.getInstance();
         kingHeartBeatStarter.onStart();
         System.in.read();
     }

@@ -132,7 +132,12 @@ public class SoldierManager implements Starter {
     }
 
     public SoldierInfo getSoldierInfo(Integer id){
+        if (id==null||id<0) return null;
         return soldierInfoMap.get(id);
+    }
+
+    public boolean contains(int id){
+        return soldierInfoMap.containsKey(id);
     }
 
     public void registSoldier(int id, SoldierInfo soldierInfo){
