@@ -1,10 +1,12 @@
 package top.shauna.dfs.config;
 
+import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.rpc.bean.FoundBean;
 import top.shauna.rpc.bean.RegisterBean;
 import top.shauna.rpc.config.PubConfig;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,16 +19,27 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @Date 2020/9/27 19:50
  * @E-Mail z1023778132@icloud.com
  */
+@Slf4j
 public class KingConfig implements Starter {
     @Override
     public void onStart() throws Exception {
         prepareConfig();
     }
 
-    private void prepareConfig() throws IOException {
+    private void prepareConfig() throws Exception {
         String propPath = System.getProperty("properties");
         Properties properties = new Properties();
-        InputStream in = KingConfig.class.getClassLoader().getResourceAsStream(propPath);
+        InputStream in;
+        try{
+            in = new FileInputStream(propPath);
+        }catch (Exception e){
+            try{
+                in = KingConfig.class.getClassLoader().getResourceAsStream(propPath);
+            }catch (Exception e2){
+                log.error("配置文件路径出错");
+                throw new Exception("配置文件路径出错");
+            }
+        }
         properties.load(new InputStreamReader(in,"UTF-8"));
         KingPubConfig kingPubConfig = KingPubConfig.getInstance();
         kingPubConfig.setRootDir(properties.getProperty("rootPath","/tmp/ShaunaDfs"));

@@ -5,45 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a51f00b-e7d2-44af-8fcb-ff5299584bea" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/client-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/client-1.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/test-classes/top/shauna/dfs/client/test/Test1.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/target/test-classes/top/shauna/dfs/client/test/Test1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/common-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/common-1.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/service/KingHAProtocolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/service/KingHAProtocolService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/soldier/impl/HeartBeatProtocolImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/soldier/impl/HeartBeatProtocolImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/soldier/service/HeartBeatProtocolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/soldier/service/HeartBeatProtocolService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/BlocksManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/BlocksManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ShaunaFSManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ShaunaFSManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/proxy/ShaunaFSManagerProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/proxy/ShaunaFSManagerProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/queenserver/service/QueenProtocolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/queenserver/service/QueenProtocolService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/resources/king.properties" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/resources/king.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/king.properties" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/king.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/KingHAStarter$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/KingHAStarter$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/KingHAStarter.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/KingHAStarter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/KingHAStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/KingHAStatus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/service/KingHAProtocolService.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/service/KingHAProtocolService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/soldier/impl/HeartBeatProtocolImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/soldier/impl/HeartBeatProtocolImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/soldier/service/HeartBeatProtocolService.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/soldier/service/HeartBeatProtocolService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/BlocksManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/BlocksManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/ShaunaFSManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/ShaunaFSManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/proxy/ShaunaFSManagerProxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/proxy/ShaunaFSManagerProxy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/queenserver/service/QueenProtocolService.class" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/queenserver/service/QueenProtocolService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/king-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/king-1.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/king/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/queen/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/queen-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/queen/target/queen-1.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/MessageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/interact/MessageUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/MessageUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/MessageUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/soldier-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/target/soldier-1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/king/target/test-classes/top/shauna/dfs/test/TestKing$TEST.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/king/target/test-classes/top/shauna/dfs/test/TestKing.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/king/target/" />
@@ -79,11 +43,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="76" column="31" lean-forward="true" selection-start-line="76" selection-start-column="31" selection-end-line="76" selection-end-column="31" />
+            <state relative-caret-position="96">
+              <caret line="78" column="40" lean-forward="true" selection-start-line="78" selection-start-column="40" selection-end-line="78" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KingStarter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/KingStarter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="12" column="3" lean-forward="true" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InitFS.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/InitFS.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="282">
+              <caret line="13" column="31" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KingConfig.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="29" column="57" lean-forward="true" selection-start-line="29" selection-start-column="57" selection-end-line="29" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -107,7 +98,6 @@
       <list>
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/KingPubConfig.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/KingStarter.java" />
-        <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/LogManager.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/kingmanager/bean/KingHAMsgBean.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/protocol/KingHAProtocol.java" />
@@ -156,6 +146,7 @@
         <option value="$PROJECT_DIR$/client/src/test/java/top/shauna/dfs/client/test/Test1.java" />
         <option value="$PROJECT_DIR$/king/src/main/resources/king.properties" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java" />
       </list>
     </option>
   </component>
@@ -765,6 +756,12 @@
             <path>
               <item name="ShaunaDFS" type="b2602c69:ProjectViewProjectNode" />
               <item name="ShaunaDFS" type="462c0819:PsiDirectoryNode" />
+              <item name="king" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ShaunaDFS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShaunaDFS" type="462c0819:PsiDirectoryNode" />
               <item name="queen" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -1021,6 +1018,17 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ShaunaDFS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShaunaDFS" type="462c0819:PsiDirectoryNode" />
+              <item name="soldier" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ShaunaDFS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShaunaDFS" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -1068,7 +1076,7 @@
     <configuration name="InitFS" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="top.shauna.dfs.InitFS" />
       <module name="king" />
-      <option name="VM_PARAMETERS" value="-Dproperties=king.properties" />
+      <option name="VM_PARAMETERS" value="-Dproperties=F:\java项目\ShaunaDFS\king\src\main\resources\king.properties" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -1312,7 +1320,7 @@
       <workItem from="1603805582970" duration="2484000" />
       <workItem from="1603853567242" duration="23090000" />
       <workItem from="1603939229873" duration="23410000" />
-      <workItem from="1604039263042" duration="16366000" />
+      <workItem from="1604039263042" duration="19085000" />
     </task>
     <servers />
   </component>
@@ -1349,7 +1357,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="470819000" />
+    <option name="totallyTimeSpent" value="473538000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-320" width="1874" height="1096" extended-state="6" />
@@ -1363,12 +1371,12 @@
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.18081588" />
+      <window_info anchor="right" id="Maven Projects" order="3" weight="0.18081588" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.35736677" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.40543365" />
       <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.52978057" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3678161" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49601275" visible="true" weight="0.19184123" />
@@ -1435,27 +1443,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/soldierserver/protocolimpl/SoldierServerProtocolImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="37" column="37" lean-forward="true" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/protocol/QueenProtocol.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://F:/maven/apache-maven-3.5.4/repository/top/shauna/interact/1.0-SNAPSHOT/interact-1.0-SNAPSHOT.jar!/top/shauna/rpc/client/channel/NettyChannel.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="20" column="27" lean-forward="true" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://F:/maven/apache-maven-3.5.4/repository/top/shauna/proxy/1.0-SNAPSHOT/proxy-1.0-SNAPSHOT.jar!/top/shauna/rpc/invokerhandler/ShaunaInvokeHandler.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
@@ -1596,13 +1583,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
           <caret line="118" column="24" lean-forward="true" selection-start-line="118" selection-start-column="24" selection-end-line="118" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/KingStarter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
@@ -1819,8 +1799,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="76" column="31" lean-forward="true" selection-start-line="76" selection-start-column="31" selection-end-line="76" selection-end-column="31" />
+        <state relative-caret-position="96">
+          <caret line="78" column="40" lean-forward="true" selection-start-line="78" selection-start-column="40" selection-end-line="78" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/KingStarter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="3" lean-forward="true" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/InitFS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="13" column="31" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/ClassLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="1298" column="32" lean-forward="true" selection-start-line="1298" selection-start-column="32" selection-end-line="1298" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="29" column="57" lean-forward="true" selection-start-line="29" selection-start-column="57" selection-end-line="29" selection-end-column="57" />
         </state>
       </provider>
     </entry>
