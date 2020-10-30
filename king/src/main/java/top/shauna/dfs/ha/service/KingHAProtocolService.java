@@ -4,12 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.ha.KingHAStatus;
 import top.shauna.dfs.kingmanager.LogManager;
-import top.shauna.dfs.kingmanager.ShaunaFSManager;
 import top.shauna.dfs.kingmanager.bean.CheckPoint;
 import top.shauna.dfs.kingmanager.bean.KingHAMsgBean;
 import top.shauna.dfs.kingmanager.bean.LogItem;
+import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
 import top.shauna.dfs.protocol.KingHAProtocol;
-import top.shauna.dfs.storage.util.CheckPointUtil;
+import top.shauna.dfs.threadpool.CommonThreadPool;
 import top.shauna.dfs.type.KingHAMsgType;
 import top.shauna.dfs.util.CommonUtil;
 import top.shauna.dfs.util.KingUtils;
@@ -20,8 +20,11 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * @Author Shauna.Chou
@@ -31,14 +34,31 @@ import java.util.Map;
 @Slf4j
 public class KingHAProtocolService {
     private LogManager logManager;
+    private BlockingQueue<LogItem> logItems;
+    private KingHAStatus kingHAStatus;
 
     public KingHAProtocolService(){
         logManager = LogManager.getInstance();
         logManager.getEditLogSystem().initEditLogSystem(KingPubConfig.getInstance().getEditLogDirs());
+        logItems = new ArrayBlockingQueue<>(100);
+        kingHAStatus = KingHAStatus.getInstance();
+        CommonThreadPool.threadPool.execute(()-> doAddLogItem());
+    }
+
+    private void doAddLogItem() {
+        while (kingHAStatus.getMaster()==null||!kingHAStatus.getMaster()){
+            try {
+                LogItem logItem = logItems.take();
+                logManager.saveLogItem(logItem);
+                ShaunaFSManagerProxy.getInstance(null).getShaunaFSManager().addLogItemToRoot(Arrays.asList(logItem));
+                log.info("同步OKKK");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void electMaster(KingHAMsgBean msg) throws Exception {
-        KingHAStatus kingHAStatus = KingHAStatus.getInstance();
         long id = msg.getId();
         Map<String, KingHAProtocol> keeper = kingHAStatus.getKeeper();
         String ip_port = msg.getIp_port();
@@ -79,7 +99,11 @@ public class KingHAProtocolService {
     }
 
     public void addLogItem(LogItem logItem) throws IOException {
-        logManager.saveLogItem(logItem);
+        try {
+            logItems.put(logItem);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void refreshImage(KingHAMsgBean msg) throws Exception {
@@ -91,7 +115,7 @@ public class KingHAProtocolService {
         KingUtils.deleteLogs();
         byte[] newImage = CommonUtil.dealWithCheckPoint(checkPoint);
         CommonUtil.saveCheckPointLocal(newImage,KingPubConfig.getInstance().getRootDir()+File.separator + "ShaunaImage.dat");
-        ShaunaFSManager.getInstance().refreshRoot(new DataInputStream(new ByteArrayInputStream(newImage)));
+        ShaunaFSManagerProxy.getInstance(null).getShaunaFSManager().refreshRoot(new DataInputStream(new ByteArrayInputStream(newImage)));
         log.info("Image Refresh完成!!!");
     }
 }

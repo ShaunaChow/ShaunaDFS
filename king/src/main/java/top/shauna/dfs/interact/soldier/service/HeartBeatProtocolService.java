@@ -2,6 +2,7 @@ package top.shauna.dfs.interact.soldier.service;
 
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.config.KingPubConfig;
+import top.shauna.dfs.interact.exceptions.ErrorIdException;
 import top.shauna.dfs.kingmanager.BlocksManager;
 import top.shauna.dfs.kingmanager.SoldierManager;
 import top.shauna.dfs.kingmanager.bean.*;
@@ -27,7 +28,10 @@ public class HeartBeatProtocolService {
     }
 
     public void reportBlocks(HeartBeatRequestBean heartBeatRequestBean) throws Exception {
-        int id = heartBeatRequestBean.getId();
+        Integer id = heartBeatRequestBean.getId();
+        if (id==null||id<0){
+            throw new ErrorIdException("ID为负数!!!!");
+        }
         List<BlockInfo> blockInfos = heartBeatRequestBean.getBlockInfos();
         List<BlockInfo> newBlockInfos = new CopyOnWriteArrayList<>();
         for (BlockInfo blockInfo : blockInfos) {

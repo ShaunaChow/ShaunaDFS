@@ -70,11 +70,12 @@ public class BlocksManager implements Starter {
                     continue;
                 }
                 sum++;
-                Iterator<ReplicasInfo> iterator = block.getReplicasInfos().iterator();
-                while (iterator.hasNext()){
-                    ReplicasInfo replicasInfo = iterator.next();
+                List<ReplicasInfo> replicasInfos = block.getReplicasInfos();
+                for (int i=0;i<replicasInfos.size();i++){
+                    ReplicasInfo replicasInfo = replicasInfos.get(i);
                     if (!SoldierManager.getInstance().contains(replicasInfo.getId())){
-                        iterator.remove();
+                        replicasInfos.remove(i--);
+                        block.setReplicas(replicasInfos.size());
                     }
                 }
                 if (block.getReplicas()>0){
@@ -186,6 +187,12 @@ public class BlocksManager implements Starter {
 
     public void registBlocks(String filePath, List<Block> blockList){
         blocksMap.put(filePath,blockList);
+    }
+
+    public void refreshBlocks(){
+        blocksMap.clear();
+        backupMap.clear();
+        backupId = 0;
     }
 
     public void deleteBlocks(String filePath){

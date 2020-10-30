@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class ShaunaFSManager implements Starter,FSManager {
-    private static ShaunaFSManager shaunaFSManager = new ShaunaFSManager();
     private INodeDirectory root;
     private ConcurrentHashMap<String,ClientFileInfo> newFileKeeper;
     private BlocksManager blocksManager;
@@ -39,10 +38,6 @@ public class ShaunaFSManager implements Starter,FSManager {
         KingPubConfig kingPubConfig = KingPubConfig.getInstance();
         rootDir = kingPubConfig.getRootDir();
         deletedNode = new CopyOnWriteArrayList<>();
-    }
-
-    public static ShaunaFSManager getInstance(){
-        return shaunaFSManager;
     }
 
     @Override
@@ -65,7 +60,7 @@ public class ShaunaFSManager implements Starter,FSManager {
                 try {
                     editInput = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
                     List<LogItem> logItems = CheckPointUtil.loadEditLogs(editInput);
-                    CheckPointUtil.mergeEditLogs(root,logItems);
+                    addLogItemToRoot(logItems);
                     editInput.close();
                     file.delete();
                 }finally {
@@ -107,8 +102,14 @@ public class ShaunaFSManager implements Starter,FSManager {
         });
     }
 
+    public void addLogItemToRoot(List<LogItem> logs){
+        CheckPointUtil.mergeEditLogs(root,logs);
+        refreshBlocks();
+    }
+
     public void refreshRoot(DataInputStream inputStream) throws Exception {
         root = CheckPointUtil.loadRootNode(inputStream);
+        refreshBlocks();
     }
 
     private void doDelete() {
@@ -145,6 +146,11 @@ public class ShaunaFSManager implements Starter,FSManager {
                 doDelete(node);
             }
         }
+    }
+
+    private void refreshBlocks(){
+        blocksManager.refreshBlocks();
+        initBlockManager();
     }
 
     private void initBlockManager(){

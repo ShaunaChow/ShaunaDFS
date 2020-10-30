@@ -107,6 +107,9 @@ public class MessageUtil {
                     dealWithBlockInfoRes(blockInfo);
                 }
                 break;
+            case REPORT_BLOCKS_AGAIN:
+                SoldierHeartBeat soldierHeartBeat = SoldierHeartBeat.getInstance();
+                soldierHeartBeat.regist();
             case UNKNOWN:
                 log.error("未知错误");
                 break;

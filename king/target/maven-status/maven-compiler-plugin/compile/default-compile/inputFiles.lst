@@ -8,6 +8,7 @@ F:\java项目\ShaunaDFS\king\src\main\java\top\shauna\dfs\interact\soldier\impl\
 F:\java项目\ShaunaDFS\king\src\main\java\top\shauna\dfs\interact\client\impl\ClientProtocolImpl.java
 F:\java项目\ShaunaDFS\king\src\main\java\top\shauna\dfs\kingmanager\BlocksManager.java
 F:\java项目\ShaunaDFS\king\src\main\java\top\shauna\dfs\queenserver\impl\QueenProtocolImpl.java
+F:\java项目\ShaunaDFS\king\src\main\java\top\shauna\dfs\interact\exceptions\ErrorIdException.java
 F:\java项目\ShaunaDFS\king\src\main\java\top\shauna\dfs\kingmanager\ManagerStarter.java
 F:\java项目\ShaunaDFS\king\src\main\java\top\shauna\dfs\kingmanager\SoldierManager.java
 F:\java项目\ShaunaDFS\king\src\main\java\top\shauna\dfs\KingStarter.java

@@ -15,11 +15,9 @@ import top.shauna.rpc.supports.ZKSupportKit;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @Author Shauna.Chou
@@ -121,9 +119,9 @@ public class Test1 {
 
         clientService.mkdir("/shauna/");
 
-        clientService.uploadFile("/shauna/2.txt", fileChannel);
+        clientService.uploadFile("/shauna/1.txt", fileChannel);
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/2.txt");
+        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/1.txt");
 
         FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\2019优秀数模论文.zip",
                 "rw").getChannel();
@@ -134,8 +132,8 @@ public class Test1 {
         fileChannel2.close();
 
 //        clientService.rmDir("/shauna/");
-//        boolean b1 = clientService.rmDir("/shauna");
-//        boolean b1 = clientService.rmFile("/shauna/2.txt");
+//        boolean b1 = clientService.rmDir("/shauna2");
+//        boolean b12 = clientService.rmFile("/shauna/1.txt");
 //        System.out.println(b1);
     }
 
@@ -202,5 +200,18 @@ public class Test1 {
         System.out.println(CommonUtil.getLocalHostIp());
         Map<Integer,Integer> map = new HashMap<>();
         System.out.println(map.containsKey(null));
+
+        CopyOnWriteArrayList<Integer> integers = new CopyOnWriteArrayList<>();
+        integers.add(1);
+        integers.add(2);
+        for (int i=0;i<integers.size();i++){
+            Integer integer = integers.get(i);
+            if (integer==1){
+                integers.remove(i--);
+            }
+        }
+        for (Integer integer : integers) {
+            System.out.println(integer);
+        }
     }
 }

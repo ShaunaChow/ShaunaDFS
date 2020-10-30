@@ -6,9 +6,9 @@ import top.shauna.dfs.ha.impl.KingHAProtocolImpl;
 import top.shauna.dfs.interact.client.ClientProtocolStarter;
 import top.shauna.dfs.interact.soldier.KingHeartBeatStarter;
 import top.shauna.dfs.kingmanager.ManagerStarter;
-import top.shauna.dfs.kingmanager.ShaunaFSManager;
 import top.shauna.dfs.kingmanager.bean.CheckPoint;
 import top.shauna.dfs.kingmanager.bean.KingHAMsgBean;
+import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
 import top.shauna.dfs.protocol.KingHAProtocol;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.util.CommonUtil;
@@ -131,7 +131,6 @@ public class KingHAStarter implements Starter {
             if (kingHAStatus.becomeMaster()){
                 ShaunaRPCHandler.doRegister(serviceBean);
                 registThisKing();
-                startThisKing();
             }
         }
     }
@@ -158,7 +157,7 @@ public class KingHAStarter implements Starter {
                             KingUtils.deleteLogs();
                             byte[] newImage = CommonUtil.dealWithCheckPoint(resp.getCheckPoint());
                             CommonUtil.saveCheckPointLocal(newImage,KingPubConfig.getInstance().getRootDir()+File.separator+"ShaunaImage.dat");
-                            ShaunaFSManager.getInstance().refreshRoot(new DataInputStream(new ByteArrayInputStream(newImage)));
+                            ShaunaFSManagerProxy.getInstance(null).getShaunaFSManager().refreshRoot(new DataInputStream(new ByteArrayInputStream(newImage)));
                             log.info("Image Refresh完成!!!");
                             break;
                         case ERROR:

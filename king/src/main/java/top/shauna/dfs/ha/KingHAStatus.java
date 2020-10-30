@@ -67,7 +67,7 @@ public class KingHAStatus {
         this.nextMaster = nextMaster;
     }
 
-    public Boolean getMaster() {
+    public synchronized Boolean getMaster() {
         return master;
     }
 

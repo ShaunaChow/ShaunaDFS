@@ -1,4 +1,5 @@
 top\shauna\dfs\kingmanager\ShaunaFSManager.class
+top\shauna\dfs\interact\exceptions\ErrorIdException.class
 top\shauna\dfs\KingStarter.class
 top\shauna\dfs\ha\service\KingHAProtocolService.class
 top\shauna\dfs\safemode\SafeModeLock.class

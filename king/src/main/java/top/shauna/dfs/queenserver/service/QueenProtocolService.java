@@ -72,6 +72,10 @@ public class QueenProtocolService {
     }
 
     public QueenInfo heartBeat(QueenInfo queenInfo) {
+        if (queenInfo.getId()==null){
+            queenInfo.setOK(false);
+            return queenInfo;
+        }
         QueenInfo keeperInfo = queenManager.getQueenInfo(queenInfo.getId());
         if (keeperInfo==null){
             queenInfo.setOK(false);

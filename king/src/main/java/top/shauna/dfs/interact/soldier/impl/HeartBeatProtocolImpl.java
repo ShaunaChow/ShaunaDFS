@@ -3,6 +3,7 @@ package top.shauna.dfs.interact.soldier.impl;
 import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.bean.HeartBeatRequestBean;
 import top.shauna.dfs.bean.HeartBeatResponseBean;
+import top.shauna.dfs.interact.exceptions.ErrorIdException;
 import top.shauna.dfs.interact.soldier.service.HeartBeatProtocolService;
 import top.shauna.dfs.protocol.HeartBeatProtocol;
 import top.shauna.dfs.type.HeartBeatResponseType;
@@ -41,7 +42,11 @@ public class HeartBeatProtocolImpl implements HeartBeatProtocol {
         heartBeatResponseBean.setPort(heartBeatRequestBean.getPort());
         try {
             heartBeatProtocolService.reportBlocks(heartBeatRequestBean);
-        } catch (Exception e) {
+        } catch (ErrorIdException e) {
+            log.error("错误的ID："+e.getMessage());
+            heartBeatResponseBean.setRes(HeartBeatResponseType.REPORT_BLOCKS_AGAIN);
+            return heartBeatResponseBean;
+        }catch (Exception e) {
             log.error("Blocks汇报出错："+e.getMessage());
             heartBeatResponseBean.setRes(HeartBeatResponseType.UNKNOWN);
             return heartBeatResponseBean;
