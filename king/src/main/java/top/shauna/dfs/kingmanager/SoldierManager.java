@@ -1,5 +1,6 @@
 package top.shauna.dfs.kingmanager;
 
+import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.bean.Block;
 import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 2020/10/11 14:53
  * @E-Mail z1023778132@icloud.com
  */
+@Slf4j
 public class SoldierManager implements Starter {
     private static volatile SoldierManager soldierManager = new SoldierManager();
 
@@ -51,8 +53,9 @@ public class SoldierManager implements Starter {
         CommonThreadPool.threadPool.execute(()->{
             while(true){
                 try {
-                    doScan();
                     TimeUnit.SECONDS.sleep(KingPubConfig.getInstance().getSoldierScanTime());
+                    doScan();
+                    log.info("Soldiers扫描完成！！！");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

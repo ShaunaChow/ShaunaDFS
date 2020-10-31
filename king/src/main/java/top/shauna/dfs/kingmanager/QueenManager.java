@@ -1,5 +1,6 @@
 package top.shauna.dfs.kingmanager;
 
+import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.bean.QueenInfo;
 import top.shauna.dfs.safemode.SafeModeLock;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 2020/10/22 17:07
  * @E-Mail z1023778132@icloud.com
  */
+@Slf4j
 public class QueenManager implements Starter {
     private static volatile QueenManager queenManager;
     private ConcurrentHashMap<Integer,QueenInfo> queens;
@@ -44,6 +46,7 @@ public class QueenManager implements Starter {
                 try {
                     TimeUnit.SECONDS.sleep(KingPubConfig.getInstance().getQueenScanTime());
                     doScan();
+                    log.info("Queen扫描完成");
                 }catch (Exception e){
                     e.printStackTrace();
                 }

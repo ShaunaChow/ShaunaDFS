@@ -54,6 +54,7 @@ public class BlocksManager implements Starter {
                 try {
                     TimeUnit.SECONDS.sleep(KingPubConfig.getInstance().getBlockScanTime());
                     scanReplicas();
+                    log.info("Blocks扫描完成!");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -53,7 +53,6 @@ public class ManagerStarter implements Starter {
         localExportBean.setProtocol("netty");
         localExportBean.setIp(hostAddress);
         localExportBean.setPort(Integer.parseInt(KingPubConfig.getInstance().getQueenServerPort()));
-
         serviceBean = ShaunaRPCHandler.publishServiceBean(
                 QueenProtocol.class,
                 new QueenProtocolImpl(LogManager.getInstance().getEditLogSystem()),

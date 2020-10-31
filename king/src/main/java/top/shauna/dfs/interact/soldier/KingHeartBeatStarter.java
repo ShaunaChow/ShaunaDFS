@@ -47,7 +47,6 @@ public class KingHeartBeatStarter implements Starter {
         localExportBean.setProtocol("netty");
         localExportBean.setIp(hostAddress);
         localExportBean.setPort(Integer.parseInt(KingPubConfig.getInstance().getSoldierServerPort()));
-
         serviceBean = ShaunaRPCHandler.publishServiceBean(HeartBeatProtocol.class, new HeartBeatProtocolImpl(),localExportBean,false);
     }
 
