@@ -26,11 +26,11 @@ public class ClientStarter {
 
         clientService.mkdir("/shauna/");
 
-        clientService.uploadFile("/shauna/1.txt", fileChannel);
+        clientService.uploadFile("/shauna/"+args[1], fileChannel);
 
         ByteBuffer byteBuffer = clientService.downloadFile("/shauna/1.txt");
 
-        FileChannel fileChannel2 = new RandomAccessFile(args[1],
+        FileChannel fileChannel2 = new RandomAccessFile(args[2],
                 "rw").getChannel();
 
         fileChannel2.write(byteBuffer);
