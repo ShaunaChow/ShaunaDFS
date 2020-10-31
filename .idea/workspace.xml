@@ -4,155 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/king/src/main/resources/king.properties" line="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a51f00b-e7d2-44af-8fcb-ff5299584bea" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/top/shauna/dfs/ClientStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/top/shauna/dfs/service/ClientService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/top/shauna/dfs/service/impl/ClientServiceImpl$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/classes/top/shauna/dfs/service/impl/ClientServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/client-1.0-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/client-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/target/test-classes/top/shauna/dfs/client/test/Test1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/bean/HeartBeatRequestBean.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/bean/HeartBeatResponseBean.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/config/KingPubConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/config/QueenPubConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/config/SoldierPubConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/interfaze/Writable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/BackupBean.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/Block.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/CheckPoint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/ClientFileInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/DeleteBean.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/INode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/INodeDirectory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/INodeFile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/KingHAMsgBean.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/LogItem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/QueenInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/ReplicasInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/SoldierInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/kingmanager/bean/Transaction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/protocol/ClientProtocol.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/protocol/HeartBeatProtocol.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/protocol/KingHAProtocol.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/protocol/QueenProtocol.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/protocol/SoldierServerProtocol.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/soldiermanager/bean/Block.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/soldiermanager/bean/BlockInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/soldiermanager/bean/DataInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/soldiermanager/bean/MetaInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/soldiermanager/bean/SoldierResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/starter/Starter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/storage/impl/LocalFileStorage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/storage/interfaces/StorageEngine.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/storage/util/CheckPointUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/threadpool/CommonThreadPool.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/type/ClientProtocolType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/type/HeartBeatResponseType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/type/KingHAMsgType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/type/SoldierResponseType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/type/TransactionType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/top/shauna/dfs/util/CommonUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/common-1.0-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/common-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/king/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/resources/king.properties" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/resources/king.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/king.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/InitFS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/KingStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/config/KingConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/editlog/ShaunaEditLogSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/editlog/factory/EditLogSystemFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/editlog/interfaze/EditLogSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/KingHAStarter$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/KingHAStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/KingHAStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/impl/KingHAProtocolImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/ha/service/KingHAProtocolService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/client/ClientProtocolStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/client/impl/ClientProtocolImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/exceptions/ErrorIdException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/soldier/KingHeartBeatStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/soldier/impl/HeartBeatProtocolImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/interact/soldier/service/HeartBeatProtocolService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/BlocksManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/LogManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/ManagerStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/QueenManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/ShaunaFSManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/SoldierManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/interfaze/FSManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/kingmanager/proxy/ShaunaFSManagerProxy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/queenserver/impl/QueenProtocolImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/queenserver/service/QueenProtocolService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/safemode/SafeModeLock.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/classes/top/shauna/dfs/util/KingUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/king-1.0-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/king-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/test-classes/top/shauna/dfs/test/TestKing$TEST.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/target/test-classes/top/shauna/dfs/test/TestKing.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/queen/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/classes/queen.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/classes/top/shauna/dfs/QueenStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/classes/top/shauna/dfs/checkpoint/CheckPointStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/classes/top/shauna/dfs/checkpoint/DealWithCheckPoint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/classes/top/shauna/dfs/config/QueenConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/queen-1.0-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/queen-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queen/target/test-classes/top/shauna/dfs/test/QueenTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/soldier.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/SoldierStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/DataKeeper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/LocalBlockHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/MetaFileScanner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/MetaKeeper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/interfaces/AbstractBlockHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/block/interfaces/BlockHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/config/SoldierConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/MessageUtil$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/MessageUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/SoldierInteractStarter$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/SoldierInteractStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/interact/soldier/SoldierHeartBeat.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/monitor/MonitorProxy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/monitor/StaticDatas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/monitor/bean/StaticBean.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/soldierserver/SoldierServerStarter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/soldierserver/SoldierServerUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/soldierserver/protocolimpl/SoldierServerProtocolImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/classes/top/shauna/dfs/soldierserver/udpsupport/UDPUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/soldier-1.0-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/soldier-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/target/test-classes/top/shauna/dfs/test/Test1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/ShaunaDFS-1.0-jar-with-dependencies.jar" beforeDir="false" />
-    </list>
+    <list default="true" id="6a51f00b-e7d2-44af-8fcb-ff5299584bea" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/king/target/" />
     <ignored path="$PROJECT_DIR$/queen/target/" />
@@ -187,11 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="KingHAStarter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="KingHAStarter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="194" column="41" selection-start-line="194" selection-start-column="41" selection-end-line="194" selection-end-column="41" />
+            <state relative-caret-position="3402">
+              <caret line="192" lean-forward="true" selection-start-line="192" selection-end-line="192" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -235,7 +87,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/soldier/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="230">
@@ -1487,7 +1339,7 @@
       <workItem from="1603853567242" duration="23090000" />
       <workItem from="1603939229873" duration="23410000" />
       <workItem from="1604039263042" duration="20356000" />
-      <workItem from="1604112848991" duration="3137000" />
+      <workItem from="1604112848991" duration="3371000" />
     </task>
     <servers />
   </component>
@@ -1524,7 +1376,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="477946000" />
+    <option name="totallyTimeSpent" value="478180000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1308" height="784" extended-state="6" />
@@ -1536,12 +1388,12 @@
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.18028846" />
+      <window_info anchor="right" id="Maven Projects" order="3" weight="0.18028846" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5271318" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.5271318" />
       <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.36743215" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3658915" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49601275" visible="true" weight="0.2820513" />
@@ -1919,16 +1771,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="194" column="41" selection-start-line="194" selection-start-column="41" selection-end-line="194" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ShaunaFSManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -1978,6 +1820,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3402">
+          <caret line="192" lean-forward="true" selection-start-line="192" selection-end-line="192" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
