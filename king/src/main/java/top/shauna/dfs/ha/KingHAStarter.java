@@ -55,29 +55,41 @@ public class KingHAStarter implements Starter {
 
     @Override
     public void onStart() throws Exception {
+        System.out.println("位置-1");
         ha = kingPubConfig.getHa();
         if (ha==null||ha.size()<=1){        /** 不启动高可用 **/
             startThisKing();
             registThisKing();
         }else{                              /** 高可用模式 **/
             String thisKing = ip+":"+port;
+            System.out.println("位置0 "+thisKing);
             if (ha.contains(thisKing)){
+                System.out.println("位置11001");
                 kingHAStatus.setNextMaster(true);
                 kingHAStatus.setMaster(false);
                 kingHAStatus.setId(System.currentTimeMillis());
+                System.out.println("位置11002");
                 startThisKing();
+                System.out.println("位置11003");
                 serviceBean = publishHAProtocol();
+                System.out.println("位置11004");
                 ha.remove(thisKing);
+                System.out.println("位置1");
                 while(connectAll()<1){      /** 至少需要一个僚机 **/
                     log.info("高可用模式----等待队友上线...");
+                    System.out.println("sout-高可用模式----等待队友上线...");
                     TimeUnit.SECONDS.sleep(2);
                 }
+                System.out.println("位置2");
                 vote();
+                System.out.println("位置3");
                 if (kingHAStatus.becomeMaster()){
+                    System.out.println("位置4");
                     ShaunaRPCHandler.doRegister(serviceBean);
                     registThisKing();
                     refreshAll();
                 }else {
+                    System.out.println("位置5");
                     zkSupportKit.subscribeChildChanges(top.shauna.rpc.util.CommonUtil.getZookeeperPath(KingHAProtocol.class),
                             (parentPath, currentChilds) -> doChange(parentPath, currentChilds));
                 }
@@ -117,6 +129,7 @@ public class KingHAStarter implements Starter {
                 keeper.put(s,referenceProxy);
             }catch (Exception e){
                 log.info("僚机未准备好");
+                System.out.println("sout-僚机未准备好");
             }
         }
         return count;
