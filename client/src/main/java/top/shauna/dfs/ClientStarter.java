@@ -3,6 +3,7 @@ package top.shauna.dfs;
 import top.shauna.dfs.service.ClientService;
 import top.shauna.dfs.service.impl.ClientServiceImpl;
 import top.shauna.rpc.bean.FoundBean;
+import top.shauna.rpc.bean.LocalExportBean;
 import top.shauna.rpc.bean.RegisterBean;
 import top.shauna.rpc.config.PubConfig;
 

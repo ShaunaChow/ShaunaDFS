@@ -1,5 +1,6 @@
 package top.shauna.dfs.service.impl;
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.LocalElement;
 import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.kingmanager.bean.Block;
 import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
@@ -11,6 +12,7 @@ import top.shauna.dfs.service.ClientService;
 import top.shauna.dfs.soldiermanager.bean.SoldierResponse;
 import top.shauna.dfs.util.CommonUtil;
 import top.shauna.rpc.bean.FoundBean;
+import top.shauna.rpc.bean.LocalExportBean;
 import top.shauna.rpc.bean.RegisterBean;
 import top.shauna.rpc.config.PubConfig;
 import top.shauna.rpc.service.ShaunaRPCHandler;
@@ -36,6 +38,11 @@ public class ClientServiceImpl implements ClientService {
     public ClientServiceImpl(){
         preparePubConfig();
         clientProtocol = ShaunaRPCHandler.getReferenceProxy(ClientProtocol.class);
+        connectKeeper = new ConcurrentHashMap<>();
+    }
+    public ClientServiceImpl(LocalExportBean localExportBean) throws Exception {
+        preparePubConfig();
+        clientProtocol = ShaunaRPCHandler.getReferenceProxy(ClientProtocol.class,localExportBean);
         connectKeeper = new ConcurrentHashMap<>();
     }
 

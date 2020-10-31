@@ -7,6 +7,7 @@ import top.shauna.dfs.service.ClientService;
 import top.shauna.dfs.service.impl.ClientServiceImpl;
 import top.shauna.dfs.util.CommonUtil;
 import top.shauna.rpc.bean.FoundBean;
+import top.shauna.rpc.bean.LocalExportBean;
 import top.shauna.rpc.bean.RegisterBean;
 import top.shauna.rpc.config.PubConfig;
 import top.shauna.rpc.service.ShaunaRPCHandler;
@@ -88,16 +89,16 @@ public class Test1 {
     }
 
     @Test
-    public void test3() throws IOException {
+    public void test3() throws Exception {
         preparePubConfig();
-        ClientService clientService = new ClientServiceImpl();
+        ClientService clientService = new ClientServiceImpl(new LocalExportBean("netty",10001,"39.105.89.185"));
 
         clientService.mkdir("/1/");
         clientService.mkdir("/2/");
-        clientService.mkdir("/3/");
-        clientService.mkdir("/4/");
-        clientService.mkdir("/5/");
-        clientService.mkdir("/6/");
+//        clientService.mkdir("/3/");
+//        clientService.mkdir("/4/");
+//        clientService.mkdir("/5/");
+//        clientService.mkdir("/6/");
 //        clientService.mkdir("/7/");
 //        clientService.mkdir("/8222/");
 //        clientService.mkdir("/2229/");
@@ -107,7 +108,7 @@ public class Test1 {
     }
 
     @Test
-    public void test433() throws IOException {
+    public void test433() throws Exception {
         preparePubConfig();
 
         FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\2019优秀数模论文.zip",
@@ -115,13 +116,13 @@ public class Test1 {
 //      jdk-8u201-windows-x64.exe
 //      2019优秀数模论文.zip
 //      example.pdf
-        ClientService clientService = new ClientServiceImpl();
+        ClientService clientService = new ClientServiceImpl(new LocalExportBean("netty",10001,"39.105.89.185"));
 
         clientService.mkdir("/shauna/");
 
-        clientService.uploadFile("/shauna/1.txt", fileChannel);
+        clientService.uploadFile("/shauna/2.txt", fileChannel);
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/1.txt");
+        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/2.txt");
 
         FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\2019优秀数模论文.zip",
                 "rw").getChannel();
