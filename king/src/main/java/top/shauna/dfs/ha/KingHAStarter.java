@@ -9,6 +9,7 @@ import top.shauna.dfs.kingmanager.ManagerStarter;
 import top.shauna.dfs.kingmanager.bean.CheckPoint;
 import top.shauna.dfs.kingmanager.bean.KingHAMsgBean;
 import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
+import top.shauna.dfs.monitor.MonitorStarter;
 import top.shauna.dfs.protocol.KingHAProtocol;
 import top.shauna.dfs.starter.Starter;
 import top.shauna.dfs.util.CommonUtil;
@@ -186,11 +187,13 @@ public class KingHAStarter implements Starter {
         ClientProtocolStarter.getInstance().onStart();
     }
 
-    private void registThisKing() {
+    private void registThisKing() throws Exception {
         ManagerStarter.getInstance().doRegist();
 
         KingHeartBeatStarter.getInstance().doRegist();
 
         ClientProtocolStarter.getInstance().doRegist();
+
+        new MonitorStarter().onStart();
     }
 }

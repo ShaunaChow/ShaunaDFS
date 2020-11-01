@@ -17,7 +17,5 @@ public class KingStarter {
         new KingConfig().onStart();
 
         new KingHAStarter().onStart();
-
-        new MonitorStarter().onStart();
     }
 }
