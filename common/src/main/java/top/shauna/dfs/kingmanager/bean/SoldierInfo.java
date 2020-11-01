@@ -1,5 +1,6 @@
 package top.shauna.dfs.kingmanager.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 
@@ -28,7 +29,9 @@ public class SoldierInfo {
     private Float TPS;
     private Long lastUsedTime;
     private Integer status;     /** 区分是养老代（-1）还是工作代（1） **/
+    @JsonIgnore
     public SoldierInfo next;
+    @JsonIgnore
     public SoldierInfo pre;
 
     public Float getPS(){
