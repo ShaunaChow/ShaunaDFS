@@ -103,4 +103,8 @@ public class QueenManager implements Starter {
     public int getGenId(){
         return genId++;
     }
+
+    public ConcurrentHashMap<Integer, QueenInfo> getQueens() {
+        return queens;
+    }
 }

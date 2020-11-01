@@ -3,13 +3,8 @@ package top.shauna.dfs;
 import top.shauna.dfs.service.ClientService;
 import top.shauna.dfs.service.impl.ClientServiceImpl;
 import top.shauna.rpc.bean.FoundBean;
-import top.shauna.rpc.bean.LocalExportBean;
 import top.shauna.rpc.bean.RegisterBean;
 import top.shauna.rpc.config.PubConfig;
-
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 
 /**
  * @Author Shauna.Chou
@@ -17,28 +12,6 @@ import java.nio.channels.FileChannel;
  * @E-Mail z1023778132@icloud.com
  */
 public class ClientStarter {
-    public static void main(String[] args) throws Exception {
-        preparePubConfig();
-
-        FileChannel fileChannel = new RandomAccessFile(args[0],
-                "rw").getChannel();
-
-        ClientService clientService = new ClientServiceImpl();
-
-        clientService.mkdir("/shauna/");
-
-        clientService.uploadFile("/shauna/"+args[1], fileChannel);
-
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/1.txt");
-
-        FileChannel fileChannel2 = new RandomAccessFile(args[2],
-                "rw").getChannel();
-
-        fileChannel2.write(byteBuffer);
-
-        fileChannel.close();
-        fileChannel2.close();
-    }
 
     private static void preparePubConfig() {
         PubConfig pubConfig = PubConfig.getInstance();
@@ -56,5 +29,9 @@ public class ClientStarter {
             );
             pubConfig.setFoundBean(foundBean);
         }
+    }
+
+    public static ClientService getClientService(){
+        return new ClientServiceImpl();
     }
 }

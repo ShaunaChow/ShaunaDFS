@@ -5,6 +5,7 @@ import top.shauna.dfs.ha.KingHAStarter;
 import top.shauna.dfs.interact.client.ClientProtocolStarter;
 import top.shauna.dfs.interact.soldier.KingHeartBeatStarter;
 import top.shauna.dfs.kingmanager.ManagerStarter;
+import top.shauna.dfs.monitor.MonitorStarter;
 
 /**
  * @Author Shauna.Chou
@@ -16,5 +17,7 @@ public class KingStarter {
         new KingConfig().onStart();
 
         new KingHAStarter().onStart();
+
+        new MonitorStarter().onStart();
     }
 }

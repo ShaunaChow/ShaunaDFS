@@ -1,6 +1,5 @@
 package top.shauna.dfs.service.impl;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.LocalElement;
 import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.kingmanager.bean.Block;
 import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
@@ -22,7 +21,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -33,17 +31,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ClientServiceImpl implements ClientService {
     private ClientProtocol clientProtocol;
-    private ConcurrentHashMap<String,SoldierServerProtocol> connectKeeper;
 
     public ClientServiceImpl(){
         preparePubConfig();
         clientProtocol = ShaunaRPCHandler.getReferenceProxy(ClientProtocol.class);
-        connectKeeper = new ConcurrentHashMap<>();
     }
     public ClientServiceImpl(LocalExportBean localExportBean) throws Exception {
         preparePubConfig();
         clientProtocol = ShaunaRPCHandler.getReferenceProxy(ClientProtocol.class,localExportBean);
-        connectKeeper = new ConcurrentHashMap<>();
     }
 
     private void preparePubConfig() {

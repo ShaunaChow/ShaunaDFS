@@ -410,4 +410,8 @@ public class ShaunaFSManager implements Starter,FSManager {
             }
         }
     }
+
+    public INodeDirectory getRoot() {
+        return root;
+    }
 }

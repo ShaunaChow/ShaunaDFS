@@ -33,7 +33,7 @@ public class SoldierManager implements Starter {
         tailer.pre = header;
         soldiersStatus = -1;
         genId = 0;
-        MinSpace = KingPubConfig.getInstance().getBlockSize()*2;
+        MinSpace = KingPubConfig.getInstance().getBlockSize()==null?25165824:KingPubConfig.getInstance().getBlockSize()*2;
     }
 
     public static SoldierManager getInstance(){
@@ -248,5 +248,9 @@ public class SoldierManager implements Starter {
 
     public synchronized int getGenId() {
         return genId++;
+    }
+
+    public ConcurrentHashMap<Integer, SoldierInfo> getSoldierInfoMap() {
+        return soldierInfoMap;
     }
 }

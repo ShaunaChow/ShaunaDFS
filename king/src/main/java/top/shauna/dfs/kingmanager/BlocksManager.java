@@ -206,4 +206,8 @@ public class BlocksManager implements Starter {
     public synchronized int getBackupId() {
         return backupId++;
     }
+
+    public ConcurrentHashMap<String, List<Block>> getBlocksMap() {
+        return blocksMap;
+    }
 }
