@@ -10,7 +10,7 @@ import java.nio.channels.FileChannel;
  * @E-Mail z1023778132@icloud.com
  */
 public interface ClientService {
-    boolean uploadFile(String filePath, FileChannel inputStream) throws IOException;
+    boolean uploadFile(String filePath, byte[] data) throws IOException;
 
     ByteBuffer downloadFile(String filePath);
 

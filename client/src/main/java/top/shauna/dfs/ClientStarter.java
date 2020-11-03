@@ -27,7 +27,11 @@ public class ClientStarter {
 
         clientService.mkdir("/shauna/");
 
-        clientService.uploadFile("/shauna/"+args[1], fileChannel);
+        ByteBuffer allocate = ByteBuffer.allocate((int) fileChannel.size());
+
+        fileChannel.read(allocate);
+
+        clientService.uploadFile("/shauna/2.txt", allocate.array());
 
         ByteBuffer byteBuffer = clientService.downloadFile("/shauna/"+args[1]);
 

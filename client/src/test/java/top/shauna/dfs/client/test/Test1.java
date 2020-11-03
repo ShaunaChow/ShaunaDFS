@@ -120,7 +120,11 @@ public class Test1 {
 
         clientService.mkdir("/shauna/");
 
-        clientService.uploadFile("/shauna/2.txt", fileChannel);
+        ByteBuffer allocate = ByteBuffer.allocate((int) fileChannel.size());
+
+        fileChannel.read(allocate);
+
+        clientService.uploadFile("/shauna/2.txt", allocate.array());
 
         ByteBuffer byteBuffer = clientService.downloadFile("/shauna/2.txt");
 
@@ -213,6 +217,19 @@ public class Test1 {
         }
         for (Integer integer : integers) {
             System.out.println(integer);
+        }
+    }
+
+    @Test
+    public void okkkkkk(){
+        byte[] bytes = {1, 2, 3, 4, 5, 6, 7, 8};
+        byte[] by = Arrays.copyOfRange(bytes, 0, 2);
+        for(byte b:by){
+            System.out.println(b);
+        }
+        by = Arrays.copyOfRange(bytes, 2, 4);
+        for(byte b:by){
+            System.out.println(b);
         }
     }
 }

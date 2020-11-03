@@ -18,7 +18,7 @@ import top.shauna.rpc.service.ShaunaRPCHandler;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +59,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean uploadFile(String filePath, FileChannel channel) throws IOException {
+    public boolean uploadFile(String filePath, byte[] data) throws IOException {
         if(!filePath.contains("/")){
             log.error("错误的文件路径，没有以/开头："+filePath);
             return false;
@@ -72,8 +72,7 @@ public class ClientServiceImpl implements ClientService {
             log.error("不是一个文件路径，请不要用/结尾："+filePath);
             return false;
         }
-        long fileSize = channel.size();
-        long curPosition = channel.position();
+        long fileSize = data.length;
         String name = filePath.substring(filePath.lastIndexOf('/')+1);
         ClientFileInfo clientFileInfo = new ClientFileInfo();
         clientFileInfo.setFileLength(fileSize);
@@ -89,8 +88,7 @@ public class ClientServiceImpl implements ClientService {
                 int pin = 0;
                 while (true) {
                     try {
-                        channel.position(curPosition);
-                        uploadFile(uploadFileRes.getINodeFile(), channel);
+                        uploadFile(uploadFileRes.getINodeFile(), data);
                         clientProtocol.uploadFileOk(uploadFileRes);
                         return true;
                     } catch (Exception e) {
@@ -346,22 +344,20 @@ public class ClientServiceImpl implements ClientService {
         return res;
     }
 
-    private void uploadFile(INodeFile iNodeFile, FileChannel channel) throws Exception {
+    private void uploadFile(INodeFile iNodeFile, byte[] toSendData) throws Exception {
         List<Block> blocks = iNodeFile.getBlocks();
+        int pin = 0;
         for (Block block : blocks) {
             top.shauna.dfs.soldiermanager.bean.Block toSendBlock = new top.shauna.dfs.soldiermanager.bean.Block();
             toSendBlock.setFilePath(block.getFilePath());
             toSendBlock.setPin(block.getPin());
             toSendBlock.setUuid("");
             toSendBlock.setVersion(System.currentTimeMillis());
-
             Integer length = block.getBlockLength();
-            ByteBuffer buffer = ByteBuffer.allocate(length);
-            channel.read(buffer);
-            byte[] toSendData = buffer.array();
-
-            toSendBlock.setContent(toSendData);
-            toSendBlock.setMd5(CommonUtil.getMD5(toSendData));
+            byte[] bytes = Arrays.copyOfRange(toSendData, pin, pin + length);
+            pin = pin+length;
+            toSendBlock.setContent(bytes);
+            toSendBlock.setMd5(CommonUtil.getMD5(bytes));
 
             List<ReplicasInfo> replicasInfos = block.getReplicasInfos();
             for (ReplicasInfo replicasInfo:replicasInfos){
