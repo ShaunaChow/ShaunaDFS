@@ -6,6 +6,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpRequestDecoder;
+import lombok.extern.slf4j.Slf4j;
+import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.monitor.controller.KingController;
 import top.shauna.dfs.monitor.handler.MonitorHnadler;
 import top.shauna.dfs.monitor.util.ResponseUtil;
@@ -19,6 +21,7 @@ import java.lang.reflect.Method;
  * @Date 2020/11/1 14:58
  * @E-Mail z1023778132@icloud.com
  */
+@Slf4j
 public class MonitorStarter implements Starter {
     @Override
     public void onStart() throws Exception {
@@ -43,7 +46,7 @@ public class MonitorStarter implements Starter {
 
                 }
             });
-            Channel ch = b.bind(8888)//Integer.parseInt(KingPubConfig.getInstance().getMonitorPort()))
+            Channel ch = b.bind(Integer.parseInt(KingPubConfig.getInstance().getMonitorPort()))
                     .sync()
                     .channel();
             CommonThreadPool.threadPool.execute(()->{
@@ -56,6 +59,7 @@ public class MonitorStarter implements Starter {
                     workGroup.shutdownGracefully();
                 }
             });
+            log.info("MonitorStarter OKKK!!!");
         } catch (Exception e) {
             e.printStackTrace();
         }
