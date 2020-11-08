@@ -59,6 +59,7 @@ public class KingConfig implements Starter {
         kingPubConfig.setSoldierScanTime(Integer.parseInt(properties.getProperty("soldierScanTime","5")));
         kingPubConfig.setQueenFaultTime(Integer.parseInt(properties.getProperty("queenFaultTime","5")));
         kingPubConfig.setQueenScanTime(Integer.parseInt(properties.getProperty("queenScanTime","5")));
+        kingPubConfig.setMonitorPort(properties.getProperty("monitorPort","8888"));
 
         if (properties.getProperty("ha")!=null) {
             String property = properties.getProperty("ha");

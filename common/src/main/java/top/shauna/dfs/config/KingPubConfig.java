@@ -44,6 +44,15 @@ public class KingPubConfig {
     private Integer queenFaultTime;
     private Integer queenScanTime;
     private List<String> ha;
+    private String monitorPort;
+
+    public String getMonitorPort() {
+        return monitorPort;
+    }
+
+    public void setMonitorPort(String monitorPort) {
+        this.monitorPort = monitorPort;
+    }
 
     public List<String> getHa() {
         return ha;

@@ -1,13 +1,10 @@
 package top.shauna.dfs.kingmanager.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
-import top.shauna.dfs.interfaze.Writable;
-
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class INodeFile extends INode implements Serializable {
+    @JSONField(serialize = false)
     private List<Block> blocks;
 
     @Override

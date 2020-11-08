@@ -1,6 +1,6 @@
 package top.shauna.dfs.kingmanager.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 import top.shauna.dfs.soldiermanager.bean.BlockInfo;
 
@@ -23,15 +23,17 @@ public class SoldierInfo {
     private Boolean OK;
     private Long timeStamp;
     private Long freeSpace;
+    @JSONField(serialize = false)
     private List<BlockInfo> blockInfos;
+    @JSONField(serialize = false)
     private List<Transaction> transactions;
     private Float QPS;
     private Float TPS;
     private Long lastUsedTime;
     private Integer status;     /** 区分是养老代（-1）还是工作代（1） **/
-    @JsonIgnore
+    @JSONField(serialize = false)
     public SoldierInfo next;
-    @JsonIgnore
+    @JSONField(serialize = false)
     public SoldierInfo pre;
 
     public Float getPS(){

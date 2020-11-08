@@ -1,6 +1,6 @@
 package top.shauna.dfs.kingmanager.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 import top.shauna.dfs.interfaze.Writable;
@@ -17,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Getter
 @Setter
 public abstract class INode implements Serializable,Writable {
-    @JsonIgnore
+    @JSONField(serialize = false)
     private INode parent;
     private String name;
     private String path;

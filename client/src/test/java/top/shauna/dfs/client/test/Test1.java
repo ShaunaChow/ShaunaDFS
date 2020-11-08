@@ -99,24 +99,16 @@ public class Test1 {
 //        clientService.mkdir("/4/");
 //        clientService.mkdir("/5/");
 //        clientService.mkdir("/6/");
-//        clientService.mkdir("/7/");
-//        clientService.mkdir("/8222/");
-//        clientService.mkdir("/2229/");
-//        clientService.mkdir("/22210/");
-//        clientService.mkdir("/12221/");
-//        clientService.mkdir("/12222/");
     }
 
     @Test
     public void test433() throws Exception {
         preparePubConfig();
 
-        FileChannel fileChannel = new RandomAccessFile("F:\\百度网盘下载\\2019优秀数模论文.zip",
+        FileChannel fileChannel = new RandomAccessFile("D:\\百度网盘\\下载文件\\VMware 15.5.0.rar",
                 "rw").getChannel();
-//      jdk-8u201-windows-x64.exe
-//      2019优秀数模论文.zip
-//      example.pdf
-        ClientService clientService = new ClientServiceImpl(new LocalExportBean("netty",10001,"39.105.89.185"));
+
+        ClientService clientService = new ClientServiceImpl();
 
         clientService.mkdir("/shauna/");
 
@@ -128,18 +120,13 @@ public class Test1 {
 
         ByteBuffer byteBuffer = clientService.downloadFile("/shauna/2.txt");
 
-        FileChannel fileChannel2 = new RandomAccessFile("F:\\java项目\\ShaunaDfsTmp\\2019优秀数模论文.zip",
+        FileChannel fileChannel2 = new RandomAccessFile("D:\\百度网盘\\下载文件\\VMware 15.5.0------------2.rar",
                 "rw").getChannel();
 
         fileChannel2.write(byteBuffer);
 
         fileChannel.close();
         fileChannel2.close();
-
-//        clientService.rmDir("/shauna/");
-//        boolean b1 = clientService.rmDir("/shauna2");
-//        boolean b12 = clientService.rmFile("/shauna/1.txt");
-//        System.out.println(b1);
     }
 
     private void preparePubConfig() {

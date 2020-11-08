@@ -1,10 +1,6 @@
 package top.shauna.dfs.monitor.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import top.shauna.dfs.ha.KingHAStatus;
 import top.shauna.dfs.monitor.bean.ResponseBean;
 import top.shauna.dfs.monitor.service.KingService;
@@ -14,14 +10,14 @@ import top.shauna.dfs.monitor.service.KingService;
  * @Date 2020/11/1 15:29
  * @E-Mail z1023778132@icloud.com
  */
-@Controller
 @Slf4j
 public class KingController {
-    @Autowired
     private KingService kingService;
 
-    @GetMapping("fsinfo")
-    @ResponseBody
+    public KingController(){
+        kingService = new KingService();
+    }
+
     public ResponseBean FSInfo(){
         try{
             int code = getCode();
@@ -32,8 +28,6 @@ public class KingController {
         }
     }
 
-    @GetMapping("blocksinfo")
-    @ResponseBody
     public ResponseBean blocksInfo(){
         try{
             int code = getCode();
@@ -44,8 +38,6 @@ public class KingController {
         }
     }
 
-    @GetMapping("soldiersinfo")
-    @ResponseBody
     public ResponseBean soldiersInfo(){
         try{
             int code = getCode();
@@ -56,8 +48,6 @@ public class KingController {
         }
     }
 
-    @GetMapping("queeninfo")
-    @ResponseBody
     public ResponseBean queenInfo(){
         try{
             int code = getCode();
@@ -74,5 +64,9 @@ public class KingController {
         }else{
             return 201;
         }
+    }
+
+    public ResponseBean okk(String s){
+        return new ResponseBean(200,s);
     }
 }

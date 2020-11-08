@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: com.caucho:hessian:4.0.38">
     <CLASSES>
-      <root url="jar://F:/maven/apache-maven-3.5.4/repository/com/caucho/hessian/4.0.38/hessian-4.0.38.jar!/" />
+      <root url="jar://E:/Maven/apache-maven-3.5.4/reposity/com/caucho/hessian/4.0.38/hessian-4.0.38.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://F:/maven/apache-maven-3.5.4/repository/com/caucho/hessian/4.0.38/hessian-4.0.38-javadoc.jar!/" />
+      <root url="jar://E:/Maven/apache-maven-3.5.4/reposity/com/caucho/hessian/4.0.38/hessian-4.0.38-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://F:/maven/apache-maven-3.5.4/repository/com/caucho/hessian/4.0.38/hessian-4.0.38-sources.jar!/" />
+      <root url="jar://E:/Maven/apache-maven-3.5.4/reposity/com/caucho/hessian/4.0.38/hessian-4.0.38-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
