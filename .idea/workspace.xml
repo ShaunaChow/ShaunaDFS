@@ -7,6 +7,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6a51f00b-e7d2-44af-8fcb-ff5299584bea" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/MonitorStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/MonitorStarter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -47,7 +49,7 @@
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="67">
-              <caret line="75" column="53" lean-forward="true" selection-start-line="75" selection-start-column="53" selection-end-line="75" selection-end-column="53" />
+              <caret line="75" column="53" selection-start-line="75" selection-start-column="53" selection-end-line="75" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -55,20 +57,11 @@
       <file leaf-file-name="MonitorStarter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/MonitorStarter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1045">
-              <caret line="73" column="46" lean-forward="true" selection-start-line="73" selection-start-column="46" selection-end-line="73" selection-end-column="46" />
+            <state relative-caret-position="245">
+              <caret line="58" column="51" selection-start-line="58" selection-start-column="51" selection-end-line="58" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="king.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/king/src/main/resources/king.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="6" column="16" lean-forward="true" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -124,7 +117,6 @@
         <option value="$PROJECT_DIR$/client/src/main/java/top/shauna/dfs/service/ClientService.java" />
         <option value="$PROJECT_DIR$/client/src/main/java/top/shauna/dfs/ClientStarter.java" />
         <option value="$PROJECT_DIR$/client/src/main/java/top/shauna/dfs/service/impl/ClientServiceImpl.java" />
-        <option value="$PROJECT_DIR$/common/src/main/resources/log4j2.xml" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/exceptions/NotSupportException.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/exceptions/_404Exception.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/controller/KingController.java" />
@@ -132,7 +124,6 @@
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/util/ResponseUtil.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/handler/MonitorHnadler.java" />
-        <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/MonitorStarter.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/kingmanager/bean/SoldierInfo.java" />
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/kingmanager/bean/INode.java" />
         <option value="$PROJECT_DIR$/king/src/main/resources/king.properties" />
@@ -141,6 +132,8 @@
         <option value="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/kingmanager/bean/INodeFile.java" />
         <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/BlocksManager.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/MonitorStarter.java" />
+        <option value="$PROJECT_DIR$/common/src/main/resources/log4j2.xml" />
       </list>
     </option>
   </component>
@@ -1422,7 +1415,7 @@
       <workItem from="1604405577030" duration="3219000" />
       <workItem from="1604724331191" duration="2466000" />
       <workItem from="1604756609546" duration="2787000" />
-      <workItem from="1604798799231" duration="20076000" />
+      <workItem from="1604798799231" duration="20494000" />
     </task>
     <servers />
   </component>
@@ -1459,11 +1452,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="535833000" />
+    <option name="totallyTimeSpent" value="536251000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
@@ -1484,10 +1476,10 @@
       <window_info anchor="bottom" id="Java Enterprise" order="8" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.39476553" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.39476553" />
       <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.41766632" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49601275" visible="true" weight="0.16791044" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.41766632" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49601275" visible="true" weight="0.16791044" />
       <window_info id="Web" order="3" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -1625,13 +1617,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="516">
           <caret line="221" selection-start-line="221" selection-end-line="221" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/resources/log4j2.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1957,7 +1942,14 @@
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="67">
-          <caret line="75" column="53" lean-forward="true" selection-start-line="75" selection-start-column="53" selection-end-line="75" selection-end-column="53" />
+          <caret line="75" column="53" selection-start-line="75" selection-start-column="53" selection-end-line="75" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/resources/log4j2.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1970,8 +1962,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/MonitorStarter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1045">
-          <caret line="73" column="46" lean-forward="true" selection-start-line="73" selection-start-column="46" selection-end-line="73" selection-end-column="46" />
+        <state relative-caret-position="245">
+          <caret line="58" column="51" selection-start-line="58" selection-start-column="51" selection-end-line="58" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
