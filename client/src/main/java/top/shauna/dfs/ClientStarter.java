@@ -67,4 +67,8 @@ public class ClientStarter {
     public static ClientService getClientService(){
         return new ClientServiceImpl();
     }
+
+    public static ClientService getClientService(LocalExportBean localExportBean) throws Exception {
+        return new ClientServiceImpl(localExportBean);
+    }
 }
