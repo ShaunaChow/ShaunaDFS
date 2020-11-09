@@ -205,12 +205,12 @@ public class SoldierManager implements Starter {
         List<ReplicasInfo> res = new ArrayList<>();
         SoldierInfo soldierInfo = header.next;
         int scanAgain = 1;
-        for (int i=0;i<nums;i++){
+        for (int i=0;i<nums;){
             if (soldierInfo==tailer) {  /** 给一次重刷的机会 **/
                 if (scanAgain>0){
                     soldierInfo = header.next;
                     try {
-                        TimeUnit.SECONDS.sleep(5);
+                        TimeUnit.SECONDS.sleep(2);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -223,7 +223,7 @@ public class SoldierManager implements Starter {
                 soldierInfo = soldierInfo.next;
                 moveToOldGen(tmp);
             }
-            if (System.currentTimeMillis() - soldierInfo.getLastUsedTime()<5000){   /** 避免Soldier上线瞬间压力暴增 **/
+            if (System.currentTimeMillis() - soldierInfo.getLastUsedTime()<2000){   /** 避免Soldier上线瞬间压力暴增 **/
                 soldierInfo = soldierInfo.next;
                 if (soldierInfo==tailer) {
                     continue;
@@ -240,6 +240,7 @@ public class SoldierManager implements Starter {
             if(i==0) replicasInfo.setMaster(true);
             else replicasInfo.setMaster(false);
             res.add(replicasInfo);
+            i++;
             soldierInfo.setLastUsedTime(System.currentTimeMillis());
             soldierInfo = soldierInfo.next;
         }

@@ -110,15 +110,15 @@ public class Test1 {
 
         ClientService clientService = new ClientServiceImpl();
 
-        clientService.mkdir("/shauna/");
+//        clientService.mkdir("/shauna/");
 
         ByteBuffer allocate = ByteBuffer.allocate((int) fileChannel.size());
 
         fileChannel.read(allocate);
 
-        clientService.uploadFile("/shauna/2.txt", allocate.array());
+        clientService.uploadFile("/2.rar", allocate.array());
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/2.txt");
+        ByteBuffer byteBuffer = clientService.downloadFile("/2.rar");
 
         FileChannel fileChannel2 = new RandomAccessFile("D:\\百度网盘\\下载文件\\VMware 15.5.0------------2.rar",
                 "rw").getChannel();

@@ -38,6 +38,7 @@ public class SoldierServerProtocolImpl implements SoldierServerProtocol {
             blockHandler.read(block);
             return block;
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("Block请求出错："+e.getMessage());
             return null;
         }

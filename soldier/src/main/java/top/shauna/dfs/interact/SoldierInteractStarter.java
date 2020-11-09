@@ -60,7 +60,7 @@ public class SoldierInteractStarter implements Starter {
         log.info("心跳初始化OK");
 
         CommonThreadPool.threadPool.execute(()->{
-            ArrayBlockingQueue<Transaction> undoneTrasactions = MessageUtil.getUndoneTrasactions();
+            BlockQueue undoneTrasactions = MessageUtil.getUndoneTrasactions();
             while(true){
                 try {
                     Transaction undone = undoneTrasactions.take();
@@ -72,6 +72,9 @@ public class SoldierInteractStarter implements Starter {
                             toSendBlock.setFilePath(msg.getFilePath());
                             toSendBlock.setPin(msg.getPin());
                             Block block = protocol.getBlock(toSendBlock);
+                            if (block==null){
+                                break;
+                            }
                             block.setVersion(System.currentTimeMillis());
                             MonitorProxy.getInstance().getProxy().write(block);
                             /** 触发一次汇报Blocks **/
@@ -79,10 +82,12 @@ public class SoldierInteractStarter implements Starter {
                             break;
                         case DELETE:
                             DeleteBean deleteBean = (DeleteBean) undone.getMsg();
-                            MetaKeeper.delete(
-                                    SoldierPubConfig.getInstance().getRootDir()+
-                                            File.separator+"Meta"+deleteBean.getFilePath()+"_"+deleteBean.getPin()+".block"
-                            );
+                            if(MetaKeeper.contains(SoldierPubConfig.getInstance().getRootDir()+File.separator+"Meta"+deleteBean.getFilePath()+"_"+deleteBean.getPin()+".block")) {
+                                MetaKeeper.delete(
+                                        SoldierPubConfig.getInstance().getRootDir() +
+                                                File.separator + "Meta" + deleteBean.getFilePath() + "_" + deleteBean.getPin() + ".block"
+                                );
+                            }
                             break;
                     }
                 } catch (Exception e) {

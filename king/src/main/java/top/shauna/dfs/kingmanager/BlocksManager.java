@@ -144,7 +144,8 @@ public class BlocksManager implements Starter {
                 ReplicasInfo goodReplica = good.get((pin++) % good.size());
                 BackupBean backupBean = new BackupBean(block.getFilePath(), block.getPin(), goodReplica, newRep);
                 SoldierInfo soldierInfo = soldierManager.getSoldierInfo(newRep.getId());
-                soldierInfo.getTransactions().add(new Transaction(getBackupId(),TransactionType.BACK_UP,backupBean));
+                Transaction transaction = new Transaction(getBackupId(), TransactionType.BACK_UP, backupBean);
+                soldierInfo.getTransactions().add(transaction);
             }
         }
     }

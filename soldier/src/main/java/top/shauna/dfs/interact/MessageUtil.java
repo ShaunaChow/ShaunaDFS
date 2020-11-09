@@ -30,10 +30,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class MessageUtil {
     private static Long currentTime = 0L;
     private static int idKeeper = -99999999;
-    private static ArrayBlockingQueue<Transaction> undoneTrasactions;
+    private static BlockQueue undoneTrasactions;
 
     static {
-        undoneTrasactions = new ArrayBlockingQueue(10);
+        undoneTrasactions = new BlockQueue();
     }
 
     public static HeartBeatRequestBean getHeartBeatRequestBean() throws Exception{
@@ -87,7 +87,7 @@ public class MessageUtil {
         switch (heartBeatResponseBean.getRes()){
             case SUCCESS:
                 setIdKeeper(heartBeatResponseBean.getId());
-                log.error("注测ok");
+                log.info("注测ok");
                 break;
             case UNKNOWN:
                 log.error("未知错误");
@@ -171,7 +171,7 @@ public class MessageUtil {
         MessageUtil.idKeeper = idKeeper;
     }
 
-    public static ArrayBlockingQueue<Transaction> getUndoneTrasactions() {
+    public static BlockQueue getUndoneTrasactions() {
         return undoneTrasactions;
     }
 }
