@@ -89,6 +89,7 @@ public class ClientServiceImpl implements ClientService {
                         clientProtocol.uploadFileOk(uploadFileRes);
                         return true;
                     } catch (Exception e) {
+                        e.printStackTrace();
                         log.error("上传失败！！！！  "+e.getMessage());
                         pin++;
                         if(pin>=5) break;
