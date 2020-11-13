@@ -85,7 +85,9 @@ public class ClientServiceImpl implements ClientService {
                 int pin = 0;
                 while (true) {
                     try {
-                        uploadFile((INodeFile) uploadFileRes.getINode(), data);
+                        INodeFile iNodeFile = (INodeFile) uploadFileRes.getINode();
+                        log.warn(iNodeFile.toString());
+                        uploadFile(iNodeFile, data);
                         clientProtocol.uploadFileOk(uploadFileRes);
                         return true;
                     } catch (Exception e) {
