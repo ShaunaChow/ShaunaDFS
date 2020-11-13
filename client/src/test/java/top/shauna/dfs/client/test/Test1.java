@@ -112,13 +112,13 @@ public class Test1 {
 
         ClientService clientService = new ClientServiceImpl();
 
-        clientService.mkdir("/shauna/");
+//        clientService.mkdir("/shauna/");
 
         ByteBuffer allocate = ByteBuffer.allocate((int) fileChannel.size());
 
         fileChannel.read(allocate);
 
-        clientService.uploadFile("/shauna/2.rar", allocate.array());
+        clientService.uploadFile("/1.png", allocate.array());
 
         ByteBuffer byteBuffer = clientService.downloadFile("/shauna/2.rar");
 

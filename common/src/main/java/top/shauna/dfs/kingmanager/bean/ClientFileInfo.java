@@ -59,7 +59,7 @@ public class ClientFileInfo implements Serializable,Writable {
         }
         byte exitsFile = fileInputStream.readByte();
         if (exitsFile==1){
-            clientFileInfo.setINode((INodeFile) INodeFile.load(fileInputStream,null));
+            clientFileInfo.setINode(INodeFile.load(fileInputStream,null));
         }
         return clientFileInfo;
     }
