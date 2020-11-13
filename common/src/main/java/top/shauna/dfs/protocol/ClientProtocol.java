@@ -20,4 +20,6 @@ public interface ClientProtocol {
     ClientFileInfo rmFile(ClientFileInfo fileInfo);
 
     ClientFileInfo rmDir(ClientFileInfo fileInfo);
+
+    ClientFileInfo getDir(ClientFileInfo fileInfo);
 }

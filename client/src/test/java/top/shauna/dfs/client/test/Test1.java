@@ -2,6 +2,7 @@ package top.shauna.dfs.client.test;
 
 import org.junit.Test;
 import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
+import top.shauna.dfs.kingmanager.bean.INodeDirectory;
 import top.shauna.dfs.protocol.ClientProtocol;
 import top.shauna.dfs.service.ClientService;
 import top.shauna.dfs.service.impl.ClientServiceImpl;
@@ -91,10 +92,11 @@ public class Test1 {
     @Test
     public void test3() throws Exception {
         preparePubConfig();
-        ClientService clientService = new ClientServiceImpl(new LocalExportBean("netty",10001,"39.105.89.185"));
-
-        clientService.mkdir("/1/");
-        clientService.mkdir("/2/");
+        ClientService clientService = new ClientServiceImpl();//new LocalExportBean("netty",10001,"39.105.89.185"));
+        INodeDirectory dir = clientService.getDir("/");
+        System.out.println(dir);
+//        clientService.mkdir("/1/");
+//        clientService.mkdir("/2/");
 //        clientService.mkdir("/3/");
 //        clientService.mkdir("/4/");
 //        clientService.mkdir("/5/");
@@ -105,22 +107,22 @@ public class Test1 {
     public void test433() throws Exception {
         preparePubConfig();
 
-        FileChannel fileChannel = new RandomAccessFile("D:\\百度网盘\\下载文件\\VMware 15.5.0.rar",
+        FileChannel fileChannel = new RandomAccessFile("H:\\百度网盘文件\\Netty\\3-介绍3.png",
                 "rw").getChannel();
 
         ClientService clientService = new ClientServiceImpl();
 
-//        clientService.mkdir("/shauna/");
+        clientService.mkdir("/shauna/");
 
         ByteBuffer allocate = ByteBuffer.allocate((int) fileChannel.size());
 
         fileChannel.read(allocate);
 
-        clientService.uploadFile("/2.rar", allocate.array());
+        clientService.uploadFile("/shauna/2.rar", allocate.array());
 
-        ByteBuffer byteBuffer = clientService.downloadFile("/2.rar");
+        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/2.rar");
 
-        FileChannel fileChannel2 = new RandomAccessFile("D:\\百度网盘\\下载文件\\VMware 15.5.0------------2.rar",
+        FileChannel fileChannel2 = new RandomAccessFile("H:\\百度网盘文件\\3-介绍3.png",
                 "rw").getChannel();
 
         fileChannel2.write(byteBuffer);

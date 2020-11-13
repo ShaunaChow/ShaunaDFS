@@ -5,7 +5,6 @@ import top.shauna.dfs.kingmanager.bean.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -50,7 +49,7 @@ public class CheckPointUtil {
                 if (newFile!=null){
                     continue;
                 }
-                newFile = fileInfo.getINodeFile();
+                newFile = (INodeFile) fileInfo.getINode();
                 newFile.setParent(father);
                 newFile.setStatus(1);
                 newFile.setName(name);

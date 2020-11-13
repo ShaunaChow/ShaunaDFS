@@ -1,5 +1,7 @@
 package top.shauna.dfs.service;
 
+import top.shauna.dfs.kingmanager.bean.INodeDirectory;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -19,4 +21,6 @@ public interface ClientService {
     boolean rmFile(String filePath);
 
     boolean rmDir(String dirPath);
+
+    INodeDirectory getDir(String dirPath);
 }

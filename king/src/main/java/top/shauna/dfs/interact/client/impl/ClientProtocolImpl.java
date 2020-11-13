@@ -85,4 +85,15 @@ public class ClientProtocolImpl implements ClientProtocol {
         }
         return fileInfo;
     }
+
+    @Override
+    public ClientFileInfo getDir(ClientFileInfo fileInfo) {
+        try{
+            shaunaFSManager.getDir(fileInfo);
+        }catch (Exception e){
+            log.error("删除出错："+e.getMessage());
+            fileInfo.setRes(ClientProtocolType.UNKNOWN);
+        }
+        return fileInfo;
+    }
 }

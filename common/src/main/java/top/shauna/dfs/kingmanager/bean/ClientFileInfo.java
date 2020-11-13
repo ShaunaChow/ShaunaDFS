@@ -24,7 +24,7 @@ public class ClientFileInfo implements Serializable,Writable {
     private String name;
     private Long timeStamp;
     private Long fileLength;
-    private INodeFile iNodeFile;
+    private INode iNode;
     private ClientProtocolType res;
 
     @Override
@@ -38,9 +38,9 @@ public class ClientFileInfo implements Serializable,Writable {
         }else{
             fileOutputStream.writeByte(0);
         }
-        if (iNodeFile!=null) {
+        if (iNode !=null) {
             fileOutputStream.writeByte(1);
-            iNodeFile.write(fileOutputStream);
+            iNode.write(fileOutputStream);
         }else{
             fileOutputStream.writeByte(0);
         }
@@ -59,7 +59,7 @@ public class ClientFileInfo implements Serializable,Writable {
         }
         byte exitsFile = fileInputStream.readByte();
         if (exitsFile==1){
-            clientFileInfo.setINodeFile((INodeFile) INodeFile.load(fileInputStream,null));
+            clientFileInfo.setINode((INodeFile) INodeFile.load(fileInputStream,null));
         }
         return clientFileInfo;
     }

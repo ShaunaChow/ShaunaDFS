@@ -125,7 +125,7 @@ public class ShaunaFSManager implements Starter,FSManager {
         for (String key : strings) {
             ClientFileInfo clientFileInfo = newFileKeeper.get(key);
             if (now-clientFileInfo.getTimeStamp()>=uploadTime*60*1000){
-                INodeFile iNodeFile = clientFileInfo.getINodeFile();
+                INodeFile iNodeFile = (INodeFile) clientFileInfo.getINode();
                 blocksManager.deleteBlocks(iNodeFile.getPath());
                 newFileKeeper.remove(key);
             }
@@ -213,7 +213,7 @@ public class ShaunaFSManager implements Starter,FSManager {
             newFile.setBlocks(blocks);
             newFile.setStatus(2);      /** 设置状态码！！！！！2为新建 **/
             directory.getChildren().add(newFile);
-            fileInfo.setINodeFile(newFile);
+            fileInfo.setINode(newFile);
             blocksManager.registBlocks(newFile.getPath(),newFile.getBlocks());
             fileInfo.setRes(ClientProtocolType.SUCCESS);
             fileInfo.setTimeStamp(System.currentTimeMillis());
@@ -225,9 +225,9 @@ public class ShaunaFSManager implements Starter,FSManager {
     public void uploadFileOk(ClientFileInfo fileInfo) {
         if (newFileKeeper.containsKey(fileInfo.getPath())){
             ClientFileInfo clientFileInfo = newFileKeeper.get(fileInfo.getPath());
-            clientFileInfo.getINodeFile().setStatus(1);     /** 设置状态码！！！！！ 1为正常文件**/
+            clientFileInfo.getINode().setStatus(1);     /** 设置状态码！！！！！ 1为正常文件**/
             SoldierManager soldierManager = SoldierManager.getInstance();
-            for (Block block : clientFileInfo.getINodeFile().getBlocks()) {
+            for (Block block : ((INodeFile)(clientFileInfo.getINode())).getBlocks()) {
                 block.setStatus(1);
                 for (ReplicasInfo replicasInfo : block.getReplicasInfos()) {
                     SoldierInfo soldierInfo = soldierManager.getSoldierInfo(replicasInfo.getId());
@@ -263,7 +263,7 @@ public class ShaunaFSManager implements Starter,FSManager {
                         if(file.getStatus()!=null&&file.getStatus()>=0) {
                             INodeFile nodeFile = (INodeFile) child;
                             resortReplicas(nodeFile);
-                            fileInfo.setINodeFile(nodeFile);
+                            fileInfo.setINode(nodeFile);
                             fileInfo.setRes(ClientProtocolType.SUCCESS);
                         }else{
                             fileInfo.setRes(ClientProtocolType.NO_SUCH_File);
@@ -413,5 +413,14 @@ public class ShaunaFSManager implements Starter,FSManager {
 
     public INodeDirectory getRoot() {
         return root;
+    }
+
+    public void getDir(ClientFileInfo fileInfo) {
+        String path = fileInfo.getPath();
+        if(!path.endsWith("/")){
+            path = path+"/";
+        }
+        INodeDirectory directory = getINodeDirectory(path);
+        fileInfo.setINode(directory);
     }
 }

@@ -1,10 +1,7 @@
 package top.shauna.dfs.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import top.shauna.dfs.kingmanager.bean.Block;
-import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
-import top.shauna.dfs.kingmanager.bean.INodeFile;
-import top.shauna.dfs.kingmanager.bean.ReplicasInfo;
+import top.shauna.dfs.kingmanager.bean.*;
 import top.shauna.dfs.protocol.ClientProtocol;
 import top.shauna.dfs.protocol.SoldierServerProtocol;
 import top.shauna.dfs.service.ClientService;
@@ -88,7 +85,7 @@ public class ClientServiceImpl implements ClientService {
                 int pin = 0;
                 while (true) {
                     try {
-                        uploadFile(uploadFileRes.getINodeFile(), data);
+                        uploadFile((INodeFile) uploadFileRes.getINode(), data);
                         clientProtocol.uploadFileOk(uploadFileRes);
                         return true;
                     } catch (Exception e) {
@@ -145,7 +142,7 @@ public class ClientServiceImpl implements ClientService {
                 int pin = 0;
                 while (true) {
                     try {
-                        return downloadFile(downloadFileRes.getINodeFile());
+                        return downloadFile((INodeFile) downloadFileRes.getINode());
                     } catch (Exception e) {
                         log.error("下载失败！！！！  "+e.getMessage());
                         pin++;
@@ -265,7 +262,7 @@ public class ClientServiceImpl implements ClientService {
     public boolean rmDir(String dirPath) {
         if (dirPath.endsWith("/")) dirPath = dirPath.substring(0,dirPath.lastIndexOf('/'));
         if(!dirPath.contains("/")){
-            log.error("错误的文件路径，没有以/开头："+dirPath);
+            log.error("错误的文件路径，没有/："+dirPath);
             return false;
         }
         if(!dirPath.startsWith("/")){
@@ -302,6 +299,22 @@ public class ClientServiceImpl implements ClientService {
                 break;
         }
         return false;
+    }
+
+    @Override
+    public INodeDirectory getDir(String dirPath) {
+        if(!dirPath.contains("/")){
+            log.error("错误的文件路径，没有/："+dirPath);
+            return null;
+        }
+        if(!dirPath.startsWith("/")){
+            log.error("文件路径出错，没有以/开头："+dirPath);
+            return null;
+        }
+        ClientFileInfo clientFileInfo = new ClientFileInfo();
+        clientFileInfo.setPath(dirPath);
+        ClientFileInfo dir = clientProtocol.getDir(clientFileInfo);
+        return (INodeDirectory) dir.getINode();
     }
 
     private ByteBuffer downloadFile(INodeFile iNodeFile) throws Exception {
