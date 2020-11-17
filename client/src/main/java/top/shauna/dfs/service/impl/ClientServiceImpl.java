@@ -85,14 +85,11 @@ public class ClientServiceImpl implements ClientService {
                 int pin = 0;
                 while (true) {
                     try {
-                        log.error(uploadFileRes.toString());
                         INodeFile iNodeFile = (INodeFile) uploadFileRes.getINode();
-                        log.error(iNodeFile.toString());
                         uploadFile(iNodeFile, data);
                         clientProtocol.uploadFileOk(uploadFileRes);
                         return true;
                     } catch (Exception e) {
-                        log.error(e.toString());
                         log.error("上传失败！！！！  "+e.getMessage());
                         pin++;
                         if(pin>=5) break;

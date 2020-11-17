@@ -1,5 +1,6 @@
 package top.shauna.dfs.client.test;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import top.shauna.dfs.kingmanager.bean.ClientFileInfo;
 import top.shauna.dfs.kingmanager.bean.INodeDirectory;
@@ -129,6 +130,8 @@ public class Test1 {
 
         fileChannel.close();
         fileChannel2.close();
+
+        System.out.println(JSON.toJSONString(clientService.getDir("/")));
     }
 
     private void preparePubConfig() {
