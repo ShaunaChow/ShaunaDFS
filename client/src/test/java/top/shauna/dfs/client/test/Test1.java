@@ -113,23 +113,23 @@ public class Test1 {
 
         ClientService clientService = new ClientServiceImpl();
 
-//        clientService.mkdir("/shauna/");
+        clientService.mkdir("/shauna222/");
 
-        ByteBuffer allocate = ByteBuffer.allocate((int) fileChannel.size());
-
-        fileChannel.read(allocate);
-
-        clientService.uploadFile("/1.png", allocate.array());
-
-        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/2.rar");
-
-        FileChannel fileChannel2 = new RandomAccessFile("H:\\百度网盘文件\\3-介绍3.png",
-                "rw").getChannel();
-
-        fileChannel2.write(byteBuffer);
-
-        fileChannel.close();
-        fileChannel2.close();
+//        ByteBuffer allocate = ByteBuffer.allocate((int) fileChannel.size());
+//
+//        fileChannel.read(allocate);
+//
+//        clientService.uploadFile("/shauna/1.png", allocate.array());
+//
+//        ByteBuffer byteBuffer = clientService.downloadFile("/shauna/1.png");
+//
+//        FileChannel fileChannel2 = new RandomAccessFile("H:\\百度网盘文件\\3-介绍3.png",
+//                "rw").getChannel();
+//
+//        fileChannel2.write(byteBuffer);
+//
+//        fileChannel.close();
+//        fileChannel2.close();
 
         System.out.println(JSON.toJSONString(clientService.getDir("/")));
     }
