@@ -5,9 +5,7 @@
     <bookmark url="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/monitor/controller/KingController.java" line="23" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a51f00b-e7d2-44af-8fcb-ff5299584bea" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/util/KingUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/util/KingUtils.java" afterDir="false" />
-    </list>
+    <list default="true" id="6a51f00b-e7d2-44af-8fcb-ff5299584bea" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/king/target/" />
     <ignored path="$PROJECT_DIR$/queen/target/" />
@@ -67,8 +65,8 @@
       <file leaf-file-name="KingUtils.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/util/KingUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="60" column="69" selection-start-line="60" selection-start-column="69" selection-end-line="60" selection-end-column="69" />
+            <state relative-caret-position="350">
+              <caret line="57" column="26" lean-forward="true" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -1427,10 +1425,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.King1.start2" />
-        <item itemvalue="JUnit.King1.start1" />
         <item itemvalue="JUnit.Queen.start" />
         <item itemvalue="JUnit.Soldier.start3" />
+        <item itemvalue="JUnit.King1.start2" />
+        <item itemvalue="JUnit.King1.start1" />
         <item itemvalue="JUnit.King1.test" />
       </list>
     </recent_temporary>
@@ -1506,29 +1504,11 @@
       <workItem from="1605775596663" duration="4699000" />
       <workItem from="1605939646334" duration="521000" />
       <workItem from="1605967918577" duration="903000" />
-      <workItem from="1606027694204" duration="6081000" />
+      <workItem from="1606027694204" duration="7050000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Soldier_start2 - 2020.11.22 at 16h 11m 51s.xml">
-      <configuration name="Soldier.start2" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Soldier_start1 - 2020.11.22 at 16h 11m 51s.xml">
-      <configuration name="Soldier.start1" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Queen_start - 2020.11.22 at 16h 11m 51s.xml">
-      <configuration name="Queen.start" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="King1_start2 - 2020.11.22 at 16h 11m 51s.xml">
-      <configuration name="King1.start2" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="King1_start2 - 2020.11.22 at 16h 27m 41s.xml">
-      <configuration name="King1.start2" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="King1_start2 - 2020.11.22 at 16h 27m 43s.xml">
-      <configuration name="King1.start2" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="King1_start2 - 2020.11.22 at 16h 27m 47s.xml">
       <configuration name="King1.start2" configurationId="JUnit" />
     </history-entry>
@@ -1541,9 +1521,27 @@
     <history-entry file="King1_start2 - 2020.11.22 at 16h 28m 23s.xml">
       <configuration name="King1.start2" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="King1_start1 - 2020.11.22 at 17h 27m 10s.xml">
+      <configuration name="King1.start1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Soldier_start1 - 2020.11.22 at 17h 27m 10s.xml">
+      <configuration name="Soldier.start1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Soldier_start3 - 2020.11.22 at 17h 27m 10s.xml">
+      <configuration name="Soldier.start3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Soldier_start2 - 2020.11.22 at 17h 27m 10s.xml">
+      <configuration name="Soldier.start2" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Queen_start - 2020.11.22 at 17h 27m 10s.xml">
+      <configuration name="Queen.start" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="King1_start2 - 2020.11.22 at 17h 27m 10s.xml">
+      <configuration name="King1.start2" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="583564000" />
+    <option name="totallyTimeSpent" value="584533000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1559,7 +1557,7 @@
       <window_info id="Structure" order="1" sideWeight="0.50398725" side_tool="true" weight="0.15876517" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.1472192" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.41330424" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.32824427" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
@@ -1569,7 +1567,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.36750272" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.3293348" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.4514722" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.22028354" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49601275" visible="true" weight="0.18550107" />
       <window_info id="Web" order="3" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
@@ -2006,8 +2004,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/util/KingUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="60" column="69" selection-start-line="60" selection-start-column="69" selection-end-line="60" selection-end-column="69" />
+        <state relative-caret-position="350">
+          <caret line="57" column="26" lean-forward="true" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
         </state>
       </provider>
     </entry>
