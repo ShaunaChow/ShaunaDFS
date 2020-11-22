@@ -1,5 +1,6 @@
 package top.shauna.dfs.util;
 
+import lombok.extern.slf4j.Slf4j;
 import top.shauna.dfs.config.KingPubConfig;
 import top.shauna.dfs.kingmanager.LogManager;
 import top.shauna.dfs.kingmanager.SoldierManager;
@@ -16,6 +17,7 @@ import java.util.Properties;
  * @Date 2020/10/28 21:04
  * @E-Mail z1023778132@icloud.com
  */
+@Slf4j
 public class KingUtils {
 
     public static void resortReplicas(Block block){
@@ -47,7 +49,7 @@ public class KingUtils {
      * **/
     public static void deleteLogs() throws IOException {
         Properties props = System.getProperties();
-        System.out.println(props.getProperty("os.name"));
+        log.info("当前操作系统: "+props.getProperty("os.name"));
         if(props.getProperty("os.name").startsWith("Windows")){
             LogManager.getInstance().getEditLogSystem().changeFile();
         }
@@ -55,7 +57,7 @@ public class KingUtils {
         for (File file : files) {
             file.delete();
         }
-        if(!props.getProperty("os.name").startsWith("Windows")){
+        if(props.getProperty("os.name").startsWith("Linux")){
             LogManager.getInstance().getEditLogSystem().changeFile();
         }
     }
