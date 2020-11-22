@@ -9,6 +9,7 @@ import top.shauna.dfs.kingmanager.bean.SoldierInfo;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @Author Shauna.Chou
@@ -45,11 +46,17 @@ public class KingUtils {
      *      而在Linux下是可以直接删除的！！！这里我们要处理一下
      * **/
     public static void deleteLogs() throws IOException {
-//        LogManager.getInstance().getEditLogSystem().changeFile();
+        Properties props = System.getProperties();
+        System.out.println(props.getProperty("os.name"));
+        if(props.getProperty("os.name").startsWith("Windows")){
+            LogManager.getInstance().getEditLogSystem().changeFile();
+        }
         List<File> files = CommonUtil.scanEditLogFiles(KingPubConfig.getInstance().getEditLogDirs());
         for (File file : files) {
             file.delete();
         }
-        LogManager.getInstance().getEditLogSystem().changeFile();//先删除后changeFile！！！！
+        if(!props.getProperty("os.name").startsWith("Windows")){
+            LogManager.getInstance().getEditLogSystem().changeFile();
+        }
     }
 }
