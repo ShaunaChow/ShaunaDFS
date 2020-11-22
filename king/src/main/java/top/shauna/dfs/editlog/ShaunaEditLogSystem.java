@@ -29,6 +29,7 @@ public class ShaunaEditLogSystem implements EditLogSystem {
         try {
             if (fileOutputStream==null) {
                 File file = getEmptyFile(dir);
+                System.out.println("weizhi3 "+file.getPath());
                 fileOutputStream = new DataOutputStream(new FileOutputStream(file));
             }
         } catch (FileNotFoundException e) {
