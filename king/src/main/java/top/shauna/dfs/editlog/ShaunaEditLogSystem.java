@@ -49,6 +49,9 @@ public class ShaunaEditLogSystem implements EditLogSystem {
 
     @Override
     public synchronized void writeEditLog(LogItem logItem) throws IOException {
+        System.out.println("weizhi2 "+logItem);
+        System.out.println("weizhi2 "+fileOutputStream.toString());
+        System.out.println("weizhi2 "+dir);
         if (logItem.write(fileOutputStream)) {
             logCounter++;
         }

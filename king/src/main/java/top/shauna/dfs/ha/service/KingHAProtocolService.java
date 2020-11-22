@@ -49,6 +49,7 @@ public class KingHAProtocolService {
         while (kingHAStatus.getMaster()==null||!kingHAStatus.getMaster()){
             try {
                 LogItem logItem = logItems.take();
+                System.out.println("添加了1");
                 logManager.saveLogItem(logItem);
                 ShaunaFSManagerProxy.getInstance(null).getShaunaFSManager().addLogItemToRoot(Arrays.asList(logItem));
                 log.info("同步OKKK");
