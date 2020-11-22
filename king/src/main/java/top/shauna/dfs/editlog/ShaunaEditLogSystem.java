@@ -13,7 +13,7 @@ import java.io.*;
  */
 @Slf4j
 public class ShaunaEditLogSystem implements EditLogSystem {
-    private DataOutputStream fileOutputStream;
+    private volatile DataOutputStream fileOutputStream;
     private String dir;
     private int filePin = -999;
     private int logCounter;
@@ -29,7 +29,6 @@ public class ShaunaEditLogSystem implements EditLogSystem {
         try {
             if (fileOutputStream==null) {
                 File file = getEmptyFile(dir);
-                System.out.println("weizhi3 "+file.getPath());
                 fileOutputStream = new DataOutputStream(new FileOutputStream(file));
             }
         } catch (FileNotFoundException e) {
@@ -50,9 +49,6 @@ public class ShaunaEditLogSystem implements EditLogSystem {
 
     @Override
     public synchronized void writeEditLog(LogItem logItem) throws IOException {
-        System.out.println("weizhi2 "+logItem);
-        System.out.println("weizhi2 "+fileOutputStream.toString());
-        System.out.println("weizhi2 "+dir);
         if (logItem.write(fileOutputStream)) {
             logCounter++;
         }
@@ -66,7 +62,12 @@ public class ShaunaEditLogSystem implements EditLogSystem {
     @Override
     public synchronized void changeFile() throws IOException {
         filePin++;
-        fileOutputStream.close();
+        try {
+            fileOutputStream.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            fileOutputStream = null;
+        }
         File file = getEmptyFile(dir);
         fileOutputStream = new DataOutputStream(new FileOutputStream(file));
     }

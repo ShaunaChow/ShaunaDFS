@@ -36,7 +36,6 @@ public class LogManager {
     }
 
     public void saveLogItem(LogItem logItem) throws IOException {
-        System.out.println(logItem);
         if (logItem==null) return;
         editLogSystem.writeEditLog(logItem);
         if (kingHAStatus.getMaster()!=null&&kingHAStatus.getMaster()) {

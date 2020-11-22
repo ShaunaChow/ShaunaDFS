@@ -39,11 +39,17 @@ public class KingUtils {
         });
     }
 
+    /**
+     * 注意！！！！
+     *      在Windows下文件File.delete()方法不能删除存在流关联的文件
+     *      而在Linux下是可以直接删除的！！！这里我们要处理一下
+     * **/
     public static void deleteLogs() throws IOException {
-        LogManager.getInstance().getEditLogSystem().changeFile();
+//        LogManager.getInstance().getEditLogSystem().changeFile();
         List<File> files = CommonUtil.scanEditLogFiles(KingPubConfig.getInstance().getEditLogDirs());
         for (File file : files) {
             file.delete();
         }
+        LogManager.getInstance().getEditLogSystem().changeFile();//先删除后changeFile！！！！
     }
 }
