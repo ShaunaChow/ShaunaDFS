@@ -18,27 +18,16 @@ public class SoldierServerUtil {
 
     public static void startServer(){
         LocalExportBean localExportBean = new LocalExportBean();
-
-        InetAddress localHost = null;
-        try {
-            localHost = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        String hostAddress;
-        if(localHost!=null)
-            hostAddress = localHost.getHostAddress();
-        else
-            hostAddress = "127.0.0.1";
+        SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
 
         int port;
-        if(SoldierPubConfig.getInstance().getPort()!=null&&!SoldierPubConfig.getInstance().getPort().equals(""))
-            port = Integer.parseInt(SoldierPubConfig.getInstance().getPort());
+        if(soldierPubConfig.getPort()!=null&&!soldierPubConfig.getPort().equals(""))
+            port = Integer.parseInt(soldierPubConfig.getPort());
         else
             port = 9001;
 
         localExportBean.setProtocol("netty");
-        localExportBean.setIp(hostAddress);
+        localExportBean.setIp(soldierPubConfig.getExportIP());
         localExportBean.setPort(port);
 
         ShaunaRPCHandler.publishServiceBean(SoldierServerProtocol.class,new SoldierServerProtocolImpl(),localExportBean);

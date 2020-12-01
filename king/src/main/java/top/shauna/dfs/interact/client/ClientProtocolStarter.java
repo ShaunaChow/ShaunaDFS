@@ -32,21 +32,11 @@ public class ClientProtocolStarter implements Starter {
     @Override
     public void onStart() {
         LocalExportBean localExportBean = new LocalExportBean();
-        InetAddress localHost = null;
-        try {
-            localHost = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        String hostAddress;
-        if(localHost!=null)
-            hostAddress = localHost.getHostAddress();
-        else
-            hostAddress = "127.0.0.1";
+        KingPubConfig kingPubConfig = KingPubConfig.getInstance();
 
         localExportBean.setProtocol("netty");
-        localExportBean.setIp(hostAddress);
-        localExportBean.setPort(Integer.parseInt(KingPubConfig.getInstance().getClientServerPort()));
+        localExportBean.setIp(kingPubConfig.getExportIP());
+        localExportBean.setPort(Integer.parseInt(kingPubConfig.getClientServerPort()));
 
         serviceBean = ShaunaRPCHandler.publishServiceBean(ClientProtocol.class, new ClientProtocolImpl(),localExportBean,false);
     }

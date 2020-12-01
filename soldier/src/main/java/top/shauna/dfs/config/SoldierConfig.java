@@ -8,6 +8,8 @@ import top.shauna.rpc.bean.RegisterBean;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Properties;
 
 /**
@@ -44,6 +46,20 @@ public class SoldierConfig implements Starter {
         if (properties.getProperty("threadNums")!=null) {
             soldierPubConfig.setThreadPoolNums(Integer.valueOf(properties.getProperty("threadNums")));
         }
+
+        InetAddress localHost = null;
+        try {
+            localHost = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        String hostAddress;
+        if(localHost!=null)
+            hostAddress = localHost.getHostAddress();
+        else
+            hostAddress = "127.0.0.1";
+        soldierPubConfig.setExportIP(properties.getProperty("exportIP",hostAddress));
+
 
         top.shauna.rpc.config.PubConfig rpcConfig = top.shauna.rpc.config.PubConfig.getInstance();
         if (properties.getProperty("shaunaRpc.applicationName")!=null) {

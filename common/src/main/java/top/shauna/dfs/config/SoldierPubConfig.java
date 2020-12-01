@@ -31,6 +31,15 @@ public class SoldierPubConfig {
     private PubConfig rpcPubConfig;
     private Integer threadPoolNums;
     private Integer heartBeatTime;
+    private String exportIP;
+
+    public String getExportIP() {
+        return exportIP;
+    }
+
+    public void setExportIP(String exportIP) {
+        this.exportIP = exportIP;
+    }
 
     public Integer getHeartBeatTime() {
         return heartBeatTime;

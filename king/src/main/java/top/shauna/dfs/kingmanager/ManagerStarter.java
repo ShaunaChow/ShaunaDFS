@@ -36,23 +36,13 @@ public class ManagerStarter implements Starter {
     @Override
     public void onStart() throws Exception {
         ShaunaFSManagerProxy.getInstance(LogManager.getInstance()).getProxy().onStart();
-        LogManager.getInstance().getEditLogSystem().initEditLogSystem(KingPubConfig.getInstance().getEditLogDirs());
+        KingPubConfig kingPubConfig = KingPubConfig.getInstance();
+        LogManager.getInstance().getEditLogSystem().initEditLogSystem(kingPubConfig.getEditLogDirs());
         LocalExportBean localExportBean = new LocalExportBean();
-        InetAddress localHost = null;
-        try {
-            localHost = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        String hostAddress;
-        if(localHost!=null)
-            hostAddress = localHost.getHostAddress();
-        else
-            hostAddress = "127.0.0.1";
 
         localExportBean.setProtocol("netty");
-        localExportBean.setIp(hostAddress);
-        localExportBean.setPort(Integer.parseInt(KingPubConfig.getInstance().getQueenServerPort()));
+        localExportBean.setIp(kingPubConfig.getExportIP());
+        localExportBean.setPort(Integer.parseInt(kingPubConfig.getQueenServerPort()));
         serviceBean = ShaunaRPCHandler.publishServiceBean(
                 QueenProtocol.class,
                 new QueenProtocolImpl(LogManager.getInstance().getEditLogSystem()),

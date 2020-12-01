@@ -45,6 +45,15 @@ public class KingPubConfig {
     private Integer queenScanTime;
     private List<String> ha;
     private String monitorPort;
+    private String exportIP;
+
+    public String getExportIP() {
+        return exportIP;
+    }
+
+    public void setExportIP(String exportIP) {
+        this.exportIP = exportIP;
+    }
 
     public String getMonitorPort() {
         return monitorPort;

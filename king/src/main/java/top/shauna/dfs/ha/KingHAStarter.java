@@ -45,7 +45,7 @@ public class KingHAStarter implements Starter {
 
     public KingHAStarter(){
         kingPubConfig = KingPubConfig.getInstance();
-        ip = CommonUtil.getLocalHostIp();
+        ip = kingPubConfig.getExportIP();
         port = kingPubConfig.getHaPort();
         kingHAStatus = KingHAStatus.getInstance();
         zkSupportKit = new ZKSupportKit(kingPubConfig.getRpcPubConfig().getFoundBean().getUrl(),5000);

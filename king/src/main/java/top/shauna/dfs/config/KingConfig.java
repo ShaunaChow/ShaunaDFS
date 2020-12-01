@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -60,6 +62,19 @@ public class KingConfig implements Starter {
         kingPubConfig.setQueenFaultTime(Integer.parseInt(properties.getProperty("queenFaultTime","5")));
         kingPubConfig.setQueenScanTime(Integer.parseInt(properties.getProperty("queenScanTime","5")));
         kingPubConfig.setMonitorPort(properties.getProperty("monitorPort","8888"));
+
+        InetAddress localHost = null;
+        try {
+            localHost = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        String hostAddress;
+        if(localHost!=null)
+            hostAddress = localHost.getHostAddress();
+        else
+            hostAddress = "127.0.0.1";
+        kingPubConfig.setExportIP(properties.getProperty("exportIP",hostAddress));
 
         if (properties.getProperty("ha")!=null) {
             String property = properties.getProperty("ha");
