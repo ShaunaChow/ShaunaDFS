@@ -7,20 +7,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6a51f00b-e7d2-44af-8fcb-ff5299584bea" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/KingPubConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/KingPubConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/SoldierPubConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/top/shauna/dfs/config/SoldierPubConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/client/ClientProtocolStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/client/ClientProtocolStarter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/soldier/KingHeartBeatStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/soldier/KingHeartBeatStarter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ManagerStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/kingmanager/ManagerStarter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/resources/king1.properties" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/resources/king1.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/king/src/main/resources/king2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/king/src/main/resources/king2.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/config/SoldierConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/config/SoldierConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/soldierserver/SoldierServerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/soldierserver/SoldierServerUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/resources/soldier1.properties" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/resources/soldier1.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/resources/soldier2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/resources/soldier2.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/soldier/src/main/resources/soldier3.properties" beforeDir="false" afterPath="$PROJECT_DIR$/soldier/src/main/resources/soldier3.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/king/target/" />
@@ -59,8 +45,8 @@
       <file leaf-file-name="king1.properties" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/king/src/main/resources/king1.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="5" column="11" lean-forward="true" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+            <state relative-caret-position="375">
+              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -78,7 +64,7 @@
         <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="200">
-              <caret line="63" column="42" lean-forward="true" selection-start-line="63" selection-start-column="42" selection-end-line="63" selection-end-column="42" />
+              <caret line="63" column="42" selection-start-line="63" selection-start-column="42" selection-end-line="63" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -96,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/client/ClientProtocolStarter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="211">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
             </state>
           </provider>
         </entry>
@@ -105,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/soldier/src/main/resources/soldier3.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="100">
-              <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+              <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -132,7 +118,7 @@
         <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/soldierserver/SoldierServerUtil.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="161">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
             </state>
           </provider>
         </entry>
@@ -141,7 +127,7 @@
         <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
-              <caret line="68" column="42" lean-forward="true" selection-start-line="68" selection-start-column="42" selection-end-line="68" selection-end-column="42" />
+              <caret line="68" column="42" selection-start-line="68" selection-start-column="42" selection-end-line="68" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -263,7 +249,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -1221,26 +1207,11 @@
       <workItem from="1606027694204" duration="7783000" />
       <workItem from="1606048292390" duration="25000" />
       <workItem from="1606716926744" duration="2442000" />
-      <workItem from="1606811296881" duration="7075000" />
+      <workItem from="1606811296881" duration="7842000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Soldier_start2 - 2020.12.01 at 19h 17m 12s.xml">
-      <configuration name="Soldier.start2" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Queen_start - 2020.12.01 at 19h 17m 12s.xml">
-      <configuration name="Queen.start" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Soldier_start1 - 2020.12.01 at 19h 17m 12s.xml">
-      <configuration name="Soldier.start1" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Soldier_start3 - 2020.12.01 at 19h 17m 12s.xml">
-      <configuration name="Soldier.start3" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="King1_start1 - 2020.12.01 at 19h 17m 12s.xml">
-      <configuration name="King1.start1" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="King1_start1 - 2020.12.01 at 20h 14m 01s.xml">
       <configuration name="King1.start1" configurationId="JUnit" />
     </history-entry>
@@ -1256,17 +1227,31 @@
     <history-entry file="King1_start1 - 2020.12.01 at 20h 17m 03s.xml">
       <configuration name="King1.start1" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="Soldier_start1 - 2020.12.01 at 21h 22m 54s.xml">
+      <configuration name="Soldier.start1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Soldier_start3 - 2020.12.01 at 21h 22m 54s.xml">
+      <configuration name="Soldier.start3" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Soldier_start2 - 2020.12.01 at 21h 22m 54s.xml">
+      <configuration name="Soldier.start2" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="King1_start2 - 2020.12.01 at 21h 22m 54s.xml">
+      <configuration name="King1.start2" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="King1_start1 - 2020.12.01 at 21h 22m 54s.xml">
+      <configuration name="King1.start1" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="594808000" />
+    <option name="totallyTimeSpent" value="595575000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" weight="0.17374517" />
+      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.17324094" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
@@ -1282,9 +1267,9 @@
       <window_info anchor="bottom" id="Java Enterprise" order="8" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36095965" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.36095965" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.3293348" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.2048947" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.20392585" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49601275" visible="true" weight="0.18976545" />
       <window_info id="Web" order="3" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
@@ -1629,7 +1614,7 @@
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/ha/KingHAStarter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
-          <caret line="63" column="42" lean-forward="true" selection-start-line="63" selection-start-column="42" selection-end-line="63" selection-end-column="42" />
+          <caret line="63" column="42" selection-start-line="63" selection-start-column="42" selection-end-line="63" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -1643,7 +1628,7 @@
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/interact/client/ClientProtocolStarter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
         </state>
       </provider>
     </entry>
@@ -1676,14 +1661,14 @@
     <entry file="file://$PROJECT_DIR$/soldier/src/main/resources/soldier3.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
-          <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/king/src/main/java/top/shauna/dfs/config/KingConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="68" column="42" lean-forward="true" selection-start-line="68" selection-start-column="42" selection-end-line="68" selection-end-column="42" />
+          <caret line="68" column="42" selection-start-line="68" selection-start-column="42" selection-end-line="68" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -1704,7 +1689,7 @@
     <entry file="file://$PROJECT_DIR$/soldier/src/main/java/top/shauna/dfs/soldierserver/SoldierServerUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
@@ -1717,8 +1702,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/king/src/main/resources/king1.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="11" lean-forward="true" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+        <state relative-caret-position="375">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
         </state>
       </provider>
     </entry>

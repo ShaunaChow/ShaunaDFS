@@ -38,13 +38,14 @@ public class MessageUtil {
 
     public static HeartBeatRequestBean getHeartBeatRequestBean() throws Exception{
         HeartBeatRequestBean heartBeatRequestBean = new HeartBeatRequestBean();
+        SoldierPubConfig soldierPubConfig = SoldierPubConfig.getInstance();
         heartBeatRequestBean.setId(getIdKeeper());
-        heartBeatRequestBean.setIp(InetAddress.getLocalHost().getHostAddress());
-        heartBeatRequestBean.setPort(SoldierPubConfig.getInstance().getPort());
+        heartBeatRequestBean.setIp(soldierPubConfig.getExportIP());
+        heartBeatRequestBean.setPort(soldierPubConfig.getPort());
         long currentTimeMillis = System.currentTimeMillis();
         heartBeatRequestBean.setTimeStamp(currentTimeMillis);
         currentTime = currentTimeMillis;
-        long freeSpace = new File(SoldierPubConfig.getInstance().getRootDir()).getFreeSpace();
+        long freeSpace = new File(soldierPubConfig.getRootDir()).getFreeSpace();
         heartBeatRequestBean.setFreeSpace(freeSpace);
         heartBeatRequestBean.setTPS(getTPS());
         heartBeatRequestBean.setQPS(getQPS());
