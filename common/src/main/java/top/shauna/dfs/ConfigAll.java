@@ -22,9 +22,9 @@ public class ConfigAll {
         configKings();
         System.out.println("接下来开始配置queen");
         configQueen();
-        System.out.println("soldiers");
+        System.out.println("接下来开始配置soldiers");
         configSoldiers();
-
+        System.out.println("配置已完成，打开目录"+rootPath+"以查看配置");
     }
 
     private static void configSoldiers() {
@@ -40,7 +40,10 @@ public class ConfigAll {
             int port = scanner.nextInt();
             scanner.nextLine();
             Map<String,String> map = new HashMap<>();
-            map.put("rootPath",rootPath+File.separator+"soldier"+(i+1));
+            String path = rootPath + File.separator + "soldier" + (i + 1);
+            File file = new File(path);
+            file.mkdirs();
+            map.put("rootPath", path);
             map.put("port",String.valueOf(port));
             map.put("threadNums","20");
             map.put("exportIP",ip);
@@ -71,7 +74,6 @@ public class ConfigAll {
                 ps.close();
             }
         }
-        System.out.println("配置已完成，打开目录"+rootPath+"以查看配置");
     }
 
     private static void configQueen() {
@@ -81,7 +83,10 @@ public class ConfigAll {
             int port = scanner.nextInt();
             scanner.nextLine();
             ps = new PrintStream(new FileOutputStream(rootPath+File.separator+"queen.properties"));
-            ps.println("rootPath="+rootPath+File.separator+"queen");
+            String path = "rootPath=" + rootPath + File.separator + "queen";
+            File file = new File(path);
+            file.mkdirs();
+            ps.println(path);
             ps.println("port="+port);
             ps.println("threadNums=10");
             ps.println("editLogDirs="+rootPath+File.separator+"queen");
@@ -123,8 +128,11 @@ public class ConfigAll {
             scanner.nextLine();
             System.out.println("端口: "+port+"、"+(port+1)+"、"+(port+2)+"、"+(port+3)+"、"+(port+4)+"将被占用!");
             Map<String,String> map = new HashMap<>();
-            map.put("rootPath",rootPath+File.separator+"king"+(i+1));
-            map.put("editLogDirs",rootPath+File.separator+"king"+(i+1));
+            String path = rootPath + File.separator + "king" + (i + 1);
+            File file = new File(path);
+            file.mkdirs();
+            map.put("rootPath", path);
+            map.put("editLogDirs", path);
             map.put("soldierServerPort",String.valueOf(port));
             map.put("clientServerPort",String.valueOf(port+1));
             map.put("queenServerPort",String.valueOf(port+2));

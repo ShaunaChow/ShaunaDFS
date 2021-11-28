@@ -11,6 +11,7 @@ import top.shauna.dfs.kingmanager.proxy.ShaunaFSManagerProxy;
  */
 public class InitFS {
     public static void main(String[] args) throws Exception {
+        System.out.println(System.getProperty("properties"));
         new KingConfig().onStart();
 
         ShaunaFSManagerProxy.getInstance(LogManager.getInstance()).getProxy().initFS();
